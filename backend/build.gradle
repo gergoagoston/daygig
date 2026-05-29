@@ -41,7 +41,6 @@ dependencies {
 
 
 }
-
 checkstyle {
 	toolVersion = '12.3.1'
 	ignoreFailures = false
@@ -54,7 +53,6 @@ tasks.withType(Checkstyle).configureEach {
 		html.required = true
 	}
 }
-
 tasks.named('test') {
 	useJUnitPlatform()
 }
