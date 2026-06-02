@@ -1,0 +1,23 @@
+name: Pull Request Source Gate
+
+on:
+    pull_request:
+        branches:
+            - main
+        types: [opened, synchronize, reopened]
+
+jobs:
+    validate-source-branch:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Verify that PR originates from development branch
+              if: github.head_ref != 'development'
+              run: |
+                  echo "COMPLIANCE ERROR: Pull Requests targeting the 'main' branch are strictly restricted."
+                  echo "Only the 'development' branch is allowed as a source."
+                  echo "Your current source branch is: '${{ github.head_ref }}'"
+                  exit 1
+
+            - name: Validation Successful
+              if: github.head_ref == 'development'
+              run: echo "Source branch validation passed. Branch is 'development'."
