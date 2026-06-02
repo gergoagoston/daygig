@@ -1,3 +1,8 @@
 spring:
   application:
     name: backend
+  profiles:
+    default: dev
+server:
+  servlet:
+    context-path: /api
