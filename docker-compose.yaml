@@ -1,0 +1,16 @@
+services:
+  daygig-db:
+    image: postgres:latest
+    container_name: daygig-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: daygig
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - integra-data:/var/lib/postgresql
+
+volumes:
+  integra-data:
