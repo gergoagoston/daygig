@@ -10,7 +10,7 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - integra-data:/var/lib/postgresql
+      - daygig-data:/var/lib/postgresql/data
 
 volumes:
-  integra-data:
+  daygig-data:

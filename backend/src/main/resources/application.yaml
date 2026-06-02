@@ -2,7 +2,7 @@ spring:
   application:
     name: backend
   profiles:
-    active: dev
+    default: dev
 server:
   servlet:
     context-path: /api
