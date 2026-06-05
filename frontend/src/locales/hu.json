@@ -1,0 +1,17 @@
+{
+    "auth": {
+        "login": {
+            "title": "Üdvözöljük újra",
+            "submit_button": "Bejelentkezés"
+        },
+        "register": {
+            "title": "Fiók létrehozása"
+        }
+    },
+    "common": {
+        "buttons": {
+            "save": "Módosítások mentése",
+            "cancel": "Mégse"
+        }
+    }
+}
