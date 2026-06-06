@@ -3,19 +3,18 @@ package edu.bbte.daygig.backend.service.user;
 import edu.bbte.daygig.backend.model.User;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface UserService {
 
-    User login(User user);
-
-    User register(User user);
-
-    User getByUserName(String userName);
+    User getById(UUID id);
 
     List<User> getAll();
 
-    User getById(Long id);
+    void delete(UUID id);
 
-    User getByEmail(String email);
+    User update(UUID id, User user);
+
+
 
 }

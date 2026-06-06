@@ -1,14 +1,16 @@
 package edu.bbte.daygig.backend.repository;
 
 import edu.bbte.daygig.backend.model.User;
-import org.springframework.context.annotation.Profile;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import org.springframework.stereotype.Repository;
 
+import java.util.UUID;
+
 
 @Repository
-@Profile("jpa")
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends JpaRepository<User, UUID> {
+
+        User findByEmail(String email);
 
 }

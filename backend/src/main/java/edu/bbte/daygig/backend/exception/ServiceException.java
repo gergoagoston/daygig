@@ -1,4 +1,4 @@
-package edu.bbte.daygig.backend.service;
+package edu.bbte.daygig.backend.exception;
 
 public class ServiceException extends RuntimeException {
     public ServiceException(String message) {

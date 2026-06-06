@@ -5,19 +5,18 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Column;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.EnumType;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ForeignKey;
 import jakarta.persistence.Index;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 
 @Entity
 @Table(name = "user_accounts", indexes = {@Index(name = "idx_users_email", columnList = "email", unique = true)})
-@SQLDelete(sql = "UPDATE users SET is_deleted = true WHERE id = ?")
+@SQLDelete(sql = "UPDATE user_accounts SET is_deleted = true WHERE id = ?")
 @SQLRestriction("is_deleted = false")
+@Getter
+@Setter
 public class User extends BaseEntity {
 
 
@@ -31,7 +30,19 @@ public class User extends BaseEntity {
     @Column(name = "role", nullable = false)
     private Role role;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "profile_id", referencedColumnName = "id", foreignKey = @ForeignKey(name = "fk_users_profile"))
-    private Profile profile;
+    @Column(name = "first_name")
+    private String firstName;
+
+    @Column(name = "last_name")
+    private String lastName;
+
+    @Column(name = "phone_number")
+    private String phoneNumber;
+
+    @Column(nullable = true, name = "bio", length = 1000)
+    private String bio;
+
+    @Column(name = "is_deleted", nullable = false)
+    private boolean isDeleted = false;
+
 }
