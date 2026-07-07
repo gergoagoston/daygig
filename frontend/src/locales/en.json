@@ -1,0 +1,17 @@
+{
+    "auth": {
+        "login": {
+            "title": "Welcome Back",
+            "submit_button": "Log In"
+        },
+        "register": {
+            "title": "Create an Account"
+        }
+    },
+    "common": {
+        "buttons": {
+            "save": "Save Changes",
+            "cancel": "Cancel"
+        }
+    }
+}
