@@ -1,8 +1,8 @@
 package edu.bbte.daygig.backend.service.user;
 
 
+import edu.bbte.daygig.backend.exception.DuplicateResourceException;
 import edu.bbte.daygig.backend.exception.ResourceNotFoundException;
-import edu.bbte.daygig.backend.exception.ServiceException;
 import edu.bbte.daygig.backend.model.User;
 import edu.bbte.daygig.backend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService {
         if (!existingUser
             .getEmail()
             .equals(user.getEmail()) && userRepository.findByEmail(user.getEmail()) != null) {
-            throw new ServiceException("Email is already taken");
+            throw new DuplicateResourceException("Email is already taken");
         }
 
         existingUser.setEmail(user.getEmail());

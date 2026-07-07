@@ -41,6 +41,16 @@ public class ApiExceptionHandler {
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(DuplicateResourceException.class)
+    public ResponseEntity<ApiErrorResponse> handleDuplicateResource(DuplicateResourceException ex,
+                                                                    HttpServletRequest request) {
+        log.warn("Resource conflict at {}: {}", request.getRequestURI(), ex.getMessage());
+
+        ApiErrorResponse errorResponse = buildBaseErrorResponse(HttpStatus.CONFLICT, "Resource Conflict",
+            ex.getMessage(), request.getRequestURI(), null);
+        return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ApiErrorResponse> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
                                                                          HttpServletRequest request) {
