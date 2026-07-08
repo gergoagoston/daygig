@@ -4,7 +4,8 @@ import edu.bbte.daygig.backend.model.User;
 
 public interface AuthService {
 
-    User login(User user);
+    User login(String email,
+               String password);
 
     User register(User user);
 }

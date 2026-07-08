@@ -38,24 +38,21 @@ class AuthServiceImplTest {
 
     @Test
     void loginReturnsUserWhenCredentialsAreValid() {
-        User loginUser = user(EMAIL, PASSWORD1);
         User storedUser = user(EMAIL, PASSWORD2);
 
         when(userRepository.findByEmail(EMAIL)).thenReturn(storedUser);
         when(passwordEncoder.matches(PASSWORD1, PASSWORD2)).thenReturn(true);
 
-        User result = authService.login(loginUser);
+        User result = authService.login(EMAIL, PASSWORD1);
 
         assertThat(result).isSameAs(storedUser);
     }
 
     @Test
     void loginRejectsUnknownEmail() {
-        User loginUser = user(EMAIL, PASSWORD1);
-
         when(userRepository.findByEmail(EMAIL)).thenReturn(null);
 
-        assertThatThrownBy(() -> authService.login(loginUser))
+        assertThatThrownBy(() -> authService.login(EMAIL, PASSWORD1))
             .isInstanceOf(AuthException.class)
             .hasMessage("Invalid email or password");
 
@@ -64,13 +61,12 @@ class AuthServiceImplTest {
 
     @Test
     void loginRejectsInvalidPassword() {
-        User loginUser = user(EMAIL, PASSWORD1);
         User storedUser = user(EMAIL, PASSWORD2);
 
         when(userRepository.findByEmail(EMAIL)).thenReturn(storedUser);
         when(passwordEncoder.matches(PASSWORD1, PASSWORD2)).thenReturn(false);
 
-        assertThatThrownBy(() -> authService.login(loginUser))
+        assertThatThrownBy(() -> authService.login(EMAIL, PASSWORD1))
             .isInstanceOf(AuthException.class)
             .hasMessage("Invalid email or password");
     }

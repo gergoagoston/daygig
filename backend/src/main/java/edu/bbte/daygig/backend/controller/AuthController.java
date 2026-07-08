@@ -1,20 +1,21 @@
 package edu.bbte.daygig.backend.controller;
 
-import edu.bbte.daygig.backend.dto.auth.AuthResponseDto;
 import edu.bbte.daygig.backend.dto.user.UserLoginInDto;
+import edu.bbte.daygig.backend.dto.user.UserOutDto;
 import edu.bbte.daygig.backend.dto.user.UserRegisterInDto;
-import edu.bbte.daygig.backend.mappers.AuthMapper;
 import edu.bbte.daygig.backend.mappers.UserMapper;
 import edu.bbte.daygig.backend.model.User;
+import edu.bbte.daygig.backend.security.AuthCookieService;
 import edu.bbte.daygig.backend.security.JwtService;
 import edu.bbte.daygig.backend.service.auth.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -24,19 +25,36 @@ public class AuthController {
 
     private final AuthService authService;
     private final JwtService jwtService;
-    private final AuthMapper authMapper;
+    private final AuthCookieService authCookieService;
     private final UserMapper userMapper;
 
     @PostMapping("/login")
-    public AuthResponseDto login(@Valid @RequestBody UserLoginInDto loginInDto) {
-        User authenticatedUser = authService.login(authMapper.fromLoginDto(loginInDto));
-        return new AuthResponseDto(jwtService.generateToken(authenticatedUser), userMapper.toDto(authenticatedUser));
+    public ResponseEntity<UserOutDto> login(@Valid @RequestBody UserLoginInDto loginInDto) {
+        User authenticatedUser = authService.login(loginInDto.getEmail(), loginInDto.getPassword());
+        return buildAuthResponse(authenticatedUser, HttpStatus.OK);
     }
 
     @PostMapping("/register")
-    @ResponseStatus(HttpStatus.CREATED)
-    public AuthResponseDto register(@Valid @RequestBody UserRegisterInDto registerInDto) {
+    public ResponseEntity<UserOutDto> register(@Valid @RequestBody UserRegisterInDto registerInDto) {
         User registeredUser = authService.register(userMapper.fromRegisterDto(registerInDto));
-        return new AuthResponseDto(jwtService.generateToken(registeredUser), userMapper.toDto(registeredUser));
+        return buildAuthResponse(registeredUser, HttpStatus.CREATED);
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<Void> logout() {
+        return ResponseEntity
+            .noContent()
+            .header(HttpHeaders.SET_COOKIE, authCookieService.clearAccessTokenCookie())
+            .build();
+    }
+
+    private ResponseEntity<UserOutDto> buildAuthResponse(User user,
+                                                         HttpStatus status) {
+        String token = jwtService.generateToken(user);
+
+        return ResponseEntity
+            .status(status)
+            .header(HttpHeaders.SET_COOKIE, authCookieService.createAccessTokenCookie(token))
+            .body(userMapper.toDto(user));
     }
 }
