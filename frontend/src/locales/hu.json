@@ -2,7 +2,20 @@
   "auth": {
     "login": {
       "title": "Üdvözöljük újra",
-      "submit_button": "Bejelentkezés"
+      "hero_title": "Folytasd ott, ahol abbahagytad",
+      "subtitle": "Jelentkezz be, és kezeld a DayGig lehetőségeidet.",
+      "email": "Email",
+      "password": "Jelszó",
+      "submit_button": "Bejelentkezés",
+      "submitting": "Bejelentkezés...",
+      "register_prompt": "Még nincs fiókod?",
+      "errors": {
+        "email_required": "Az email megadása kötelező.",
+        "email_invalid": "Adj meg egy érvényes email címet.",
+        "password_required": "A jelszó megadása kötelező.",
+        "invalid_credentials": "Hibás bejelentkezési adatok.",
+        "generic": "A bejelentkezés sikertelen. Próbáld újra."
+      }
     },
     "register": {
       "title": "Fiók létrehozása",
@@ -36,5 +49,8 @@
       "save": "Módosítások mentése",
       "cancel": "Mégse"
     }
+  },
+  "jobs": {
+    "title": "Munkák"
   }
 }

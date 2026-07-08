@@ -2,7 +2,20 @@
   "auth": {
     "login": {
       "title": "Bine ai revenit",
-      "submit_button": "Autentificare"
+      "hero_title": "Continua de unde ai ramas",
+      "subtitle": "Autentifica-te pentru a gestiona oportunitatile DayGig.",
+      "email": "Email",
+      "password": "Parola",
+      "submit_button": "Autentificare",
+      "submitting": "Autentificare...",
+      "register_prompt": "Nu ai cont?",
+      "errors": {
+        "email_required": "Emailul este obligatoriu.",
+        "email_invalid": "Introdu o adresa de email valida.",
+        "password_required": "Parola este obligatorie.",
+        "invalid_credentials": "Credentiale invalide.",
+        "generic": "Autentificarea a esuat. Incearca din nou."
+      }
     },
     "register": {
       "title": "Creeaza un cont",
@@ -36,5 +49,8 @@
       "save": "Salveaza modificarile",
       "cancel": "Anuleaza"
     }
+  },
+  "jobs": {
+    "title": "Joburi"
   }
 }

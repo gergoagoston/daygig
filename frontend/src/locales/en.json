@@ -2,7 +2,20 @@
   "auth": {
     "login": {
       "title": "Welcome Back",
-      "submit_button": "Log In"
+      "hero_title": "Pick up where you left off",
+      "subtitle": "Sign in to manage your DayGig opportunities.",
+      "email": "Email",
+      "password": "Password",
+      "submit_button": "Log In",
+      "submitting": "Logging in...",
+      "register_prompt": "Don't have an account?",
+      "errors": {
+        "email_required": "Email is required.",
+        "email_invalid": "Enter a valid email address.",
+        "password_required": "Password is required.",
+        "invalid_credentials": "Invalid credentials.",
+        "generic": "Login failed. Please try again."
+      }
     },
     "register": {
       "title": "Create an Account",
@@ -36,5 +49,8 @@
       "save": "Save Changes",
       "cancel": "Cancel"
     }
+  },
+  "jobs": {
+    "title": "Jobs"
   }
 }
