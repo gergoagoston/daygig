@@ -19,10 +19,11 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     @Transactional(readOnly = true)
-    public User login(User user) {
-        User dbUser = userRepository.findByEmail(user.getEmail());
+    public User login(String email,
+                      String password) {
+        User dbUser = userRepository.findByEmail(email);
 
-        if (dbUser == null || !passwordEncoder.matches(user.getPassword(), dbUser.getPassword())) {
+        if (dbUser == null || !passwordEncoder.matches(password, dbUser.getPassword())) {
             throw new AuthException("Invalid email or password");
         }
 

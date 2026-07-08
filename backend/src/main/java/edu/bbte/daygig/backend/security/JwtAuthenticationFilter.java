@@ -24,9 +24,12 @@ import org.springframework.web.filter.OncePerRequestFilter;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
+    private final AuthCookieService authCookieService;
 
-    public JwtAuthenticationFilter(JwtService jwtService) {
+    public JwtAuthenticationFilter(JwtService jwtService,
+                                   AuthCookieService authCookieService) {
         this.jwtService = jwtService;
+        this.authCookieService = authCookieService;
     }
 
 
@@ -35,14 +38,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
 
-        String header = request.getHeader("Authorization");
+        String token = authCookieService.extractAccessToken(request).orElse(null);
 
-        if (header == null || !header.startsWith("Bearer ")) {
+        if (token == null || token.isBlank()) {
             filterChain.doFilter(request, response);
             return;
         }
-
-        String token = header.substring(7);
 
         try {
             var claims = jwtService.parseToken(token);
