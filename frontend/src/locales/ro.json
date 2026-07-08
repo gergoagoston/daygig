@@ -1,0 +1,40 @@
+{
+  "auth": {
+    "login": {
+      "title": "Bine ai revenit",
+      "submit_button": "Autentificare"
+    },
+    "register": {
+      "title": "Creeaza un cont",
+      "hero_title": "Gaseste de lucru rapid si usor",
+      "subtitle": "Alatura-te DayGig si gaseste oportunitati de lucru flexibile.",
+      "first_name": "Prenume",
+      "last_name": "Nume",
+      "phone_number": "Numar de telefon",
+      "email": "Email",
+      "password": "Parola",
+      "confirm_password": "Confirma parola",
+      "submit_button": "Creeaza contul",
+      "submitting": "Se creeaza contul...",
+      "login_prompt": "Ai deja un cont?",
+      "errors": {
+        "first_name_required": "Prenumele este obligatoriu.",
+        "last_name_required": "Numele este obligatoriu.",
+        "email_required": "Emailul este obligatoriu.",
+        "email_invalid": "Introdu o adresa de email valida.",
+        "email_exists": "Exista deja un cont cu acest email.",
+        "password_required": "Parola este obligatorie.",
+        "password_min_length": "Parola trebuie sa aiba cel putin 8 caractere.",
+        "confirm_password_required": "Confirma parola.",
+        "passwords_do_not_match": "Parolele nu se potrivesc.",
+        "generic": "Inregistrarea a esuat. Incearca din nou."
+      }
+    }
+  },
+  "common": {
+    "buttons": {
+      "save": "Salveaza modificarile",
+      "cancel": "Anuleaza"
+    }
+  }
+}

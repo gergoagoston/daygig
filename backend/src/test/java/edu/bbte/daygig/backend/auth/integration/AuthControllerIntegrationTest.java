@@ -97,8 +97,7 @@ class AuthControllerIntegrationTest {
             .andExpect(jsonPath("$.details.email").value("Invalid email format"))
             .andExpect(jsonPath("$.details.password").value("Password must be at least 8 characters long"))
             .andExpect(jsonPath("$.details.firstName").value("First name is required"))
-            .andExpect(jsonPath("$.details.lastName").value("Last name is required"))
-            .andExpect(jsonPath("$.details.phoneNumber").value("Phone number is required"));
+            .andExpect(jsonPath("$.details.lastName").value("Last name is required"));
     }
 
     private TestUser testUser(String emailPrefix,

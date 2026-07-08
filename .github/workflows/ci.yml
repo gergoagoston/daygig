@@ -1,7 +1,6 @@
 name: CI Pipeline
 
 on:
-    # CSAK AKKOR INDUL EL, HA PR-T NYITNAK VAGY FRISSÍTENEK A MAIN ÁGRA
     pull_request:
         branches: [main]
         types: [opened, synchronize, reopened]
@@ -29,8 +28,6 @@ jobs:
 
             - name: Run ESLint & Prettier Check
               run: npm run lint
-
-            # --- AZ ÚJ BUILD LÉPÉS, AMIT KÉRTÉL ---
             - name: Build frontend
               run: npm run build
 
