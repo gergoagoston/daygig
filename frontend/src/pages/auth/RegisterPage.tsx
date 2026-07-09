@@ -5,16 +5,14 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import { registerUser } from '../../api/authApi';
 import { isHttpConflictError } from '../../api/httpClient';
-import Button from '../../components/ui/Button';
-import Input from '../../components/ui/Input';
 
 type FormValues = {
   firstName: string;
   lastName: string;
-  phoneNumber: string;
   email: string;
   password: string;
   confirmPassword: string;
+  phoneNumber: string;
 };
 
 type FormErrors = Partial<Record<keyof FormValues | 'form', string>>;
@@ -22,10 +20,10 @@ type FormErrors = Partial<Record<keyof FormValues | 'form', string>>;
 const initialFormValues: FormValues = {
   firstName: '',
   lastName: '',
-  phoneNumber: '',
   email: '',
   password: '',
   confirmPassword: '',
+  phoneNumber: '',
 };
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -98,13 +96,12 @@ function RegisterPage() {
       await registerUser({
         firstName: formValues.firstName.trim(),
         lastName: formValues.lastName.trim(),
-        ...(formValues.phoneNumber.trim() && {
-          phoneNumber: formValues.phoneNumber.trim(),
-        }),
         email: formValues.email.trim(),
         password: formValues.password,
+        phoneNumber: formValues.phoneNumber.trim(),
       });
-      navigate('/login');
+
+      navigate('/login', { replace: true });
     } catch (error) {
       if (isHttpConflictError(error)) {
         setErrors((currentErrors) => ({
@@ -124,114 +121,109 @@ function RegisterPage() {
   };
 
   return (
-    <main className="min-h-screen cursor-default select-none bg-slate-100 px-4 py-8 text-slate-950 sm:px-6 lg:px-8">
-      <section className="mx-auto grid min-h-[calc(100vh-4rem)] w-full max-w-6xl items-center gap-8 lg:grid-cols-[0.9fr_1.1fr]">
-        <div className="hidden text-left lg:block">
-          <div className="mb-6 h-2 w-20 rounded-full bg-indigo-600" />
-          <h2 className="max-w-md text-4xl font-bold tracking-normal text-slate-950">
-            {t('auth.register.hero_title')}
-          </h2>
-          <p className="mt-4 max-w-md text-lg text-slate-600">{t('auth.register.subtitle')}</p>
+    <main className="auth-page">
+      <section className="auth-panel">
+        <div className="auth-copy">
+          <div className="accent-line" />
+          <h1>{t('auth.register.title')}</h1>
+          <p>{t('auth.register.subtitle')}</p>
         </div>
 
-        <div className="w-full rounded-lg border border-slate-200 bg-white p-6 text-left shadow-xl shadow-slate-200/70 ring-1 ring-slate-100 sm:p-8">
-          <div className="mb-8 text-left">
-            <h1 className="text-2xl font-bold tracking-normal text-slate-950 sm:text-3xl">
-              {t('auth.register.title')}
-            </h1>
-          </div>
-
-          <form className="space-y-4" onSubmit={handleSubmit} noValidate>
-            <div className="grid gap-4 sm:grid-cols-2">
-              <Input
-                id="firstName"
+        <form className="auth-form" onSubmit={handleSubmit} noValidate>
+          <div className="field-grid">
+            <label className="field">
+              <span>{t('auth.register.first_name')}</span>
+              <input
                 name="firstName"
                 type="text"
-                label={t('auth.register.first_name')}
                 value={formValues.firstName}
-                error={errors.firstName}
                 onChange={handleChange}
                 autoComplete="given-name"
+                aria-invalid={Boolean(errors.firstName)}
                 required
               />
-              <Input
-                id="lastName"
+              {errors.firstName ? <small>{errors.firstName}</small> : null}
+            </label>
+
+            <label className="field">
+              <span>{t('auth.register.last_name')}</span>
+              <input
                 name="lastName"
                 type="text"
-                label={t('auth.register.last_name')}
                 value={formValues.lastName}
-                error={errors.lastName}
                 onChange={handleChange}
                 autoComplete="family-name"
+                aria-invalid={Boolean(errors.lastName)}
                 required
               />
-            </div>
+              {errors.lastName ? <small>{errors.lastName}</small> : null}
+            </label>
+          </div>
 
-            <Input
-              id="email"
+          <label className="field">
+            <span>{t('auth.register.email')}</span>
+            <input
               name="email"
               type="email"
-              label={t('auth.register.email')}
               value={formValues.email}
-              error={errors.email}
               onChange={handleChange}
               autoComplete="email"
+              aria-invalid={Boolean(errors.email)}
               required
             />
+            {errors.email ? <small>{errors.email}</small> : null}
+          </label>
 
-            <Input
-              id="password"
+          <label className="field">
+            <span>{t('auth.register.password')}</span>
+            <input
               name="password"
               type="password"
-              label={t('auth.register.password')}
               value={formValues.password}
-              error={errors.password}
               onChange={handleChange}
               autoComplete="new-password"
+              aria-invalid={Boolean(errors.password)}
               required
             />
+            {errors.password ? <small>{errors.password}</small> : null}
+          </label>
 
-            <Input
-              id="confirmPassword"
+          <label className="field">
+            <span>{t('auth.register.confirm_password')}</span>
+            <input
               name="confirmPassword"
               type="password"
-              label={t('auth.register.confirm_password')}
               value={formValues.confirmPassword}
-              error={errors.confirmPassword}
               onChange={handleChange}
               autoComplete="new-password"
+              aria-invalid={Boolean(errors.confirmPassword)}
               required
             />
+            {errors.confirmPassword ? <small>{errors.confirmPassword}</small> : null}
+          </label>
 
-            <Input
-              id="phoneNumber"
+          <label className="field">
+            <span>{t('auth.register.phone_number')}</span>
+            <input
               name="phoneNumber"
               type="tel"
-              label={t('auth.register.phone_number')}
               value={formValues.phoneNumber}
               onChange={handleChange}
               autoComplete="tel"
             />
+          </label>
 
-            {errors.form ? (
-              <p className="rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700">{errors.form}</p>
-            ) : null}
+          {errors.form ? <p className="form-error">{errors.form}</p> : null}
 
-            <Button type="submit" isLoading={isSubmitting} className="mt-2">
-              {isSubmitting ? t('auth.register.submitting') : t('auth.register.submit_button')}
-            </Button>
-          </form>
+          <button className="primary-button" type="submit" disabled={isSubmitting}>
+            {isSubmitting ? t('auth.register.submitting') : t('auth.register.submit_button')}
+          </button>
 
-          <p className="mt-6 text-center text-sm text-slate-600">
+          <p className="auth-link">
             {t('auth.register.login_prompt')}{' '}
-            <Link
-              to="/login"
-              className="cursor-pointer select-none font-semibold text-indigo-600 hover:text-indigo-700"
-            >
-              {t('auth.login.submit_button')}
-            </Link>
+            <Link to="/login">{t('auth.login.submit_button')}</Link>
           </p>
-        </div>
+        </form>
       </section>
     </main>
   );

@@ -2,7 +2,6 @@
     "auth": {
         "login": {
             "title": "Üdvözöljük újra",
-            "hero_title": "Folytasd ott, ahol abbahagytad",
             "subtitle": "Jelentkezz be, és kezeld a DayGig lehetőségeidet.",
             "email": "Email",
             "password": "Jelszó",
@@ -19,7 +18,6 @@
         },
         "register": {
             "title": "Fiók létrehozása",
-            "hero_title": "Találj munkát gyorsan és könnyen",
             "subtitle": "Csatlakozz a DayGighez, és találj rugalmas munkalehetőségeket.",
             "first_name": "Keresztnév",
             "last_name": "Vezetéknév",
@@ -33,6 +31,7 @@
             "errors": {
                 "first_name_required": "A keresztnév megadása kötelező.",
                 "last_name_required": "A vezetéknév megadása kötelező.",
+                "phone_number_required": "A telefonszám megadása kötelező.",
                 "email_required": "Az email megadása kötelező.",
                 "email_invalid": "Adj meg egy érvényes email címet.",
                 "email_exists": "Ezzel az email címmel már létezik fiók.",
@@ -49,8 +48,5 @@
             "save": "Módosítások mentése",
             "cancel": "Mégse"
         }
-    },
-    "jobs": {
-        "title": "Munkák"
     }
 }

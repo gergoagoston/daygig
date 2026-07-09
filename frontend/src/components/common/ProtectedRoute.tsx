@@ -8,8 +8,12 @@ type ProtectedRouteProps = {
 };
 
 function ProtectedRoute({ children }: ProtectedRouteProps) {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, isInitializing } = useAuth();
   const location = useLocation();
+
+  if (isInitializing) {
+    return <main className="page-shell">Loading...</main>;
+  }
 
   if (!isAuthenticated) {
     return <Navigate to="/login" replace state={{ from: location }} />;

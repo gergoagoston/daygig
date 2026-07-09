@@ -1,0 +1,161 @@
+.auth-page,
+.page-shell {
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  padding: 32px 20px;
+  box-sizing: border-box;
+}
+
+.auth-panel {
+  width: min(960px, 100%);
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 32px;
+  align-items: center;
+}
+
+.auth-copy,
+.auth-form,
+.dashboard-panel {
+  min-width: 0;
+  cursor: default;
+  user-select: none;
+  text-align: left;
+}
+
+.auth-copy h1 {
+  max-width: 420px;
+  line-height: 1.08;
+  overflow-wrap: break-word;
+}
+
+.auth-copy p,
+.dashboard-panel p {
+  color: var(--text);
+}
+
+.accent-line {
+  width: 72px;
+  height: 6px;
+  margin-bottom: 24px;
+  border-radius: 999px;
+  background: var(--accent);
+}
+
+.auth-form,
+.dashboard-panel {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  padding: 32px;
+  box-shadow: var(--shadow);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 18px;
+  color: var(--text-h);
+  font-weight: 600;
+}
+
+.field-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.field input {
+  width: 100%;
+  box-sizing: border-box;
+  cursor: text;
+  user-select: text;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 14px;
+  color: var(--text-h);
+  background: var(--bg);
+  font: inherit;
+}
+
+.field input:focus {
+  border-color: var(--accent);
+  outline: 3px solid var(--accent-bg);
+}
+
+.field input[aria-invalid='true'] {
+  border-color: #dc2626;
+}
+
+.field small,
+.form-error {
+  color: #b91c1c;
+}
+
+.form-error {
+  margin-bottom: 18px;
+  border-radius: 8px;
+  background: #fee2e2;
+  padding: 12px 14px;
+}
+
+.primary-button,
+.secondary-button {
+  cursor: pointer;
+  user-select: none;
+  border: 0;
+  border-radius: 8px;
+  padding: 12px 18px;
+  font: inherit;
+  font-weight: 700;
+}
+
+.primary-button {
+  width: 100%;
+  color: var(--button-text);
+  background: var(--button-bg);
+}
+
+.primary-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.secondary-button {
+  margin-top: 24px;
+  color: white;
+  background: var(--accent);
+}
+
+.auth-link {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.auth-link a,
+.dashboard-panel a {
+  cursor: pointer;
+}
+
+.eyebrow {
+  margin-bottom: 8px;
+  color: var(--accent);
+  font-weight: 700;
+}
+
+@media (max-width: 760px) {
+  .auth-panel {
+    grid-template-columns: 1fr;
+  }
+
+  .auth-copy {
+    display: none;
+  }
+
+  .field-grid {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+}

@@ -5,8 +5,6 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 import { loginUser } from '../../api/authApi';
 import { isHttpUnauthorizedError } from '../../api/httpClient';
-import Button from '../../components/ui/Button';
-import Input from '../../components/ui/Input';
 import useAuth from '../../hooks/useAuth';
 
 type FormValues = {
@@ -96,7 +94,7 @@ function LoginPage() {
         email: formValues.email.trim(),
         password: formValues.password,
       });
-      login(response.data.token);
+      login(response.data);
       navigate(getRedirectPath(), { replace: true });
     } catch (error) {
       setErrors((currentErrors) => ({
@@ -111,67 +109,53 @@ function LoginPage() {
   };
 
   return (
-    <main className="min-h-screen cursor-default select-none bg-slate-100 px-4 py-8 text-slate-950 sm:px-6 lg:px-8">
-      <section className="mx-auto grid min-h-[calc(100vh-4rem)] w-full max-w-6xl items-center gap-8 lg:grid-cols-[0.9fr_1.1fr]">
-        <div className="hidden text-left lg:block">
-          <div className="mb-6 h-2 w-20 rounded-full bg-indigo-600" />
-          <h2 className="max-w-md text-4xl font-bold tracking-normal text-slate-950">
-            {t('auth.login.hero_title')}
-          </h2>
-          <p className="mt-4 max-w-md text-lg text-slate-600">{t('auth.login.subtitle')}</p>
+    <main className="auth-page">
+      <section className="auth-panel">
+        <div className="auth-copy">
+          <div className="accent-line" />
+          <h1>{t('auth.login.title')}</h1>
+          <p>{t('auth.login.subtitle')}</p>
         </div>
 
-        <div className="w-full rounded-lg border border-slate-200 bg-white p-6 text-left shadow-xl shadow-slate-200/70 ring-1 ring-slate-100 sm:p-8">
-          <div className="mb-8 text-left">
-            <h1 className="text-2xl font-bold tracking-normal text-slate-950 sm:text-3xl">
-              {t('auth.login.title')}
-            </h1>
-          </div>
-
-          <form className="space-y-4" onSubmit={handleSubmit} noValidate>
-            <Input
-              id="email"
+        <form className="auth-form" onSubmit={handleSubmit} noValidate>
+          <label className="field">
+            <span>{t('auth.login.email')}</span>
+            <input
               name="email"
               type="email"
-              label={t('auth.login.email')}
               value={formValues.email}
-              error={errors.email}
               onChange={handleChange}
               autoComplete="email"
+              aria-invalid={Boolean(errors.email)}
               required
             />
+            {errors.email ? <small>{errors.email}</small> : null}
+          </label>
 
-            <Input
-              id="password"
+          <label className="field">
+            <span>{t('auth.login.password')}</span>
+            <input
               name="password"
               type="password"
-              label={t('auth.login.password')}
               value={formValues.password}
-              error={errors.password}
               onChange={handleChange}
               autoComplete="current-password"
+              aria-invalid={Boolean(errors.password)}
               required
             />
+            {errors.password ? <small>{errors.password}</small> : null}
+          </label>
 
-            {errors.form ? (
-              <p className="rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700">{errors.form}</p>
-            ) : null}
+          {errors.form ? <p className="form-error">{errors.form}</p> : null}
 
-            <Button type="submit" isLoading={isSubmitting} className="mt-2">
-              {isSubmitting ? t('auth.login.submitting') : t('auth.login.submit_button')}
-            </Button>
-          </form>
+          <button className="primary-button" type="submit" disabled={isSubmitting}>
+            {isSubmitting ? t('auth.login.submitting') : t('auth.login.submit_button')}
+          </button>
 
-          <p className="mt-6 text-center text-sm text-slate-600">
-            {t('auth.login.register_prompt')}{' '}
-            <Link
-              to="/register"
-              className="cursor-pointer select-none font-semibold text-indigo-600 hover:text-indigo-700"
-            >
-              {t('auth.register.submit_button')}
-            </Link>
+          <p className="auth-link">
+            {t('auth.login.register_prompt')} <Link to="/register">{t('auth.register.title')}</Link>
           </p>
-        </div>
+        </form>
       </section>
     </main>
   );

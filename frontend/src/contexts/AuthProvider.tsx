@@ -1,45 +1,59 @@
 import type { ReactNode } from 'react';
-import { useCallback, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 
-import httpClient from '../api/httpClient';
+import { getCurrentUser, logoutUser } from '../api/authApi';
+import type { UserOutDto } from '../dtos/user';
+import { subscribeToUnauthorized } from '../utils/authEvents';
 import AuthContext from './AuthContext';
-import type { AuthContextValue } from './AuthContext';
-import type { AuthUser } from '../utils/authToken';
-import { decodeAuthToken } from '../utils/authToken';
 
 type AuthProviderProps = {
   children: ReactNode;
 };
 
 function AuthProvider({ children }: AuthProviderProps) {
-  const [token, setToken] = useState<string | null>(null);
-  const [user, setUser] = useState<AuthUser | null>(null);
+  const [user, setUser] = useState<UserOutDto | null>(null);
+  const [isInitializing, setIsInitializing] = useState(true);
 
-  const login = useCallback((nextToken: string) => {
-    const decodedUser = decodeAuthToken(nextToken);
+  const login = (nextUser: UserOutDto) => {
+    setUser(nextUser);
+  };
 
-    setToken(nextToken);
-    setUser(decodedUser);
-    httpClient.defaults.headers.common.Authorization = `Bearer ${nextToken}`;
+  const logout = async () => {
+    try {
+      await logoutUser();
+    } finally {
+      setUser(null);
+    }
+  };
+
+  useEffect(() => {
+    async function initAuth() {
+      try {
+        const response = await getCurrentUser();
+        setUser(response.data);
+      } catch {
+        setUser(null);
+      } finally {
+        setIsInitializing(false);
+      }
+    }
+
+    initAuth();
   }, []);
 
-  const logout = useCallback(() => {
-    setToken(null);
-    setUser(null);
-    delete httpClient.defaults.headers.common.Authorization;
+  useEffect(() => {
+    const unsubscribe = subscribeToUnauthorized(() => setUser(null));
+    return () => unsubscribe();
   }, []);
 
-  const value = useMemo<AuthContextValue>(
-    () => ({
-      token,
-      user,
-      role: user?.role ?? null,
-      isAuthenticated: Boolean(token && user),
-      login,
-      logout,
-    }),
-    [login, logout, token, user]
-  );
+  const value = {
+    user,
+    role: user?.role ?? null,
+    isAuthenticated: Boolean(user),
+    isInitializing,
+    login,
+    logout,
+  };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

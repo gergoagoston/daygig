@@ -1,14 +1,14 @@
 import { createContext } from 'react';
 
-import type { AuthUser } from '../utils/authToken';
+import type { UserOutDto, UserRole } from '../dtos/user';
 
 export type AuthContextValue = {
-  token: string | null;
-  user: AuthUser | null;
-  role: AuthUser['role'] | null;
+  user: UserOutDto | null;
+  role: UserRole | null;
   isAuthenticated: boolean;
-  login: (token: string) => void;
-  logout: () => void;
+  isInitializing: boolean;
+  login: (user: UserOutDto) => void;
+  logout: () => Promise<void>;
 };
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
