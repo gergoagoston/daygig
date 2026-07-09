@@ -1,14 +1,26 @@
 import './App.css';
-import { useTranslation } from 'react-i18next';
+import { Navigate, Route, Routes } from 'react-router-dom';
+
+import ProtectedRoute from './components/common/ProtectedRoute';
+import JobsPage from './pages/JobsPage';
+import LoginPage from './pages/auth/LoginPage';
+import RegisterPage from './pages/auth/RegisterPage';
 
 function App() {
-  const { t } = useTranslation();
-
   return (
-    <>
-      <h1>{t('auth.login.title')}</h1>
-      <h1>{t('auth.login.submit_button')}</h1>
-    </>
+    <Routes>
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/register" element={<RegisterPage />} />
+      <Route
+        path="/jobs"
+        element={
+          <ProtectedRoute>
+            <JobsPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route path="*" element={<Navigate to="/jobs" replace />} />
+    </Routes>
   );
 }
 
