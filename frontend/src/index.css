@@ -74,3 +74,20 @@ h1 {
 p {
   margin: 0;
 }
+
+a {
+  color: var(--accent);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+a:hover {
+  color: var(--text-h);
+}
+
+a:focus-visible {
+  border-radius: 4px;
+  outline: 3px solid var(--accent-bg);
+  outline-offset: 3px;
+}
