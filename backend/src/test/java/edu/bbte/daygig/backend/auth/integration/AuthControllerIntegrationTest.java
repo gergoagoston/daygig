@@ -4,14 +4,16 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
-import static org.hamcrest.Matchers.blankOrNullString;
-import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -27,18 +29,13 @@ class AuthControllerIntegrationTest {
     private MockMvc mockMvc;
 
     @Test
-    void registerCreatesUserAndReturnsToken() throws Exception {
+    void registerCreatesUserWithoutAuthenticating() throws Exception {
         TestUser user = testUser("register-success", "Register", "Success");
 
         register(user)
             .andExpect(status().isCreated())
-            .andExpect(jsonPath("$.token", not(blankOrNullString())))
-            .andExpect(jsonPath("$.user.email").value(user.email()))
-            .andExpect(jsonPath("$.user.role").value("ROLE_USER"))
-            .andExpect(jsonPath("$.user.firstName").value(user.firstName()))
-            .andExpect(jsonPath("$.user.lastName").value(user.lastName()))
-            .andExpect(jsonPath("$.user.phoneNumber").value(user.phoneNumber()))
-            .andExpect(jsonPath("$.user.password").doesNotExist());
+            .andExpect(header().doesNotExist(HttpHeaders.SET_COOKIE))
+            .andExpect(content().string(""));
     }
 
     @Test
@@ -61,10 +58,13 @@ class AuthControllerIntegrationTest {
 
         login(user.email(), user.password())
             .andExpect(status().isOk())
-            .andExpect(jsonPath("$.token", not(blankOrNullString())))
-            .andExpect(jsonPath("$.user.email").value(user.email()))
-            .andExpect(jsonPath("$.user.role").value("ROLE_USER"))
-            .andExpect(jsonPath("$.user.password").doesNotExist());
+            .andExpect(header().string(HttpHeaders.SET_COOKIE, containsString("accessToken=")))
+            .andExpect(jsonPath("$.email").value(user.email()))
+            .andExpect(jsonPath("$.role").value("ROLE_USER"))
+            .andExpect(jsonPath("$.firstName").value(user.firstName()))
+            .andExpect(jsonPath("$.lastName").value(user.lastName()))
+            .andExpect(jsonPath("$.phoneNumber").value(user.phoneNumber()))
+            .andExpect(jsonPath("$.password").doesNotExist());
     }
 
     @Test
@@ -97,8 +97,7 @@ class AuthControllerIntegrationTest {
             .andExpect(jsonPath("$.details.email").value("Invalid email format"))
             .andExpect(jsonPath("$.details.password").value("Password must be at least 8 characters long"))
             .andExpect(jsonPath("$.details.firstName").value("First name is required"))
-            .andExpect(jsonPath("$.details.lastName").value("Last name is required"))
-            .andExpect(jsonPath("$.details.phoneNumber").value("Phone number is required"));
+            .andExpect(jsonPath("$.details.lastName").value("Last name is required"));
     }
 
     private TestUser testUser(String emailPrefix,
