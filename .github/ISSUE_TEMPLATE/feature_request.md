@@ -8,34 +8,18 @@ assignees: ""
 
 ## Problem
 
-Describe the problem this feature solves.
+Describe the user or technical problem this task should solve.
 
-## Proposed Solution
+## Proposed Solutions
 
-Describe the solution you would like to see.
-
-## Alternatives Considered
-
-Describe any alternative solutions considered.
+Describe the preferred implementation approach. Add alternatives if there are important trade-offs.
 
 ## Acceptance Criteria
 
-- [ ] Requirement 1
-- [ ] Requirement 2
-- [ ] Requirement 3
-
-## Backend Impact
-
-- [ ] API Changes
-- [ ] Database Changes
-- [ ] Security Changes
-
-## Frontend Impact
-
-- [ ] UI Changes
-- [ ] State Management Changes
-- [ ] New Components
+- [ ] Expected behavior is implemented.
+- [ ] Edge cases are handled.
+- [ ] Relevant tests or verification steps are added.
 
 ## Additional Notes
 
-Add mockups, examples, or references if applicable.
+Add mockups, examples, dependencies, follow-up tasks, or implementation notes.
