@@ -1,6 +1,6 @@
 package edu.bbte.daygig.backend.dto.user;
 
-import edu.bbte.daygig.backend.model.Role;
+import edu.bbte.daygig.backend.model.enums.Role;
 
 import java.time.LocalDateTime;
 import java.util.UUID;

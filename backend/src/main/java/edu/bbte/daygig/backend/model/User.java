@@ -1,5 +1,6 @@
 package edu.bbte.daygig.backend.model;
 
+import edu.bbte.daygig.backend.model.enums.Role;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.persistence.Column;

@@ -2,7 +2,7 @@ package edu.bbte.daygig.backend.auth.unit;
 
 import edu.bbte.daygig.backend.exception.AuthException;
 import edu.bbte.daygig.backend.exception.DuplicateResourceException;
-import edu.bbte.daygig.backend.model.Role;
+import edu.bbte.daygig.backend.model.enums.Role;
 import edu.bbte.daygig.backend.model.User;
 import edu.bbte.daygig.backend.repository.UserRepository;
 import edu.bbte.daygig.backend.service.auth.AuthServiceImpl;
