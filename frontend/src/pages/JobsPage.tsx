@@ -1,25 +1,14 @@
-import { useNavigate } from 'react-router-dom';
-
-import useAuth from '../hooks/useAuth';
+import { useTranslation } from 'react-i18next';
 
 function JobsPage() {
-  const navigate = useNavigate();
-  const { logout, user } = useAuth();
-
-  const handleLogout = async () => {
-    await logout();
-    navigate('/login', { replace: true });
-  };
+  const { t } = useTranslation();
 
   return (
-    <main className="page-shell">
-      <section className="dashboard-panel">
-        <p className="eyebrow">DayGig</p>
-        <h1>Jobs</h1>
-        <p>Signed in as {user?.email}.</p>
-        <button className="secondary-button" type="button" onClick={handleLogout}>
-          Log out
-        </button>
+    <main className="app-page">
+      <section>
+        <p className="mb-2 font-bold text-primary">DayGig</p>
+        <h1>{t('jobs.title')}</h1>
+        <p className="max-w-2xl text-body">{t('jobs.placeholder')}</p>
       </section>
     </main>
   );

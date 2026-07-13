@@ -5,6 +5,9 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 import { loginUser } from '../../api/authApi';
 import { isHttpUnauthorizedError } from '../../api/httpClient';
+import AuthPage from '../../components/auth/AuthPage';
+import Button from '../../components/ui/Button';
+import Input from '../../components/ui/Input';
 import useAuth from '../../hooks/useAuth';
 
 type FormValues = {
@@ -109,55 +112,49 @@ function LoginPage() {
   };
 
   return (
-    <main className="auth-page">
-      <section className="auth-panel">
-        <div className="auth-copy">
-          <div className="accent-line" />
-          <h1>{t('auth.login.title')}</h1>
-          <p>{t('auth.login.subtitle')}</p>
-        </div>
+    <AuthPage
+      title={t('auth.login.title')}
+      subtitle={t('auth.login.subtitle')}
+      onSubmit={handleSubmit}
+    >
+      <Input
+        id="login-email"
+        className="mb-5"
+        name="email"
+        label={t('auth.login.email')}
+        type="email"
+        value={formValues.email}
+        onChange={handleChange}
+        autoComplete="email"
+        error={errors.email}
+        required
+      />
 
-        <form className="auth-form" onSubmit={handleSubmit} noValidate>
-          <label className="field">
-            <span>{t('auth.login.email')}</span>
-            <input
-              name="email"
-              type="email"
-              value={formValues.email}
-              onChange={handleChange}
-              autoComplete="email"
-              aria-invalid={Boolean(errors.email)}
-              required
-            />
-            {errors.email ? <small>{errors.email}</small> : null}
-          </label>
+      <Input
+        id="login-password"
+        className="mb-5"
+        name="password"
+        label={t('auth.login.password')}
+        type="password"
+        value={formValues.password}
+        onChange={handleChange}
+        autoComplete="current-password"
+        error={errors.password}
+        required
+      />
 
-          <label className="field">
-            <span>{t('auth.login.password')}</span>
-            <input
-              name="password"
-              type="password"
-              value={formValues.password}
-              onChange={handleChange}
-              autoComplete="current-password"
-              aria-invalid={Boolean(errors.password)}
-              required
-            />
-            {errors.password ? <small>{errors.password}</small> : null}
-          </label>
+      {errors.form ? (
+        <p className="mb-5 rounded-lg bg-red-100 px-3.5 py-3 text-red-700">{errors.form}</p>
+      ) : null}
 
-          {errors.form ? <p className="form-error">{errors.form}</p> : null}
+      <Button type="submit" isLoading={isSubmitting}>
+        {isSubmitting ? t('auth.login.submitting') : t('auth.login.submit_button')}
+      </Button>
 
-          <button className="primary-button" type="submit" disabled={isSubmitting}>
-            {isSubmitting ? t('auth.login.submitting') : t('auth.login.submit_button')}
-          </button>
-
-          <p className="auth-link">
-            {t('auth.login.register_prompt')} <Link to="/register">{t('auth.register.title')}</Link>
-          </p>
-        </form>
-      </section>
-    </main>
+      <p className="mt-5 text-center">
+        {t('auth.login.register_prompt')} <Link to="/register">{t('auth.register.title')}</Link>
+      </p>
+    </AuthPage>
   );
 }
 

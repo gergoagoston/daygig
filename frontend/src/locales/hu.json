@@ -48,5 +48,19 @@
             "save": "Módosítások mentése",
             "cancel": "Mégse"
         }
+    },
+    "navigation": {
+        "main": "Fő navigáció",
+        "jobs": "Munkák",
+        "my_jobs": "Munkáim",
+        "my_applications": "Jelentkezéseim",
+        "login": "Bejelentkezés",
+        "register": "Regisztráció",
+        "logout": "Kijelentkezés",
+        "language": "Nyelv"
+    },
+    "jobs": {
+        "title": "Munkák",
+        "placeholder": "A publikus munkalista itt fog megjelenni."
     }
 }

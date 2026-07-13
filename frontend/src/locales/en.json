@@ -48,5 +48,19 @@
             "save": "Save Changes",
             "cancel": "Cancel"
         }
+    },
+    "navigation": {
+        "main": "Main navigation",
+        "jobs": "Jobs",
+        "my_jobs": "My Jobs",
+        "my_applications": "My Applications",
+        "login": "Login",
+        "register": "Register",
+        "logout": "Logout",
+        "language": "Language"
+    },
+    "jobs": {
+        "title": "Jobs",
+        "placeholder": "The public jobs list will appear here."
     }
 }

@@ -10,29 +10,25 @@ function Input({ id, label, error, className = '', required = false, ...props }:
   const hasError = Boolean(error);
 
   return (
-    <div className={`flex flex-col gap-1.5 text-left ${className}`}>
-      <label
-        id={`${id}-label`}
-        className="cursor-default select-none text-sm font-semibold text-slate-700"
-      >
+    <div className={`flex flex-col gap-2 text-left ${className}`}>
+      <label htmlFor={id} className="font-semibold text-heading">
         {label}
         {required ? <span className="text-red-600"> *</span> : null}
       </label>
       <input
         id={id}
-        aria-labelledby={`${id}-label`}
         aria-invalid={hasError}
         aria-describedby={hasError ? `${id}-error` : undefined}
         required={required}
-        className={`w-full cursor-text select-text rounded-lg border px-4 py-3 text-base text-slate-950 outline-none transition placeholder:text-slate-400 focus:bg-white focus:ring-4 ${
+        className={`w-full rounded-lg border bg-page px-3.5 py-3 text-heading outline-none transition placeholder:text-body/70 focus:ring-3 ${
           hasError
-            ? 'border-red-500 bg-red-50/40 focus:border-red-500 focus:ring-red-100'
-            : 'border-slate-200 bg-slate-50 focus:border-indigo-600 focus:ring-indigo-100'
+            ? 'border-red-600 focus:border-red-600 focus:ring-red-100'
+            : 'border-border focus:border-primary focus:ring-primary-soft'
         }`}
         {...props}
       />
       {hasError ? (
-        <p id={`${id}-error`} className="cursor-default text-sm text-red-600">
+        <p id={`${id}-error`} className="text-sm text-red-700">
           {error}
         </p>
       ) : null}

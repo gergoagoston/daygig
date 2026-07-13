@@ -1,25 +1,27 @@
 @import 'tailwindcss';
 
-:root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --surface: #fff;
-  --border: #e5e4e7;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --button-bg: #08060d;
-  --button-text: #fff;
-  --shadow: rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+@theme {
+  --color-page: #fff;
+  --color-surface: #fff;
+  --color-border: #e5e4e7;
+  --color-primary: #aa3bff;
+  --color-primary-soft: rgba(170, 59, 255, 0.1);
+  --color-body: #6b6375;
+  --color-heading: #08060d;
+  --color-action: #08060d;
+  --color-action-text: #fff;
+  --shadow-panel: rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+}
 
+:root {
   --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
   --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
 
   font: 18px/145% var(--sans);
   letter-spacing: 0;
   color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
+  color: var(--color-body);
+  background: var(--color-page);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -32,16 +34,16 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --surface: #1f2028;
-    --border: #2e303a;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --button-bg: #f3f4f6;
-    --button-text: #08060d;
-    --shadow: rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
+    --color-page: #16171d;
+    --color-surface: #1f2028;
+    --color-border: #2e303a;
+    --color-primary: #c084fc;
+    --color-primary-soft: rgba(192, 132, 252, 0.15);
+    --color-body: #9ca3af;
+    --color-heading: #f3f4f6;
+    --color-action: #f3f4f6;
+    --color-action-text: #08060d;
+    --shadow-panel: rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
   }
 }
 
@@ -58,13 +60,48 @@ body {
   cursor: default;
 }
 
+* {
+  cursor: default;
+}
+
+input,
+textarea {
+  cursor: text;
+}
+
+a,
+button,
+select {
+  cursor: pointer;
+}
+
+.app-page {
+  min-height: calc(100svh - 72px);
+  padding: 32px 20px;
+}
+
+.app-page-centered {
+  min-height: calc(100svh - 72px);
+  display: grid;
+  place-items: center;
+  padding: 32px 20px;
+}
+
+@media (min-width: 768px) {
+  .app-page {
+    padding-right: 32px;
+    padding-left: 32px;
+  }
+}
+
 h1 {
   font-family: var(--heading);
   font-weight: 500;
-  color: var(--text-h);
+  color: var(--color-heading);
   font-size: 56px;
   letter-spacing: 0;
   margin: 32px 0;
+
   @media (max-width: 1024px) {
     font-size: 36px;
     margin: 20px 0;
@@ -76,18 +113,18 @@ p {
 }
 
 a {
-  color: var(--accent);
+  color: var(--color-primary);
   font-weight: 700;
   text-decoration: underline;
   text-underline-offset: 3px;
 }
 
 a:hover {
-  color: var(--text-h);
+  color: var(--color-heading);
 }
 
 a:focus-visible {
   border-radius: 4px;
-  outline: 3px solid var(--accent-bg);
+  outline: 3px solid var(--color-primary-soft);
   outline-offset: 3px;
 }
