@@ -1,6 +1,6 @@
 package edu.bbte.daygig.backend.auth.unit;
 
-import edu.bbte.daygig.backend.model.Role;
+import edu.bbte.daygig.backend.model.enums.Role;
 import edu.bbte.daygig.backend.model.User;
 import edu.bbte.daygig.backend.security.JwtProperties;
 import edu.bbte.daygig.backend.security.JwtService;
