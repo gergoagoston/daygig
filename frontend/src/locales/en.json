@@ -61,6 +61,29 @@
     },
     "jobs": {
         "title": "Jobs",
-        "placeholder": "The public jobs list will appear here."
+        "subtitle": "Browse open DayGig work opportunities near you.",
+        "loading": "Loading jobs...",
+        "available_count": "{{count}} available jobs",
+        "empty": {
+            "title": "No open jobs yet",
+            "description": "Check back later for new DayGig opportunities."
+        },
+        "errors": {
+            "load_failed": "Could not load jobs. Please try again."
+        },
+        "card": {
+            "hourly_rate": "{{rate}} {{currency}}/hour"
+        },
+        "categories": {
+            "CLEANING": "Cleaning",
+            "MOVING": "Moving",
+            "GARDENING": "Gardening",
+            "DELIVERY": "Delivery",
+            "BABYSITTING": "Babysitting",
+            "PET_CARE": "Pet care",
+            "HANDYMAN": "Handyman",
+            "EVENT_HELP": "Event help",
+            "OTHER": "Other"
+        }
     }
 }

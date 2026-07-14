@@ -62,6 +62,29 @@
     },
     "jobs": {
         "title": "Joburi",
-        "placeholder": "Lista publica de joburi va aparea aici."
+        "subtitle": "Cauta oportunitati DayGig disponibile.",
+        "loading": "Se incarca joburile...",
+        "available_count": "{{count}} joburi disponibile",
+        "empty": {
+            "title": "Nu exista joburi deschise",
+            "description": "Revino mai tarziu pentru oportunitati DayGig noi."
+        },
+        "errors": {
+            "load_failed": "Nu am putut incarca joburile. Incearca din nou."
+        },
+        "card": {
+            "hourly_rate": "{{rate}} {{currency}}/ora"
+        },
+        "categories": {
+            "CLEANING": "Curatenie",
+            "MOVING": "Mutari",
+            "GARDENING": "Gradinarit",
+            "DELIVERY": "Livrare",
+            "BABYSITTING": "Ingrijire copii",
+            "PET_CARE": "Ingrijire animale",
+            "HANDYMAN": "Mester",
+            "EVENT_HELP": "Ajutor evenimente",
+            "OTHER": "Altceva"
+        }
     }
 }

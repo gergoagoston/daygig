@@ -61,6 +61,29 @@
     },
     "jobs": {
         "title": "Munkák",
-        "placeholder": "A publikus munkalista itt fog megjelenni."
+        "subtitle": "Böngéssz a nyitott DayGig munkalehetőségek között.",
+        "loading": "Munkák betöltése...",
+        "available_count": "{{count}} elérhető munka",
+        "empty": {
+            "title": "Még nincs nyitott munka",
+            "description": "Nézz vissza később az új DayGig lehetőségekért."
+        },
+        "errors": {
+            "load_failed": "Nem sikerült betölteni a munkákat. Próbáld újra."
+        },
+        "card": {
+            "hourly_rate": "{{rate}} {{currency}}/óra"
+        },
+        "categories": {
+            "CLEANING": "Takarítás",
+            "MOVING": "Költöztetés",
+            "GARDENING": "Kertészkedés",
+            "DELIVERY": "Kiszállítás",
+            "BABYSITTING": "Gyerekfelügyelet",
+            "PET_CARE": "Állatgondozás",
+            "HANDYMAN": "Ezermester",
+            "EVENT_HELP": "Rendezvénysegítés",
+            "OTHER": "Egyéb"
+        }
     }
 }

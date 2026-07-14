@@ -42,7 +42,7 @@ public class DevDataSeeder implements ApplicationRunner {
             new BigDecimal("23.624457"),
             customer);
 
-        seedJob("Move sofa and boxes",
+        seedJob("Move sofa aadsfvaergvdzscnd boxes",
             "Looking for help moving a sofa and several boxes to a nearby apartment.",
             JobCategory.MOVING,
             new BigDecimal("60.00"),
@@ -50,6 +50,47 @@ public class DevDataSeeder implements ApplicationRunner {
             new BigDecimal("46.753701"),
             new BigDecimal("23.582734"),
             customer);
+        seedJob("Move sofaasdawrqddsa and boxes",
+                "Looking for help moving a sofa and several boxes to a nearby apartment.",
+                JobCategory.MOVING,
+                new BigDecimal("60.00"),
+                "Cluj-Napoca, Zorilor",
+                new BigDecimal("46.753701"),
+                new BigDecimal("23.582734"),
+                customer);
+        seedJob("Move sofa and asdasdboxes",
+                "Looking for help moving a sofa and several boxes to a nearby apartment.",
+                JobCategory.MOVING,
+                new BigDecimal("60.00"),
+                "Cluj-Napoca, Zorilor",
+                new BigDecimal("46.753701"),
+                new BigDecimal("23.582734"),
+                customer);
+        seedJob("Move sofaasdasd and boxes",
+                "Looking for help moving a sofa and several boxes to a nearby apartment.",
+                JobCategory.MOVING,
+                new BigDecimal("60.00"),
+                "Cluj-Napoca, Zorilor",
+                new BigDecimal("46.753701"),
+                new BigDecimal("23.582734"),
+                customer);
+        seedJob("Move sofa ZDasand boxes",
+                "Looking for help moving a sofa and several boxes to a nearby apartment.",
+                JobCategory.MOVING,
+                new BigDecimal("60.00"),
+                "Cluj-Napoca, Zorilor",
+                new BigDecimal("46.753701"),
+                new BigDecimal("23.582734"),
+                customer);
+        seedJob("Move sofa and boxes",
+                "Looking for help moving a sofa and several boxes to a nearby apartment.",
+                JobCategory.MOVING,
+                new BigDecimal("60.00"),
+                "Cluj-Napoca, Zorilor",
+                new BigDecimal("46.753701"),
+                new BigDecimal("23.582734"),
+                customer);
+
 
         seedJob("Garden cleanup",
             "Small garden cleanup with leaves, branches, and basic trimming.",
