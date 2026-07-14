@@ -45,7 +45,7 @@
     --color-danger-soft: rgba(248, 113, 113, 0.15);
     --color-body: #9ca3af;
     --color-heading: #f3f4f6;
-    --color-action: #f3f4f6;
+    --color-action: #c084fc;
     --color-action-text: #08060d;
     --shadow-panel: rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
   }
@@ -55,13 +55,6 @@
   margin: 0 auto;
   min-height: 100svh;
   box-sizing: border-box;
-}
-
-body {
-  min-width: 320px;
-  min-height: 100vh;
-  margin: 0;
-  cursor: default;
 }
 
 * {
@@ -75,6 +68,8 @@ textarea {
 
 a,
 button,
+a *,
+button *,
 select {
   cursor: pointer;
 }
@@ -111,11 +106,6 @@ h1 {
     margin: 20px 0;
   }
 }
-
-p {
-  margin: 0;
-}
-
 a {
   color: var(--color-primary);
   font-weight: 700;

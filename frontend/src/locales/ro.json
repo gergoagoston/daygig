@@ -2,7 +2,6 @@
     "auth": {
         "login": {
             "title": "Bine ai revenit",
-            "hero_title": "Continua de unde ai ramas",
             "subtitle": "Autentifica-te pentru a gestiona oportunitatile DayGig.",
             "email": "Email",
             "password": "Parola",
@@ -19,7 +18,6 @@
         },
         "register": {
             "title": "Creeaza un cont",
-            "hero_title": "Gaseste de lucru rapid si usor",
             "subtitle": "Alatura-te DayGig si gaseste oportunitati de lucru flexibile.",
             "first_name": "Prenume",
             "last_name": "Nume",
@@ -44,15 +42,8 @@
             }
         }
     },
-    "common": {
-        "buttons": {
-            "save": "Salveaza modificarile",
-            "cancel": "Anuleaza"
-        }
-    },
     "navigation": {
         "main": "Navigare principala",
-        "jobs": "Joburi",
         "my_jobs": "Joburile mele",
         "my_applications": "Aplicatiile mele",
         "login": "Autentificare",
@@ -61,10 +52,7 @@
         "language": "Limba"
     },
     "jobs": {
-        "title": "Joburi",
-        "subtitle": "Cauta oportunitati DayGig disponibile.",
         "loading": "Se incarca joburile...",
-        "available_count": "{{count}} joburi disponibile",
         "empty": {
             "title": "Nu exista joburi deschise",
             "description": "Revino mai tarziu pentru oportunitati DayGig noi."

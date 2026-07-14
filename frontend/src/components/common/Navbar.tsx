@@ -2,21 +2,13 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import useAuth from '../../hooks/useAuth';
+import '../../styles/Navbar.css';
 
 const languages = [
   { code: 'hu', label: 'HU' },
   { code: 'en', label: 'EN' },
   { code: 'ro', label: 'RO' },
 ] as const;
-
-function navLinkClass({ isActive }: { isActive: boolean }) {
-  return [
-    'rounded-lg border px-3 py-2 text-sm font-bold !no-underline transition-colors',
-    isActive
-      ? 'border-primary bg-primary-soft text-heading'
-      : 'border-transparent text-body hover:bg-primary-soft hover:text-heading',
-  ].join(' ');
-}
 
 function Navbar() {
   const { i18n, t } = useTranslation();
@@ -38,10 +30,10 @@ function Navbar() {
       >
         {isAuthenticated ? (
           <>
-            <NavLink className={navLinkClass} to="/my-jobs">
+            <NavLink className="navbar-gomb" to="/my-jobs">
               {t('navigation.my_jobs')}
             </NavLink>
-            <NavLink className={navLinkClass} to="/my-applications">
+            <NavLink className="navbar-gomb" to="/my-applications">
               {t('navigation.my_applications')}
             </NavLink>
           </>
@@ -61,7 +53,6 @@ function Navbar() {
           <select
             className="rounded-lg border border-border bg-surface px-3 py-2 text-sm font-bold text-heading outline-none hover:border-primary focus:border-primary"
             value={currentLanguage.slice(0, 2)}
-            aria-label={t('navigation.language')}
             onChange={(event) => void i18n.changeLanguage(event.target.value)}
           >
             {languages.map((language) => (
@@ -74,23 +65,19 @@ function Navbar() {
 
         {isInitializing ? null : isAuthenticated ? (
           <div className="flex min-w-0 flex-wrap items-center gap-2">
-            <span className="max-w-[180px] overflow-hidden text-ellipsis whitespace-nowrap font-bold text-body">
+            <span className="max-w-45 overflow-hidden text-ellipsis whitespace-nowrap font-bold text-heading">
               {accountLabel}
             </span>
-            <button
-              className="rounded-lg border border-border bg-surface px-3 py-2 text-sm font-bold text-heading hover:border-primary"
-              type="button"
-              onClick={handleLogout}
-            >
+            <button className="navbar-gomb" type="button" onClick={handleLogout}>
               {t('navigation.logout')}
             </button>
           </div>
         ) : (
           <div className="flex flex-wrap items-center gap-2">
-            <NavLink className={navLinkClass} to="/login">
+            <NavLink className="navbar-gomb" to="/login">
               {t('navigation.login')}
             </NavLink>
-            <NavLink className={navLinkClass} to="/register">
+            <NavLink className="navbar-gomb" to="/register">
               {t('navigation.register')}
             </NavLink>
           </div>

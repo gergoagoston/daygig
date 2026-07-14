@@ -31,7 +31,6 @@
             "errors": {
                 "first_name_required": "A keresztnév megadása kötelező.",
                 "last_name_required": "A vezetéknév megadása kötelező.",
-                "phone_number_required": "A telefonszám megadása kötelező.",
                 "email_required": "Az email megadása kötelező.",
                 "email_invalid": "Adj meg egy érvényes email címet.",
                 "email_exists": "Ezzel az email címmel már létezik fiók.",
@@ -43,15 +42,8 @@
             }
         }
     },
-    "common": {
-        "buttons": {
-            "save": "Módosítások mentése",
-            "cancel": "Mégse"
-        }
-    },
     "navigation": {
         "main": "Fő navigáció",
-        "jobs": "Munkák",
         "my_jobs": "Munkáim",
         "my_applications": "Jelentkezéseim",
         "login": "Bejelentkezés",
@@ -60,10 +52,7 @@
         "language": "Nyelv"
     },
     "jobs": {
-        "title": "Munkák",
-        "subtitle": "Böngéssz a nyitott DayGig munkalehetőségek között.",
         "loading": "Munkák betöltése...",
-        "available_count": "{{count}} elérhető munka",
         "empty": {
             "title": "Még nincs nyitott munka",
             "description": "Nézz vissza később az új DayGig lehetőségekért."

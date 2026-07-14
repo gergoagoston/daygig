@@ -1,0 +1,18 @@
+@reference '../index.css';
+
+.navbar-gomb {
+  @apply inline-flex items-center justify-center rounded-lg border border-border bg-transparent px-3 py-2 text-sm font-bold text-heading no-underline transition-colors;
+}
+
+.navbar-gomb:is(:hover, [aria-current='page']) {
+  @apply border-primary;
+}
+
+.navbar-gomb:hover {
+  @apply text-primary;
+}
+
+.navbar-gomb:focus-visible {
+  outline: 3px solid var(--color-primary-soft);
+  outline-offset: 3px;
+}

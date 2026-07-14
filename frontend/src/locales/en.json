@@ -31,7 +31,6 @@
             "errors": {
                 "first_name_required": "First name is required.",
                 "last_name_required": "Last name is required.",
-                "phone_number_required": "Phone number is required.",
                 "email_required": "Email is required.",
                 "email_invalid": "Enter a valid email address.",
                 "email_exists": "An account with this email already exists.",
@@ -43,15 +42,8 @@
             }
         }
     },
-    "common": {
-        "buttons": {
-            "save": "Save Changes",
-            "cancel": "Cancel"
-        }
-    },
     "navigation": {
         "main": "Main navigation",
-        "jobs": "Jobs",
         "my_jobs": "My Jobs",
         "my_applications": "My Applications",
         "login": "Login",
@@ -60,10 +52,7 @@
         "language": "Language"
     },
     "jobs": {
-        "title": "Jobs",
-        "subtitle": "Browse open DayGig work opportunities near you.",
         "loading": "Loading jobs...",
-        "available_count": "{{count}} available jobs",
         "empty": {
             "title": "No open jobs yet",
             "description": "Check back later for new DayGig opportunities."

@@ -11,7 +11,7 @@ import RegisterPage from './pages/auth/RegisterPage';
 
 function App() {
   return (
-    <div className="min-h-[100svh] bg-page">
+    <div className="min-h-svh bg-page">
       <Navbar />
       <Routes>
         <Route path="/" element={<Navigate to="/jobs" replace />} />

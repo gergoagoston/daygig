@@ -198,7 +198,7 @@ function RegisterPage() {
 
       <Input
         id="register-phone-number"
-        className="mb-5"
+        className="mb-2"
         name="phoneNumber"
         label={t('auth.register.phone_number')}
         type="tel"
@@ -208,7 +208,9 @@ function RegisterPage() {
       />
 
       {errors.form ? (
-        <p className="mb-5 rounded-lg bg-red-100 px-3.5 py-3 text-red-700">{errors.form}</p>
+        <p className="mb-4 rounded-lg bg-surface px-3.5 py-3 font-semibold text-danger">
+          {errors.form}
+        </p>
       ) : null}
 
       <Button type="submit" isLoading={isSubmitting}>

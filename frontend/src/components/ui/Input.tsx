@@ -13,7 +13,7 @@ function Input({ id, label, error, className = '', required = false, ...props }:
     <div className={`flex flex-col gap-2 text-left ${className}`}>
       <label htmlFor={id} className="font-semibold text-heading">
         {label}
-        {required ? <span className="text-red-600"> *</span> : null}
+        {required ? <span className="text-danger"> *</span> : null}
       </label>
       <input
         id={id}
@@ -22,13 +22,13 @@ function Input({ id, label, error, className = '', required = false, ...props }:
         required={required}
         className={`w-full rounded-lg border bg-page px-3.5 py-3 text-heading outline-none transition placeholder:text-body/70 focus:ring-3 ${
           hasError
-            ? 'border-red-600 focus:border-red-600 focus:ring-red-100'
+            ? 'border-danger focus:border-danger focus:ring-danger-soft'
             : 'border-border focus:border-primary focus:ring-primary-soft'
         }`}
         {...props}
       />
       {hasError ? (
-        <p id={`${id}-error`} className="text-sm text-red-700">
+        <p id={`${id}-error`} className="text-sm text-danger">
           {error}
         </p>
       ) : null}

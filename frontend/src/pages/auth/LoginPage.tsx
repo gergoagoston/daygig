@@ -132,7 +132,7 @@ function LoginPage() {
 
       <Input
         id="login-password"
-        className="mb-5"
+        className="mb-2"
         name="password"
         label={t('auth.login.password')}
         type="password"
@@ -144,7 +144,7 @@ function LoginPage() {
       />
 
       {errors.form ? (
-        <p className="mb-5 rounded-lg bg-red-100 px-3.5 py-3 text-red-700">{errors.form}</p>
+        <p className="mb-4 rounded-lg bg-surface font-semibold text-danger ">{errors.form}</p>
       ) : null}
 
       <Button type="submit" isLoading={isSubmitting}>
