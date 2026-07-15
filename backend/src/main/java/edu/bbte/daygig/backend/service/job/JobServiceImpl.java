@@ -1,15 +1,14 @@
 package edu.bbte.daygig.backend.service.job;
 
-import edu.bbte.daygig.backend.exception.ResourceNotFoundException;
-import edu.bbte.daygig.backend.model.Job;
-import edu.bbte.daygig.backend.model.enums.JobStatus;
-import edu.bbte.daygig.backend.repository.JobRepository;
-import lombok.RequiredArgsConstructor;
+import java.util.UUID;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.UUID;
+import lombok.RequiredArgsConstructor;
+import edu.bbte.daygig.backend.exception.ResourceNotFoundException;
+import edu.bbte.daygig.backend.model.enums.JobStatus;
+import edu.bbte.daygig.backend.model.Job;
+import edu.bbte.daygig.backend.repository.JobRepository;
 
 @Service
 @RequiredArgsConstructor
@@ -25,7 +24,7 @@ public class JobServiceImpl implements JobService {
     @Override
     public Job getById(UUID id) {
         return jobRepository
-            .findById(id)
-            .orElseThrow(() -> new ResourceNotFoundException("Job not found with id: " + id));
+                .findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Job not found with id: " + id));
     }
 }

@@ -1,14 +1,14 @@
 package edu.bbte.daygig.backend.service.auth;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import lombok.RequiredArgsConstructor;
 import edu.bbte.daygig.backend.exception.AuthException;
 import edu.bbte.daygig.backend.exception.DuplicateResourceException;
 import edu.bbte.daygig.backend.model.enums.Role;
 import edu.bbte.daygig.backend.model.User;
 import edu.bbte.daygig.backend.repository.UserRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor

@@ -1,13 +1,12 @@
 package edu.bbte.daygig.backend.security;
 
+import java.time.Duration;
+import java.util.Arrays;
+import java.util.Optional;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseCookie;
 import org.springframework.stereotype.Component;
-
-import java.time.Duration;
-import java.util.Arrays;
-import java.util.Optional;
 
 @Component
 public class AuthCookieService {
@@ -29,33 +28,35 @@ public class AuthCookieService {
         }
 
         return Arrays
-            .stream(cookies)
-            .filter(cookie -> authCookieProperties.name().equals(cookie.getName()))
-            .map(Cookie::getValue)
-            .findFirst();
+                .stream(cookies)
+                .filter(cookie -> authCookieProperties
+                .name()
+                .equals(cookie.getName()))
+                .map(Cookie::getValue)
+                .findFirst();
     }
 
     public String createAccessTokenCookie(String token) {
         return ResponseCookie
-            .from(authCookieProperties.name(), token)
-            .httpOnly(true)
-            .secure(authCookieProperties.secure())
-            .sameSite(authCookieProperties.sameSite())
-            .path(authCookieProperties.path())
-            .maxAge(Duration.ofMinutes(jwtProperties.expirationMinutes()))
-            .build()
-            .toString();
+                .from(authCookieProperties.name(), token)
+                .httpOnly(true)
+                .secure(authCookieProperties.secure())
+                .sameSite(authCookieProperties.sameSite())
+                .path(authCookieProperties.path())
+                .maxAge(Duration.ofMinutes(jwtProperties.expirationMinutes()))
+                .build()
+                .toString();
     }
 
     public String clearAccessTokenCookie() {
         return ResponseCookie
-            .from(authCookieProperties.name(), "")
-            .httpOnly(true)
-            .secure(authCookieProperties.secure())
-            .sameSite(authCookieProperties.sameSite())
-            .path(authCookieProperties.path())
-            .maxAge(Duration.ZERO)
-            .build()
-            .toString();
+                .from(authCookieProperties.name(), "")
+                .httpOnly(true)
+                .secure(authCookieProperties.secure())
+                .sameSite(authCookieProperties.sameSite())
+                .path(authCookieProperties.path())
+                .maxAge(Duration.ZERO)
+                .build()
+                .toString();
     }
 }

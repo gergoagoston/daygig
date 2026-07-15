@@ -1,11 +1,8 @@
 package edu.bbte.daygig.backend.controller;
 
-import edu.bbte.daygig.backend.dto.user.UserOutDto;
-import edu.bbte.daygig.backend.dto.user.UserUpdateInDto;
-import edu.bbte.daygig.backend.mappers.UserMapper;
-import edu.bbte.daygig.backend.service.user.UserService;
+import java.util.List;
+import java.util.UUID;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,9 +12,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
-import java.util.UUID;
+import lombok.RequiredArgsConstructor;
+import edu.bbte.daygig.backend.dto.user.UserOutDto;
+import edu.bbte.daygig.backend.dto.user.UserUpdateInDto;
+import edu.bbte.daygig.backend.mappers.UserMapper;
+import edu.bbte.daygig.backend.service.user.UserService;
 
 @RestController
 @RequestMapping("/users")
@@ -29,10 +28,11 @@ public class UserController {
 
     @GetMapping
     public List<UserOutDto> getAll() {
-        return userService.getAll()
-                          .stream()
-                          .map(userMapper::toDto)
-                          .toList();
+        return userService
+                .getAll()
+                .stream()
+                .map(userMapper::toDto)
+                .toList();
     }
 
     @GetMapping("/{id}")
@@ -41,7 +41,8 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public UserOutDto update(@PathVariable UUID id, @Valid @RequestBody UserUpdateInDto updateInDto) {
+    public UserOutDto update(@PathVariable UUID id,
+                             @Valid @RequestBody UserUpdateInDto updateInDto) {
         return userMapper.toDto(userService.update(id, userMapper.fromUpdateDto(updateInDto)));
     }
 

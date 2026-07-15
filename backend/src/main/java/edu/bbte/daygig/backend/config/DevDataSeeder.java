@@ -1,21 +1,20 @@
 package edu.bbte.daygig.backend.config;
 
-import edu.bbte.daygig.backend.model.Job;
-import edu.bbte.daygig.backend.model.User;
-import edu.bbte.daygig.backend.model.enums.Currency;
-import edu.bbte.daygig.backend.model.enums.JobCategory;
-import edu.bbte.daygig.backend.model.enums.JobStatus;
-import edu.bbte.daygig.backend.model.enums.Role;
-import edu.bbte.daygig.backend.repository.JobRepository;
-import edu.bbte.daygig.backend.repository.UserRepository;
-import lombok.RequiredArgsConstructor;
+import java.math.BigDecimal;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
-
-import java.math.BigDecimal;
+import lombok.RequiredArgsConstructor;
+import edu.bbte.daygig.backend.model.enums.Currency;
+import edu.bbte.daygig.backend.model.enums.JobCategory;
+import edu.bbte.daygig.backend.model.enums.JobStatus;
+import edu.bbte.daygig.backend.model.enums.Role;
+import edu.bbte.daygig.backend.model.Job;
+import edu.bbte.daygig.backend.model.User;
+import edu.bbte.daygig.backend.repository.JobRepository;
+import edu.bbte.daygig.backend.repository.UserRepository;
 
 @Component
 @Profile("dev")
@@ -33,73 +32,35 @@ public class DevDataSeeder implements ApplicationRunner {
         User customer = seedUser("peter@gmail.com", "Dev", "Customer", "0711111111");
         User worker = seedUser("gergo@gmail.com", "Dev", "Worker", "0722222222");
 
-        seedJob("Apartment cleaning help",
-            "Need help cleaning a two-room apartment before the weekend.",
-            JobCategory.CLEANING,
-            new BigDecimal("45.00"),
-            "Cluj-Napoca, Marasti",
-            new BigDecimal("46.783364"),
-            new BigDecimal("23.624457"),
-            customer);
+        seedJob("Apartment cleaning help", "Need help cleaning a two-room apartment before the weekend.",
+                JobCategory.CLEANING, new BigDecimal("45.00"), "Cluj-Napoca, Marasti", new BigDecimal("46.783364"),
+                new BigDecimal("23.624457"), customer);
 
         seedJob("Move sofa aadsfvaergvdzscnd boxes",
-            "Looking for help moving a sofa and several boxes to a nearby apartment.",
-            JobCategory.MOVING,
-            new BigDecimal("60.00"),
-            "Cluj-Napoca, Zorilor",
-            new BigDecimal("46.753701"),
-            new BigDecimal("23.582734"),
-            customer);
+                "Looking for help moving a sofa and several boxes to a nearby apartment.", JobCategory.MOVING,
+                new BigDecimal("60.00"), "Cluj-Napoca, Zorilor", new BigDecimal("46.753701"),
+                new BigDecimal("23.582734"), customer);
         seedJob("Move sofaasdawrqddsa and boxes",
-                "Looking for help moving a sofa and several boxes to a nearby apartment.",
-                JobCategory.MOVING,
-                new BigDecimal("60.00"),
-                "Cluj-Napoca, Zorilor",
-                new BigDecimal("46.753701"),
-                new BigDecimal("23.582734"),
-                customer);
-        seedJob("Move sofa and asdasdboxes",
-                "Looking for help moving a sofa and several boxes to a nearby apartment.",
-                JobCategory.MOVING,
-                new BigDecimal("60.00"),
-                "Cluj-Napoca, Zorilor",
-                new BigDecimal("46.753701"),
-                new BigDecimal("23.582734"),
-                customer);
-        seedJob("Move sofaasdasd and boxes",
-                "Looking for help moving a sofa and several boxes to a nearby apartment.",
-                JobCategory.MOVING,
-                new BigDecimal("60.00"),
-                "Cluj-Napoca, Zorilor",
-                new BigDecimal("46.753701"),
-                new BigDecimal("23.582734"),
-                customer);
-        seedJob("Move sofa ZDasand boxes",
-                "Looking for help moving a sofa and several boxes to a nearby apartment.",
-                JobCategory.MOVING,
-                new BigDecimal("60.00"),
-                "Cluj-Napoca, Zorilor",
-                new BigDecimal("46.753701"),
-                new BigDecimal("23.582734"),
-                customer);
-        seedJob("Move sofa and boxes",
-                "Looking for help moving a sofa and several boxes to a nearby apartment.",
-                JobCategory.MOVING,
-                new BigDecimal("60.00"),
-                "Cluj-Napoca, Zorilor",
-                new BigDecimal("46.753701"),
-                new BigDecimal("23.582734"),
-                customer);
+                "Looking for help moving a sofa and several boxes to a nearby apartment.", JobCategory.MOVING,
+                new BigDecimal("60.00"), "Cluj-Napoca, Zorilor", new BigDecimal("46.753701"),
+                new BigDecimal("23.582734"), customer);
+        seedJob("Move sofa and asdasdboxes", "Looking for help moving a sofa and several boxes to a nearby apartment.",
+                JobCategory.MOVING, new BigDecimal("60.00"), "Cluj-Napoca, Zorilor", new BigDecimal("46.753701"),
+                new BigDecimal("23.582734"), customer);
+        seedJob("Move sofaasdasd and boxes", "Looking for help moving a sofa and several boxes to a nearby apartment.",
+                JobCategory.MOVING, new BigDecimal("60.00"), "Cluj-Napoca, Zorilor", new BigDecimal("46.753701"),
+                new BigDecimal("23.582734"), customer);
+        seedJob("Move sofa ZDasand boxes", "Looking for help moving a sofa and several boxes to a nearby apartment.",
+                JobCategory.MOVING, new BigDecimal("60.00"), "Cluj-Napoca, Zorilor", new BigDecimal("46.753701"),
+                new BigDecimal("23.582734"), customer);
+        seedJob("Move sofa and boxes", "Looking for help moving a sofa and several boxes to a nearby apartment.",
+                JobCategory.MOVING, new BigDecimal("60.00"), "Cluj-Napoca, Zorilor", new BigDecimal("46.753701"),
+                new BigDecimal("23.582734"), customer);
 
 
-        seedJob("Garden cleanup",
-            "Small garden cleanup with leaves, branches, and basic trimming.",
-            JobCategory.GARDENING,
-            new BigDecimal("50.00"),
-            "Floresti",
-            new BigDecimal("46.745642"),
-            new BigDecimal("23.493561"),
-            worker);
+        seedJob("Garden cleanup", "Small garden cleanup with leaves, branches, and basic trimming.",
+                JobCategory.GARDENING, new BigDecimal("50.00"), "Floresti", new BigDecimal("46.745642"),
+                new BigDecimal("23.493561"), worker);
     }
 
     private User seedUser(String email,

@@ -12,13 +12,25 @@
         <property name="eachLine" value="true"/>
     </module>
 
+    <module name="LineLength">
+        <property name="max" value="120"/>
+        <property name="ignorePattern" value="^package.*|^import.*|.*https?://.*"/>
+    </module>
+
+    <module name="NewlineAtEndOfFile"/>
+
     <module name="JavadocPackage">
         <property name="severity" value="ignore"/>
     </module>
 
     <module name="TreeWalker">
         <module name="Indentation">
-            <property name="severity" value="ignore"/>
+            <property name="basicOffset" value="4"/>
+            <property name="braceAdjustment" value="0"/>
+            <property name="caseIndent" value="4"/>
+            <property name="throwsIndent" value="4"/>
+            <property name="lineWrappingIndentation" value="8"/>
+            <property name="arrayInitIndent" value="4"/>
         </module>
         <module name="JavadocType">
             <property name="severity" value="ignore"/>
@@ -34,12 +46,31 @@
         </module>
 
         <module name="AvoidStarImport"/>
+        <module name="UnusedImports"/>
+        <module name="ImportOrder">
+            <property name="groups" value="java,javax,jakarta,org,com,lombok,edu"/>
+            <property name="ordered" value="true"/>
+            <property name="option" value="bottom"/>
+            <property name="caseSensitive" value="false"/>
+            <property name="sortStaticImportsAlphabetically" value="true"/>
+        </module>
         <module name="OneTopLevelClass"/>
         <module name="NoLineWrap"/>
         <module name="EmptyBlock"/>
         <module name="LeftCurly"/>
         <module name="RightCurly"/>
         <module name="NeedBraces"/>
+        <module name="ModifierOrder"/>
+        <module name="WhitespaceAround">
+            <property name="allowEmptyConstructors" value="true"/>
+            <property name="allowEmptyMethods" value="true"/>
+            <property name="allowEmptyTypes" value="true"/>
+            <property name="allowEmptyLoops" value="true"/>
+            <property name="allowEmptyLambdas" value="true"/>
+        </module>
+        <module name="WhitespaceAfter"/>
+        <module name="NoWhitespaceBefore"/>
+        <module name="ParenPad"/>
 
         <module name="PackageName">
             <property name="format" value="^[a-z]+(\.[a-z][a-zA-Z0-9]*)*$"/>

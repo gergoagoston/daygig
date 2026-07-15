@@ -1,9 +1,8 @@
 package edu.bbte.daygig.backend.service.user;
 
-import edu.bbte.daygig.backend.model.User;
-
 import java.util.List;
 import java.util.UUID;
+import edu.bbte.daygig.backend.model.User;
 
 public interface UserService {
 
@@ -13,8 +12,8 @@ public interface UserService {
 
     void delete(UUID id);
 
-    User update(UUID id, User user);
-
+    User update(UUID id,
+                User user);
 
 
 }

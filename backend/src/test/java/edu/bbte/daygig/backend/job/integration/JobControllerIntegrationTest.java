@@ -1,13 +1,7 @@
 package edu.bbte.daygig.backend.job.integration;
 
-import edu.bbte.daygig.backend.model.Job;
-import edu.bbte.daygig.backend.model.User;
-import edu.bbte.daygig.backend.model.enums.Currency;
-import edu.bbte.daygig.backend.model.enums.JobCategory;
-import edu.bbte.daygig.backend.model.enums.JobStatus;
-import edu.bbte.daygig.backend.model.enums.Role;
-import edu.bbte.daygig.backend.repository.JobRepository;
-import edu.bbte.daygig.backend.repository.UserRepository;
+import java.math.BigDecimal;
+import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,10 +10,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.math.BigDecimal;
-import java.util.UUID;
-
+import edu.bbte.daygig.backend.model.enums.Currency;
+import edu.bbte.daygig.backend.model.enums.JobCategory;
+import edu.bbte.daygig.backend.model.enums.JobStatus;
+import edu.bbte.daygig.backend.model.enums.Role;
+import edu.bbte.daygig.backend.model.Job;
+import edu.bbte.daygig.backend.model.User;
+import edu.bbte.daygig.backend.repository.JobRepository;
+import edu.bbte.daygig.backend.repository.UserRepository;
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -54,13 +52,13 @@ class JobControllerIntegrationTest {
         saveJob(owner, "Cancelled job", JobCategory.DELIVERY, JobStatus.CANCELLED);
 
         mockMvc.perform(get("/jobs"))
-            .andExpect(status().isOk())
-            .andExpect(jsonPath("$.content", hasSize(1)))
-            .andExpect(jsonPath("$.content[0].id").value(openJob.getId().toString()))
-            .andExpect(jsonPath("$.content[0].title").value(openJob.getTitle()))
-            .andExpect(jsonPath("$.content[0].category").value("CLEANING"))
-            .andExpect(jsonPath("$.content[0].currency").value("RON"))
-            .andExpect(jsonPath("$.totalElements").value(1));
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.content", hasSize(1)))
+                .andExpect(jsonPath("$.content[0].id").value(openJob.getId().toString()))
+                .andExpect(jsonPath("$.content[0].title").value(openJob.getTitle()))
+                .andExpect(jsonPath("$.content[0].category").value("CLEANING"))
+                .andExpect(jsonPath("$.content[0].currency").value("RON"))
+                .andExpect(jsonPath("$.totalElements").value(1));
     }
 
     @Test
@@ -73,14 +71,14 @@ class JobControllerIntegrationTest {
         mockMvc.perform(get("/jobs")
                 .param("page", "0")
                 .param("size", "2"))
-            .andExpect(status().isOk())
-            .andExpect(jsonPath("$.content", hasSize(2)))
-            .andExpect(jsonPath("$.page").value(0))
-            .andExpect(jsonPath("$.size").value(2))
-            .andExpect(jsonPath("$.totalElements").value(3))
-            .andExpect(jsonPath("$.totalPages").value(2))
-            .andExpect(jsonPath("$.first").value(true))
-            .andExpect(jsonPath("$.last").value(false));
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.content", hasSize(2)))
+                .andExpect(jsonPath("$.page").value(0))
+                .andExpect(jsonPath("$.size").value(2))
+                .andExpect(jsonPath("$.totalElements").value(3))
+                .andExpect(jsonPath("$.totalPages").value(2))
+                .andExpect(jsonPath("$.first").value(true))
+                .andExpect(jsonPath("$.last").value(false));
     }
 
     @Test
@@ -89,24 +87,24 @@ class JobControllerIntegrationTest {
         Job job = saveJob(owner, "Details job", JobCategory.EVENT_HELP, JobStatus.ASSIGNED);
 
         mockMvc.perform(get("/jobs/{id}", job.getId()))
-            .andExpect(status().isOk())
-            .andExpect(jsonPath("$.id").value(job.getId().toString()))
-            .andExpect(jsonPath("$.title").value(job.getTitle()))
-            .andExpect(jsonPath("$.description").value(job.getDescription()))
-            .andExpect(jsonPath("$.category").value("EVENT_HELP"))
-            .andExpect(jsonPath("$.status").value("ASSIGNED"))
-            .andExpect(jsonPath("$.hourlyRate").value(45.0))
-            .andExpect(jsonPath("$.currency").value("RON"))
-            .andExpect(jsonPath("$.locationName").value("Cluj-Napoca"))
-            .andExpect(jsonPath("$.latitude").value(46.770439))
-            .andExpect(jsonPath("$.longitude").value(23.591423));
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(job.getId().toString()))
+                .andExpect(jsonPath("$.title").value(job.getTitle()))
+                .andExpect(jsonPath("$.description").value(job.getDescription()))
+                .andExpect(jsonPath("$.category").value("EVENT_HELP"))
+                .andExpect(jsonPath("$.status").value("ASSIGNED"))
+                .andExpect(jsonPath("$.hourlyRate").value(45.0))
+                .andExpect(jsonPath("$.currency").value("RON"))
+                .andExpect(jsonPath("$.locationName").value("Cluj-Napoca"))
+                .andExpect(jsonPath("$.latitude").value(46.770439))
+                .andExpect(jsonPath("$.longitude").value(23.591423));
     }
 
     @Test
     void getMissingJobDetailsReturnsNotFound() throws Exception {
         mockMvc.perform(get("/jobs/{id}", UUID.randomUUID()))
-            .andExpect(status().isNotFound())
-            .andExpect(jsonPath("$.error").value("Resource Not Found"));
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.error").value("Resource Not Found"));
     }
 
     private User saveUser(String emailPrefix) {
