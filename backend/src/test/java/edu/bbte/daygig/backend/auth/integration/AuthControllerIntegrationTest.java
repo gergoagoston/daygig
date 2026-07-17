@@ -1,5 +1,6 @@
 package edu.bbte.daygig.backend.auth.integration;
 
+import jakarta.servlet.http.Cookie;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -10,6 +11,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import static org.hamcrest.Matchers.containsString;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
@@ -76,6 +78,43 @@ class AuthControllerIntegrationTest {
                 .andExpect(status().isUnauthorized())
                 .andExpect(jsonPath("$.error").value("Authentication Failed"))
                 .andExpect(jsonPath("$.message").value("Invalid email or password"));
+    }
+
+    @Test
+    void logoutClearsAccessTokenCookie() throws Exception {
+        mockMvc.perform(post("/auth/logout"))
+                .andExpect(status().isNoContent())
+                .andExpect(header().string(HttpHeaders.SET_COOKIE, containsString("accessToken=")))
+                .andExpect(header().string(HttpHeaders.SET_COOKIE, containsString("Max-Age=0")));
+    }
+
+    @Test
+    void meReturnsCurrentUserWhenTokenCookieIsValid() throws Exception {
+        TestUser user = testUser("me-success", "Current", "User");
+
+        register(user).andExpect(status().isCreated());
+        Cookie accessTokenCookie = login(user.email(), user.password())
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse()
+                .getCookie("accessToken");
+
+        mockMvc.perform(get("/auth/me")
+                .cookie(accessTokenCookie))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.email").value(user.email()))
+                .andExpect(jsonPath("$.role").value("ROLE_USER"))
+                .andExpect(jsonPath("$.firstName").value(user.firstName()))
+                .andExpect(jsonPath("$.lastName").value(user.lastName()))
+                .andExpect(jsonPath("$.phoneNumber").value(user.phoneNumber()))
+                .andExpect(jsonPath("$.password").doesNotExist());
+    }
+
+    @Test
+    void meRejectsRequestWithoutTokenCookie() throws Exception {
+        mockMvc.perform(get("/auth/me"))
+                .andExpect(status().isUnauthorized())
+                .andExpect(jsonPath("$.error").value("Unauthorized: Missing or invalid token"));
     }
 
     @Test
