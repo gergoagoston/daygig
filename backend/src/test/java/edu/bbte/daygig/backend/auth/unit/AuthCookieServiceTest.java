@@ -1,6 +1,5 @@
 package edu.bbte.daygig.backend.auth.unit;
 
-import jakarta.servlet.http.Cookie;
 import org.junit.jupiter.api.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
 import edu.bbte.daygig.backend.security.AuthCookieProperties;

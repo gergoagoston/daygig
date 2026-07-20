@@ -96,8 +96,14 @@ class JobControllerIntegrationTest {
                 .andExpect(jsonPath("$.hourlyRate").value(45.0))
                 .andExpect(jsonPath("$.currency").value("RON"))
                 .andExpect(jsonPath("$.locationName").value("Cluj-Napoca"))
-                .andExpect(jsonPath("$.latitude").value(46.770439))
-                .andExpect(jsonPath("$.longitude").value(23.591423));
+                .andExpect(jsonPath("$.latitude").doesNotExist())
+                .andExpect(jsonPath("$.longitude").doesNotExist())
+                .andExpect(jsonPath("$.approximateLatitude").value(46.77))
+                .andExpect(jsonPath("$.approximateLongitude").value(23.59))
+                .andExpect(jsonPath("$.locationRadiusMeters").value(1000))
+                .andExpect(jsonPath("$.owner.id").value(owner.getId().toString()))
+                .andExpect(jsonPath("$.owner.firstName").value(owner.getFirstName()))
+                .andExpect(jsonPath("$.owner.lastName").value(owner.getLastName()));
     }
 
     @Test
