@@ -62,6 +62,34 @@
       "load_failed": "Could not load your posted jobs. Please try again."
     }
   },
+  "applications": {
+    "title": "My Applications",
+    "loading": "Loading applications...",
+    "empty": {
+      "title": "No applications yet",
+      "description": "Jobs you apply to will appear here."
+    },
+    "errors": {
+      "load_failed": "Could not load your applications. Please try again."
+    },
+    "card": {
+      "location": "Location",
+      "hourly_rate": "Hourly rate",
+      "job_status": "Job status",
+      "applied": "Applied",
+      "view_job": "View job",
+      "chat": "Chat",
+      "chat_locked": "Chat locked"
+    }
+  },
+  "application": {
+    "status": {
+      "PENDING": "Pending",
+      "ACCEPTED": "Accepted",
+      "REJECTED": "Rejected",
+      "CANCELLED": "Cancelled"
+    }
+  },
   "jobs": {
     "loading": "Loading jobs...",
     "empty": {

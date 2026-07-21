@@ -62,6 +62,34 @@
       "load_failed": "Nu am putut incarca joburile tale publicate. Incearca din nou."
     }
   },
+  "applications": {
+    "title": "Aplicatiile mele",
+    "loading": "Se incarca aplicatiile...",
+    "empty": {
+      "title": "Nu ai aplicatii inca",
+      "description": "Joburile la care aplici vor aparea aici."
+    },
+    "errors": {
+      "load_failed": "Nu am putut incarca aplicatiile tale. Incearca din nou."
+    },
+    "card": {
+      "location": "Locatie",
+      "hourly_rate": "Tarif orar",
+      "job_status": "Status job",
+      "applied": "Aplicat la",
+      "view_job": "Vezi jobul",
+      "chat": "Chat",
+      "chat_locked": "Chat blocat"
+    }
+  },
+  "application": {
+    "status": {
+      "PENDING": "In asteptare",
+      "ACCEPTED": "Acceptata",
+      "REJECTED": "Respinsa",
+      "CANCELLED": "Anulata"
+    }
+  },
   "jobs": {
     "loading": "Se incarca joburile...",
     "empty": {

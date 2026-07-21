@@ -62,6 +62,34 @@
       "load_failed": "Nem sikerült betölteni a meghirdetett munkáidat. Próbáld újra."
     }
   },
+  "applications": {
+    "title": "Jelentkezéseim",
+    "loading": "Jelentkezések betöltése...",
+    "empty": {
+      "title": "Még nincs jelentkezésed",
+      "description": "Azok a munkák, amelyekre jelentkezel, itt fognak megjelenni."
+    },
+    "errors": {
+      "load_failed": "Nem sikerült betölteni a jelentkezéseidet. Próbáld újra."
+    },
+    "card": {
+      "location": "Helyszín",
+      "hourly_rate": "Óradíj",
+      "job_status": "Munka állapota",
+      "applied": "Jelentkezve",
+      "view_job": "Munka megnyitása",
+      "chat": "Chat",
+      "chat_locked": "Chat zárolva"
+    }
+  },
+  "application": {
+    "status": {
+      "PENDING": "Függőben",
+      "ACCEPTED": "Elfogadva",
+      "REJECTED": "Elutasítva",
+      "CANCELLED": "Visszavonva"
+    }
+  },
   "jobs": {
     "loading": "Munkák betöltése...",
     "empty": {

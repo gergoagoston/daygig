@@ -2,9 +2,8 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import { getMyApplications } from '../api/applicationsApi';
+import { applyToJob, getMyApplications } from '../api/applicationsApi';
 import { isHttpConflictError } from '../api/httpClient';
-import { applyToJob } from '../api/jobsApi';
 
 export type ApplyMessage = {
   type: 'success' | 'warning' | 'error';
@@ -25,6 +24,7 @@ type UseApplyToJobOptions = {
 function useApplyToJob({ jobId, enabled }: UseApplyToJobOptions) {
   const { t } = useTranslation();
   const queryClient = useQueryClient();
+  const canUseApplications = enabled && Boolean(jobId);
   const [applyState, setApplyState] = useState<ApplyState>({
     jobId: '',
     hasApplied: false,
@@ -34,7 +34,7 @@ function useApplyToJob({ jobId, enabled }: UseApplyToJobOptions) {
   const { data: myApplications = [], isLoading: isLoadingMyApplications } = useQuery({
     queryKey: ['applications', 'mine'],
     queryFn: getMyApplications,
-    enabled: enabled && Boolean(jobId),
+    enabled: canUseApplications,
   });
 
   const applyMutation = useMutation({
@@ -73,9 +73,11 @@ function useApplyToJob({ jobId, enabled }: UseApplyToJobOptions) {
     },
   });
 
-  const applyMessage = applyState.jobId === jobId ? applyState.message : null;
-  const hasAppliedFromCurrentAction = applyState.jobId === jobId && applyState.hasApplied;
-  const hasAppliedFromServer = myApplications.some((application) => application.job.id === jobId);
+  const applyMessage = canUseApplications && applyState.jobId === jobId ? applyState.message : null;
+  const hasAppliedFromCurrentAction =
+    canUseApplications && applyState.jobId === jobId && applyState.hasApplied;
+  const hasAppliedFromServer =
+    canUseApplications && myApplications.some((application) => application.job.id === jobId);
   const hasApplied = hasAppliedFromCurrentAction || hasAppliedFromServer;
 
   const apply = () => {
@@ -91,7 +93,7 @@ function useApplyToJob({ jobId, enabled }: UseApplyToJobOptions) {
     applyMessage,
     hasApplied,
     isApplying: applyMutation.isPending,
-    isCheckingApplicationStatus: enabled && Boolean(jobId) && isLoadingMyApplications,
+    isCheckingApplicationStatus: canUseApplications && isLoadingMyApplications,
   };
 }
 
