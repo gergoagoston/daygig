@@ -56,6 +56,8 @@ public class SecurityConfiguration {
                         .permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/logout")
                         .permitAll()
+                        .requestMatchers(HttpMethod.GET, "/jobs/mine")
+                        .authenticated()
                         .requestMatchers(HttpMethod.GET, "/jobs")
                         .permitAll()
                         .requestMatchers(HttpMethod.GET, "/jobs/{id}")

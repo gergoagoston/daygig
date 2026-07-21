@@ -2,6 +2,7 @@ package edu.bbte.daygig.backend.job.integration;
 
 import java.math.BigDecimal;
 import java.util.UUID;
+import jakarta.servlet.http.Cookie;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,6 +19,8 @@ import edu.bbte.daygig.backend.model.Job;
 import edu.bbte.daygig.backend.model.User;
 import edu.bbte.daygig.backend.repository.JobRepository;
 import edu.bbte.daygig.backend.repository.UserRepository;
+import edu.bbte.daygig.backend.security.JwtService;
+import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -30,6 +33,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class JobControllerIntegrationTest {
 
     private static final String PASSWORD = "password123";
+    private static final String ACCESS_TOKEN_COOKIE_NAME = "accessToken";
 
     @Autowired
     private MockMvc mockMvc;
@@ -42,6 +46,9 @@ class JobControllerIntegrationTest {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private JwtService jwtService;
 
     @Test
     void getJobsWorksWithoutAuthenticationAndReturnsOnlyOpenJobs() throws Exception {
@@ -57,6 +64,7 @@ class JobControllerIntegrationTest {
                 .andExpect(jsonPath("$.content[0].id").value(openJob.getId().toString()))
                 .andExpect(jsonPath("$.content[0].title").value(openJob.getTitle()))
                 .andExpect(jsonPath("$.content[0].category").value("CLEANING"))
+                .andExpect(jsonPath("$.content[0].status").value("OPEN"))
                 .andExpect(jsonPath("$.content[0].currency").value("RON"))
                 .andExpect(jsonPath("$.totalElements").value(1));
     }
@@ -79,6 +87,34 @@ class JobControllerIntegrationTest {
                 .andExpect(jsonPath("$.totalPages").value(2))
                 .andExpect(jsonPath("$.first").value(true))
                 .andExpect(jsonPath("$.last").value(false));
+    }
+
+    @Test
+    void getMineReturnsOnlyCurrentUsersJobs() throws Exception {
+        User owner = saveUser("mine-owner");
+        User otherOwner = saveUser("mine-other-owner");
+        Job firstOwnJob = saveJob(owner, "Own open job", JobCategory.CLEANING, JobStatus.OPEN);
+        Job secondOwnJob = saveJob(owner, "Own completed job", JobCategory.GARDENING, JobStatus.COMPLETED);
+        saveJob(otherOwner, "Other owner job", JobCategory.MOVING, JobStatus.ASSIGNED);
+
+        mockMvc.perform(get("/jobs/mine")
+                .cookie(accessTokenCookie(owner)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(jsonPath("$[*].id", containsInAnyOrder(firstOwnJob.getId().toString(),
+                        secondOwnJob.getId().toString())))
+                .andExpect(jsonPath("$[*].title", containsInAnyOrder(firstOwnJob.getTitle(),
+                        secondOwnJob.getTitle())))
+                .andExpect(jsonPath("$[*].category", containsInAnyOrder("CLEANING", "GARDENING")))
+                .andExpect(jsonPath("$[*].status", containsInAnyOrder("OPEN", "COMPLETED")))
+                .andExpect(jsonPath("$[*].locationName", containsInAnyOrder("Cluj-Napoca", "Cluj-Napoca")))
+                .andExpect(jsonPath("$[*].currency", containsInAnyOrder("RON", "RON")));
+    }
+
+    @Test
+    void getMineRejectsUnauthenticatedRequest() throws Exception {
+        mockMvc.perform(get("/jobs/mine"))
+                .andExpect(status().isUnauthorized());
     }
 
     @Test
@@ -111,6 +147,10 @@ class JobControllerIntegrationTest {
         mockMvc.perform(get("/jobs/{id}", UUID.randomUUID()))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.error").value("Resource Not Found"));
+    }
+
+    private Cookie accessTokenCookie(User user) {
+        return new Cookie(ACCESS_TOKEN_COOKIE_NAME, jwtService.generateToken(user));
     }
 
     private User saveUser(String emailPrefix) {

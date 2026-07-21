@@ -1,5 +1,6 @@
 package edu.bbte.daygig.backend.repository;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import org.springframework.data.domain.Page;
@@ -15,6 +16,8 @@ public interface JobRepository extends JpaRepository<Job, UUID> {
 
     Page<Job> findAllByStatus(JobStatus status,
                               Pageable pageable);
+
+    List<Job> findAllByOwnerIdOrderByCreatedAtDesc(UUID ownerId);
 
     @Override
     @EntityGraph(attributePaths = "owner")

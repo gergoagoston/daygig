@@ -18,8 +18,8 @@ public class JobMapper {
     private final UserMapper userMapper;
 
     public JobOutDto toListDto(Job job) {
-        return new JobOutDto(job.getId(), job.getTitle(), job.getDescription(), job.getCategory(), job.getHourlyRate(),
-                job.getCurrency(), job.getLocationName(), job.getCreatedAt());
+        return new JobOutDto(job.getId(), job.getTitle(), job.getDescription(), job.getCategory(), job.getStatus(),
+                job.getHourlyRate(), job.getCurrency(), job.getLocationName(), job.getCreatedAt());
     }
 
     public JobDetailedOutDto toDetailsDto(Job job) {

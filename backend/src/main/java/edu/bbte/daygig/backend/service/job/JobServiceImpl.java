@@ -1,5 +1,6 @@
 package edu.bbte.daygig.backend.service.job;
 
+import java.util.List;
 import java.util.UUID;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,6 +20,11 @@ public class JobServiceImpl implements JobService {
     @Override
     public Page<Job> getOpenJobs(Pageable pageable) {
         return jobRepository.findAllByStatus(JobStatus.OPEN, pageable);
+    }
+
+    @Override
+    public List<Job> getMine(UUID ownerId) {
+        return jobRepository.findAllByOwnerIdOrderByCreatedAtDesc(ownerId);
     }
 
     @Override
