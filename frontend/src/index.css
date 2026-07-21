@@ -74,6 +74,17 @@ select {
   cursor: pointer;
 }
 
+.leaflet-container,
+.leaflet-container * {
+  cursor: grab;
+}
+
+.leaflet-control,
+.leaflet-control *,
+.leaflet-interactive {
+  cursor: pointer;
+}
+
 .app-page {
   min-height: calc(100svh - 72px);
   padding: 32px 20px;

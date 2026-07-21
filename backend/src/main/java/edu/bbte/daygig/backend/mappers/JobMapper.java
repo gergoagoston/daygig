@@ -26,8 +26,7 @@ public class JobMapper {
         return new JobDetailedOutDto(job.getId(), job.getTitle(), job.getDescription(), job.getCategory(),
                 job.getStatus(), job.getHourlyRate(), job.getCurrency(), job.getLocationName(),
                 approximateCoordinate(job.getLatitude()), approximateCoordinate(job.getLongitude()),
-                PUBLIC_LOCATION_RADIUS_METERS, userMapper.toSummaryDto(job.getOwner()), job.getCreatedAt(),
-                job.getUpdatedAt());
+                PUBLIC_LOCATION_RADIUS_METERS, userMapper.toSummaryDto(job.getOwner()), job.getCreatedAt());
     }
 
     private BigDecimal approximateCoordinate(BigDecimal coordinate) {

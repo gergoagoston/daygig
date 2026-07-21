@@ -1,3 +1,5 @@
+import type { UserSummary } from './user';
+
 export type JobCategory =
   | 'CLEANING'
   | 'MOVING'
@@ -13,16 +15,6 @@ export type JobStatus = 'OPEN' | 'ASSIGNED' | 'COMPLETED' | 'CANCELLED';
 
 export type Currency = 'RON' | 'EUR';
 
-export type PageResponse<T> = {
-  content: T[];
-  page: number;
-  size: number;
-  totalElements: number;
-  totalPages: number;
-  first: boolean;
-  last: boolean;
-};
-
 export type Job = {
   id: string;
   title: string;
@@ -36,9 +28,10 @@ export type Job = {
 
 export type JobDetails = Job & {
   status: JobStatus;
-  latitude: number;
-  longitude: number;
-  updatedAt: string;
+  approximateLatitude: number;
+  approximateLongitude: number;
+  locationRadiusMeters: number;
+  owner: UserSummary;
 };
 
 export type JobsQueryParams = {

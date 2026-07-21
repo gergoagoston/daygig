@@ -1,78 +1,108 @@
 {
-    "auth": {
-        "login": {
-            "title": "Üdvözöljük újra",
-            "subtitle": "Jelentkezz be, és kezeld a DayGig lehetőségeidet.",
-            "email": "Email",
-            "password": "Jelszó",
-            "submit_button": "Bejelentkezés",
-            "submitting": "Bejelentkezés...",
-            "register_prompt": "Még nincs fiókod?",
-            "errors": {
-                "email_required": "Az email megadása kötelező.",
-                "email_invalid": "Adj meg egy érvényes email címet.",
-                "password_required": "A jelszó megadása kötelező.",
-                "invalid_credentials": "Hibás bejelentkezési adatok.",
-                "generic": "A bejelentkezés sikertelen. Próbáld újra."
-            }
-        },
-        "register": {
-            "title": "Fiók létrehozása",
-            "subtitle": "Csatlakozz a DayGighez, és találj rugalmas munkalehetőségeket.",
-            "first_name": "Keresztnév",
-            "last_name": "Vezetéknév",
-            "phone_number": "Telefonszám",
-            "email": "Email",
-            "password": "Jelszó",
-            "confirm_password": "Jelszó megerősítése",
-            "submit_button": "Fiók létrehozása",
-            "submitting": "Fiók létrehozása...",
-            "login_prompt": "Már van fiókod?",
-            "errors": {
-                "first_name_required": "A keresztnév megadása kötelező.",
-                "last_name_required": "A vezetéknév megadása kötelező.",
-                "email_required": "Az email megadása kötelező.",
-                "email_invalid": "Adj meg egy érvényes email címet.",
-                "email_exists": "Ezzel az email címmel már létezik fiók.",
-                "password_required": "A jelszó megadása kötelező.",
-                "password_min_length": "A jelszónak legalább 8 karakter hosszúnak kell lennie.",
-                "confirm_password_required": "Erősítsd meg a jelszavad.",
-                "passwords_do_not_match": "A jelszavak nem egyeznek.",
-                "generic": "A regisztráció sikertelen. Próbáld újra."
-            }
-        }
+  "auth": {
+    "login": {
+      "title": "Üdvözöljük újra",
+      "subtitle": "Jelentkezz be, és kezeld a DayGig lehetőségeidet.",
+      "email": "Email",
+      "password": "Jelszó",
+      "submit_button": "Bejelentkezés",
+      "submitting": "Bejelentkezés...",
+      "register_prompt": "Még nincs fiókod?",
+      "errors": {
+        "email_required": "Az email megadása kötelező.",
+        "email_invalid": "Adj meg egy érvényes email címet.",
+        "password_required": "A jelszó megadása kötelező.",
+        "invalid_credentials": "Hibás bejelentkezési adatok.",
+        "generic": "A bejelentkezés sikertelen. Próbáld újra."
+      }
     },
-    "navigation": {
-        "main": "Fő navigáció",
-        "my_jobs": "Munkáim",
-        "my_applications": "Jelentkezéseim",
-        "login": "Bejelentkezés",
-        "register": "Regisztráció",
-        "logout": "Kijelentkezés",
-        "language": "Nyelv"
-    },
-    "jobs": {
-        "loading": "Munkák betöltése...",
-        "empty": {
-            "title": "Még nincs nyitott munka",
-            "description": "Nézz vissza később az új DayGig lehetőségekért."
-        },
-        "errors": {
-            "load_failed": "Nem sikerült betölteni a munkákat. Próbáld újra."
-        },
-        "card": {
-            "hourly_rate": "{{rate}} {{currency}}/óra"
-        },
-        "categories": {
-            "CLEANING": "Takarítás",
-            "MOVING": "Költöztetés",
-            "GARDENING": "Kertészkedés",
-            "DELIVERY": "Kiszállítás",
-            "BABYSITTING": "Gyerekfelügyelet",
-            "PET_CARE": "Állatgondozás",
-            "HANDYMAN": "Ezermester",
-            "EVENT_HELP": "Rendezvénysegítés",
-            "OTHER": "Egyéb"
-        }
+    "register": {
+      "title": "Fiók létrehozása",
+      "subtitle": "Csatlakozz a DayGighez, és találj rugalmas munkalehetőségeket.",
+      "first_name": "Keresztnév",
+      "last_name": "Vezetéknév",
+      "phone_number": "Telefonszám",
+      "email": "Email",
+      "password": "Jelszó",
+      "confirm_password": "Jelszó megerősítése",
+      "submit_button": "Fiók létrehozása",
+      "submitting": "Fiók létrehozása...",
+      "login_prompt": "Már van fiókod?",
+      "errors": {
+        "first_name_required": "A keresztnév megadása kötelező.",
+        "last_name_required": "A vezetéknév megadása kötelező.",
+        "email_required": "Az email megadása kötelező.",
+        "email_invalid": "Adj meg egy érvényes email címet.",
+        "email_exists": "Ezzel az email címmel már létezik fiók.",
+        "password_required": "A jelszó megadása kötelező.",
+        "password_min_length": "A jelszónak legalább 8 karakter hosszúnak kell lennie.",
+        "confirm_password_required": "Erősítsd meg a jelszavad.",
+        "passwords_do_not_match": "A jelszavak nem egyeznek.",
+        "generic": "A regisztráció sikertelen. Próbáld újra."
+      }
     }
+  },
+  "navigation": {
+    "main": "Fő navigáció",
+    "my_jobs": "Munkáim",
+    "my_applications": "Jelentkezéseim",
+    "login": "Bejelentkezés",
+    "register": "Regisztráció",
+    "logout": "Kijelentkezés",
+    "language": "Nyelv"
+  },
+  "jobs": {
+    "loading": "Munkák betöltése...",
+    "empty": {
+      "title": "Még nincs nyitott munka",
+      "description": "Nézz vissza később az új DayGig lehetőségekért."
+    },
+    "errors": {
+      "load_failed": "Nem sikerült betölteni a munkákat. Próbáld újra."
+    },
+    "card": {
+      "hourly_rate": "{{rate}} {{currency}}/óra"
+    },
+    "details": {
+      "loading": "Munka részleteinek betöltése...",
+      "status_label": "Állapot",
+      "hourly_rate": "Óradíj",
+      "location": "Helyszín",
+      "owner": "Hirdető",
+      "published_on": "Közzétéve",
+      "map": {
+        "approximate_location": "Hozzávetőleges helyszín",
+        "missing_location": "Ehhez a munkához nem érhető el helyszínadat."
+      },
+      "apply": {
+        "button": "Jelentkezés",
+        "submitting": "Jelentkezés...",
+        "success": "A jelentkezés sikeresen elküldve!",
+        "already_applied": "Már jelentkeztél erre a munkára.",
+        "duplicate": "Erre a munkára már jelentkeztél.",
+        "generic_error": "Valami hiba történt. Próbáld újra később.",
+        "own_job": "Nem jelentkezhetsz a saját munkádra."
+      },
+      "errors": {
+        "load_failed": "Nem sikerült betölteni a munka részleteit. Próbáld újra."
+      }
+    },
+    "statuses": {
+      "OPEN": "Nyitott",
+      "ASSIGNED": "Kiosztva",
+      "COMPLETED": "Befejezve",
+      "CANCELLED": "Lezárva"
+    },
+    "categories": {
+      "CLEANING": "Takarítás",
+      "MOVING": "Költöztetés",
+      "GARDENING": "Kertészkedés",
+      "DELIVERY": "Kiszállítás",
+      "BABYSITTING": "Gyerekfelügyelet",
+      "PET_CARE": "Állatgondozás",
+      "HANDYMAN": "Ezermester",
+      "EVENT_HELP": "Rendezvénysegítés",
+      "OTHER": "Egyéb"
+    }
+  }
 }

@@ -1,78 +1,108 @@
 {
-    "auth": {
-        "login": {
-            "title": "Bine ai revenit",
-            "subtitle": "Autentifica-te pentru a gestiona oportunitatile DayGig.",
-            "email": "Email",
-            "password": "Parola",
-            "submit_button": "Autentificare",
-            "submitting": "Autentificare...",
-            "register_prompt": "Nu ai cont?",
-            "errors": {
-                "email_required": "Emailul este obligatoriu.",
-                "email_invalid": "Introdu o adresa de email valida.",
-                "password_required": "Parola este obligatorie.",
-                "invalid_credentials": "Credentiale invalide.",
-                "generic": "Autentificarea a esuat. Incearca din nou."
-            }
-        },
-        "register": {
-            "title": "Creeaza un cont",
-            "subtitle": "Alatura-te DayGig si gaseste oportunitati de lucru flexibile.",
-            "first_name": "Prenume",
-            "last_name": "Nume",
-            "phone_number": "Numar de telefon",
-            "email": "Email",
-            "password": "Parola",
-            "confirm_password": "Confirma parola",
-            "submit_button": "Creeaza contul",
-            "submitting": "Se creeaza contul...",
-            "login_prompt": "Ai deja un cont?",
-            "errors": {
-                "first_name_required": "Prenumele este obligatoriu.",
-                "last_name_required": "Numele este obligatoriu.",
-                "email_required": "Emailul este obligatoriu.",
-                "email_invalid": "Introdu o adresa de email valida.",
-                "email_exists": "Exista deja un cont cu acest email.",
-                "password_required": "Parola este obligatorie.",
-                "password_min_length": "Parola trebuie sa aiba cel putin 8 caractere.",
-                "confirm_password_required": "Confirma parola.",
-                "passwords_do_not_match": "Parolele nu se potrivesc.",
-                "generic": "Inregistrarea a esuat. Incearca din nou."
-            }
-        }
+  "auth": {
+    "login": {
+      "title": "Bine ai revenit",
+      "subtitle": "Autentifica-te pentru a gestiona oportunitatile DayGig.",
+      "email": "Email",
+      "password": "Parola",
+      "submit_button": "Autentificare",
+      "submitting": "Autentificare...",
+      "register_prompt": "Nu ai cont?",
+      "errors": {
+        "email_required": "Emailul este obligatoriu.",
+        "email_invalid": "Introdu o adresa de email valida.",
+        "password_required": "Parola este obligatorie.",
+        "invalid_credentials": "Credentiale invalide.",
+        "generic": "Autentificarea a esuat. Incearca din nou."
+      }
     },
-    "navigation": {
-        "main": "Navigare principala",
-        "my_jobs": "Joburile mele",
-        "my_applications": "Aplicatiile mele",
-        "login": "Autentificare",
-        "register": "Inregistrare",
-        "logout": "Deconectare",
-        "language": "Limba"
-    },
-    "jobs": {
-        "loading": "Se incarca joburile...",
-        "empty": {
-            "title": "Nu exista joburi deschise",
-            "description": "Revino mai tarziu pentru oportunitati DayGig noi."
-        },
-        "errors": {
-            "load_failed": "Nu am putut incarca joburile. Incearca din nou."
-        },
-        "card": {
-            "hourly_rate": "{{rate}} {{currency}}/ora"
-        },
-        "categories": {
-            "CLEANING": "Curatenie",
-            "MOVING": "Mutari",
-            "GARDENING": "Gradinarit",
-            "DELIVERY": "Livrare",
-            "BABYSITTING": "Ingrijire copii",
-            "PET_CARE": "Ingrijire animale",
-            "HANDYMAN": "Mester",
-            "EVENT_HELP": "Ajutor evenimente",
-            "OTHER": "Altceva"
-        }
+    "register": {
+      "title": "Creeaza un cont",
+      "subtitle": "Alatura-te DayGig si gaseste oportunitati de lucru flexibile.",
+      "first_name": "Prenume",
+      "last_name": "Nume",
+      "phone_number": "Numar de telefon",
+      "email": "Email",
+      "password": "Parola",
+      "confirm_password": "Confirma parola",
+      "submit_button": "Creeaza contul",
+      "submitting": "Se creeaza contul...",
+      "login_prompt": "Ai deja un cont?",
+      "errors": {
+        "first_name_required": "Prenumele este obligatoriu.",
+        "last_name_required": "Numele este obligatoriu.",
+        "email_required": "Emailul este obligatoriu.",
+        "email_invalid": "Introdu o adresa de email valida.",
+        "email_exists": "Exista deja un cont cu acest email.",
+        "password_required": "Parola este obligatorie.",
+        "password_min_length": "Parola trebuie sa aiba cel putin 8 caractere.",
+        "confirm_password_required": "Confirma parola.",
+        "passwords_do_not_match": "Parolele nu se potrivesc.",
+        "generic": "Inregistrarea a esuat. Incearca din nou."
+      }
     }
+  },
+  "navigation": {
+    "main": "Navigare principala",
+    "my_jobs": "Joburile mele",
+    "my_applications": "Aplicatiile mele",
+    "login": "Autentificare",
+    "register": "Inregistrare",
+    "logout": "Deconectare",
+    "language": "Limba"
+  },
+  "jobs": {
+    "loading": "Se incarca joburile...",
+    "empty": {
+      "title": "Nu exista joburi deschise",
+      "description": "Revino mai tarziu pentru oportunitati DayGig noi."
+    },
+    "errors": {
+      "load_failed": "Nu am putut incarca joburile. Incearca din nou."
+    },
+    "card": {
+      "hourly_rate": "{{rate}} {{currency}}/ora"
+    },
+    "details": {
+      "loading": "Se incarca detaliile jobului...",
+      "status_label": "Status",
+      "hourly_rate": "Tarif orar",
+      "location": "Locatie",
+      "owner": "Publicat de",
+      "published_on": "Publicat la",
+      "map": {
+        "approximate_location": "Locatie aproximativa",
+        "missing_location": "Datele despre locatie nu sunt disponibile pentru acest job."
+      },
+      "apply": {
+        "button": "Aplica",
+        "submitting": "Se aplica...",
+        "success": "Aplicatia a fost trimisa cu succes!",
+        "already_applied": "Ai aplicat pentru acest job.",
+        "duplicate": "Ai aplicat deja pentru acest job.",
+        "generic_error": "A aparut o eroare. Incearca din nou mai tarziu.",
+        "own_job": "Nu poti aplica la propriul job."
+      },
+      "errors": {
+        "load_failed": "Nu am putut incarca detaliile jobului. Incearca din nou."
+      }
+    },
+    "statuses": {
+      "OPEN": "Deschis",
+      "ASSIGNED": "Atribuit",
+      "COMPLETED": "Finalizat",
+      "CANCELLED": "Inchis"
+    },
+    "categories": {
+      "CLEANING": "Curatenie",
+      "MOVING": "Mutari",
+      "GARDENING": "Gradinarit",
+      "DELIVERY": "Livrare",
+      "BABYSITTING": "Ingrijire copii",
+      "PET_CARE": "Ingrijire animale",
+      "HANDYMAN": "Mester",
+      "EVENT_HELP": "Ajutor evenimente",
+      "OTHER": "Altceva"
+    }
+  }
 }
