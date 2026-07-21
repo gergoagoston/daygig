@@ -23,9 +23,9 @@ function Navbar() {
   };
 
   return (
-    <header className="grid min-h-18 gap-3 border-b border-border bg-surface px-5 py-4 md:grid-cols-[1fr_auto_1fr] md:items-center md:px-8">
+    <header className="grid min-h-18 grid-cols-[1fr_auto] gap-3 border-b border-border bg-surface px-5 py-4 md:grid-cols-[1fr_auto_1fr] md:items-center md:px-8">
       <nav
-        className="flex flex-wrap items-center gap-2 md:justify-self-start"
+        className="order-3 col-span-2 flex flex-wrap items-center justify-center gap-2 md:order-1 md:col-span-1 md:justify-self-start"
         aria-label={t('navigation.main')}
       >
         {isAuthenticated ? (
@@ -41,31 +41,16 @@ function Navbar() {
       </nav>
 
       <NavLink
-        className="text-center text-lg font-extrabold text-heading no-underline! md:justify-self-center"
+        className="order-1 justify-self-start text-lg font-extrabold text-heading no-underline! md:order-2 md:justify-self-center"
         to="/jobs"
       >
         DayGig
       </NavLink>
 
-      <div className="flex flex-wrap items-center justify-between gap-3 md:justify-self-end">
-        <label>
-          <span className="sr-only">{t('navigation.language')}</span>
-          <select
-            className="rounded-lg border border-border bg-surface px-3 py-2 text-sm font-bold text-heading outline-none hover:border-primary focus:border-primary"
-            value={currentLanguage.slice(0, 2)}
-            onChange={(event) => void i18n.changeLanguage(event.target.value)}
-          >
-            {languages.map((language) => (
-              <option key={language.code} value={language.code}>
-                {language.label}
-              </option>
-            ))}
-          </select>
-        </label>
-
+      <div className="order-2 flex flex-wrap items-center justify-end gap-3 md:order-3 md:justify-self-end">
         {isInitializing ? null : isAuthenticated ? (
-          <div className="flex min-w-0 flex-wrap items-center gap-2">
-            <span className="max-w-45 overflow-hidden text-ellipsis whitespace-nowrap font-bold text-heading">
+          <div className="flex min-w-0 flex-wrap items-center justify-end gap-2">
+            <span className="max-w-28 overflow-hidden text-ellipsis whitespace-nowrap font-bold text-heading sm:max-w-45">
               {accountLabel}
             </span>
             <button className="navbar-gomb" type="button" onClick={handleLogout}>
@@ -82,6 +67,21 @@ function Navbar() {
             </NavLink>
           </div>
         )}
+
+        <label>
+          <span className="sr-only">{t('navigation.language')}</span>
+          <select
+            className="rounded-lg border border-border bg-surface px-3 py-2 text-sm font-bold text-heading outline-none hover:border-primary focus:border-primary"
+            value={currentLanguage.slice(0, 2)}
+            onChange={(event) => void i18n.changeLanguage(event.target.value)}
+          >
+            {languages.map((language) => (
+              <option key={language.code} value={language.code}>
+                {language.label}
+              </option>
+            ))}
+          </select>
+        </label>
       </div>
     </header>
   );

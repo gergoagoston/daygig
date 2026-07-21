@@ -44,12 +44,23 @@
   },
   "navigation": {
     "main": "Main navigation",
-    "my_jobs": "My Jobs",
+    "my_jobs": "Posted Jobs",
     "my_applications": "My Applications",
     "login": "Login",
     "register": "Register",
     "logout": "Logout",
     "language": "Language"
+  },
+  "posted_jobs": {
+    "title": "Posted Jobs",
+    "loading": "Loading posted jobs...",
+    "empty": {
+      "title": "No posted jobs yet",
+      "description": "Jobs you publish will appear here."
+    },
+    "errors": {
+      "load_failed": "Could not load your posted jobs. Please try again."
+    }
   },
   "jobs": {
     "loading": "Loading jobs...",

@@ -44,12 +44,23 @@
   },
   "navigation": {
     "main": "Fő navigáció",
-    "my_jobs": "Munkáim",
+    "my_jobs": "Meghirdetett munkáim",
     "my_applications": "Jelentkezéseim",
     "login": "Bejelentkezés",
     "register": "Regisztráció",
     "logout": "Kijelentkezés",
     "language": "Nyelv"
+  },
+  "posted_jobs": {
+    "title": "Meghirdetett munkáim",
+    "loading": "Meghirdetett munkák betöltése...",
+    "empty": {
+      "title": "Még nincs meghirdetett munkád",
+      "description": "Az általad közzétett munkák itt fognak megjelenni."
+    },
+    "errors": {
+      "load_failed": "Nem sikerült betölteni a meghirdetett munkáidat. Próbáld újra."
+    }
   },
   "jobs": {
     "loading": "Munkák betöltése...",

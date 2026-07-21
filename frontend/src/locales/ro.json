@@ -44,12 +44,23 @@
   },
   "navigation": {
     "main": "Navigare principala",
-    "my_jobs": "Joburile mele",
+    "my_jobs": "Joburile publicate",
     "my_applications": "Aplicatiile mele",
     "login": "Autentificare",
     "register": "Inregistrare",
     "logout": "Deconectare",
     "language": "Limba"
+  },
+  "posted_jobs": {
+    "title": "Joburile publicate",
+    "loading": "Se incarca joburile publicate...",
+    "empty": {
+      "title": "Nu ai joburi publicate inca",
+      "description": "Joburile pe care le publici vor aparea aici."
+    },
+    "errors": {
+      "load_failed": "Nu am putut incarca joburile tale publicate. Incearca din nou."
+    }
   },
   "jobs": {
     "loading": "Se incarca joburile...",

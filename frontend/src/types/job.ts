@@ -20,6 +20,7 @@ export type Job = {
   title: string;
   description: string;
   category: JobCategory;
+  status: JobStatus;
   hourlyRate: number;
   currency: Currency;
   locationName: string;

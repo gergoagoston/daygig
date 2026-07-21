@@ -8,6 +8,11 @@ export async function getJobs(params?: JobsQueryParams): Promise<PageResponse<Jo
   return response.data;
 }
 
+export async function getMyJobs(): Promise<Job[]> {
+  const response = await httpClient.get<Job[]>('/jobs/mine');
+  return response.data;
+}
+
 export async function getJobById(id: string): Promise<JobDetails> {
   const response = await httpClient.get<JobDetails>(`/jobs/${id}`);
   return response.data;
