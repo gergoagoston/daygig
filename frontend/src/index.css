@@ -97,6 +97,28 @@ select {
   padding: 32px 20px;
 }
 
+.view-transition {
+  animation: view-enter 160ms ease-out both;
+}
+
+@keyframes view-enter {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .view-transition {
+    animation: none;
+  }
+}
+
 @media (min-width: 768px) {
   .app-page {
     padding-right: 32px;
