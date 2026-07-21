@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
+import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
@@ -20,9 +21,11 @@ import edu.bbte.daygig.backend.model.User;
 import edu.bbte.daygig.backend.repository.JobRepository;
 import edu.bbte.daygig.backend.repository.UserRepository;
 import edu.bbte.daygig.backend.security.JwtService;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -118,6 +121,75 @@ class JobControllerIntegrationTest {
     }
 
     @Test
+    void createJobCreatesOpenJobForAuthenticatedUser() throws Exception {
+        User owner = saveUser("create-owner");
+
+        String response = mockMvc.perform(post("/jobs")
+                .cookie(accessTokenCookie(owner))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(validCreateJobJson()))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.id").exists())
+                .andExpect(jsonPath("$.title").value("Created job"))
+                .andExpect(jsonPath("$.description").value("Created job description"))
+                .andExpect(jsonPath("$.category").value("DELIVERY"))
+                .andExpect(jsonPath("$.status").value("OPEN"))
+                .andExpect(jsonPath("$.hourlyRate").value(60.0))
+                .andExpect(jsonPath("$.currency").value("EUR"))
+                .andExpect(jsonPath("$.locationName").value("Oradea"))
+                .andReturn()
+                .getResponse()
+                .getContentAsString();
+
+        UUID createdJobId = UUID.fromString(response.replaceAll(".*\"id\":\"([^\"]+)\".*", "$1"));
+        Job createdJob = jobRepository.findById(createdJobId).orElseThrow();
+
+        assertThat(createdJob.getOwner().getId()).isEqualTo(owner.getId());
+        assertThat(createdJob.getStatus()).isEqualTo(JobStatus.OPEN);
+        assertThat(createdJob.getLatitude()).isEqualByComparingTo(new BigDecimal("47.046500"));
+        assertThat(createdJob.getLongitude()).isEqualByComparingTo(new BigDecimal("21.918900"));
+    }
+
+    @Test
+    void createJobRejectsUnauthenticatedRequest() throws Exception {
+        mockMvc.perform(post("/jobs")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(validCreateJobJson()))
+                .andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    void createJobRejectsValidationErrors() throws Exception {
+        User owner = saveUser("create-validation-owner");
+
+        mockMvc.perform(post("/jobs")
+                .cookie(accessTokenCookie(owner))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("""
+                        {
+                          "title": "",
+                          "description": "",
+                          "category": null,
+                          "hourlyRate": -5,
+                          "currency": null,
+                          "locationName": "",
+                          "latitude": 95,
+                          "longitude": -190
+                        }
+                        """))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.error").value("Validation Failed"))
+                .andExpect(jsonPath("$.details.title").exists())
+                .andExpect(jsonPath("$.details.description").exists())
+                .andExpect(jsonPath("$.details.category").exists())
+                .andExpect(jsonPath("$.details.hourlyRate").exists())
+                .andExpect(jsonPath("$.details.currency").exists())
+                .andExpect(jsonPath("$.details.locationName").exists())
+                .andExpect(jsonPath("$.details.latitude").exists())
+                .andExpect(jsonPath("$.details.longitude").exists());
+    }
+
+    @Test
     void getJobDetailsWorksWithoutAuthentication() throws Exception {
         User owner = saveUser("details-owner");
         Job job = saveJob(owner, "Details job", JobCategory.EVENT_HELP, JobStatus.ASSIGNED);
@@ -151,6 +223,21 @@ class JobControllerIntegrationTest {
 
     private Cookie accessTokenCookie(User user) {
         return new Cookie(ACCESS_TOKEN_COOKIE_NAME, jwtService.generateToken(user));
+    }
+
+    private String validCreateJobJson() {
+        return """
+                {
+                  "title": "Created job",
+                  "description": "Created job description",
+                  "category": "DELIVERY",
+                  "hourlyRate": 60.00,
+                  "currency": "EUR",
+                  "locationName": "Oradea",
+                  "latitude": 47.046500,
+                  "longitude": 21.918900
+                }
+                """;
     }
 
     private User saveUser(String emailPrefix) {
