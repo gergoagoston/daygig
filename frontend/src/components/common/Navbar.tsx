@@ -10,7 +10,11 @@ const languages = [
   { code: 'ro', label: 'RO' },
 ] as const;
 
-function Navbar() {
+type NavbarProps = {
+  onCreateJob: () => void;
+};
+
+function Navbar({ onCreateJob }: NavbarProps) {
   const { i18n, t } = useTranslation();
   const navigate = useNavigate();
   const { isAuthenticated, isInitializing, logout, user } = useAuth();
@@ -36,6 +40,13 @@ function Navbar() {
             <NavLink className="navbar-gomb" to="/my-applications">
               {t('navigation.my_applications')}
             </NavLink>
+            <button
+              className="navbar-create-gomb"
+              type="button"
+              aria-label={t('jobs.create.nav_label')}
+              title={t('jobs.create.nav_label')}
+              onClick={onCreateJob}
+            />
           </>
         ) : null}
       </nav>

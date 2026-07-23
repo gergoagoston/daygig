@@ -102,6 +102,50 @@
     "card": {
       "hourly_rate": "{{rate}} {{currency}}/ora"
     },
+    "create": {
+      "nav_label": "Publica un job",
+      "title": "Publica un job",
+      "close": "Inchide",
+      "cancel": "Anuleaza",
+      "submit": "Creeaza jobul",
+      "submitting": "Se creeaza...",
+      "fields": {
+        "title": "Titlu",
+        "description": "Descriere",
+        "category": "Categorie",
+        "hourly_rate": "Tarif orar",
+        "currency": "Moneda",
+        "location_name": "Numele locatiei",
+        "select_placeholder": "Selecteaza"
+      },
+      "map": {
+        "label": "Locatia jobului"
+      },
+      "errors": {
+        "generic": "Nu am putut crea jobul. Incearca din nou.",
+        "title_required": "Titlul este obligatoriu.",
+        "title_too_long": "Titlul trebuie sa aiba cel mult 50 de caractere.",
+        "description_required": "Descrierea este obligatorie.",
+        "description_too_long": "Descrierea trebuie sa aiba cel mult 1000 de caractere.",
+        "category_required": "Categoria este obligatorie.",
+        "hourly_rate_required": "Tariful orar este obligatoriu.",
+        "hourly_rate_positive": "Tariful orar trebuie sa fie mai mare decat 0.",
+        "currency_required": "Moneda este obligatorie.",
+        "location_name_required": "Numele locatiei este obligatoriu.",
+        "location_required": "Selecteaza o locatie pe harta.",
+        "location_invalid": "Locatia selectata este invalida.",
+        "backend": {
+          "title": "Titlul este obligatoriu.",
+          "description": "Descrierea este obligatorie.",
+          "category": "Categoria este obligatorie.",
+          "hourlyRate": "Tariful orar trebuie sa fie mai mare decat 0.",
+          "currency": "Moneda este obligatorie.",
+          "locationName": "Numele locatiei este obligatoriu.",
+          "latitude": "Selecteaza o locatie valida pe harta.",
+          "longitude": "Selecteaza o locatie valida pe harta."
+        }
+      }
+    },
     "details": {
       "loading": "Se incarca detaliile jobului...",
       "status_label": "Status",

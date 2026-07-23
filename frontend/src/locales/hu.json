@@ -102,6 +102,50 @@
     "card": {
       "hourly_rate": "{{rate}} {{currency}}/óra"
     },
+    "create": {
+      "nav_label": "Munka meghirdetése",
+      "title": "Munka meghirdetése",
+      "close": "Bezárás",
+      "cancel": "Mégse",
+      "submit": "Munka létrehozása",
+      "submitting": "Létrehozás...",
+      "fields": {
+        "title": "Cím",
+        "description": "Leírás",
+        "category": "Kategória",
+        "hourly_rate": "Óradíj",
+        "currency": "Pénznem",
+        "location_name": "Helyszín neve",
+        "select_placeholder": "Válassz"
+      },
+      "map": {
+        "label": "Munka helyszíne"
+      },
+      "errors": {
+        "generic": "Nem sikerült létrehozni a munkát. Próbáld újra.",
+        "title_required": "A cím megadása kötelező.",
+        "title_too_long": "A cím legfeljebb 50 karakter lehet.",
+        "description_required": "A leírás megadása kötelező.",
+        "description_too_long": "A leírás legfeljebb 1000 karakter lehet.",
+        "category_required": "A kategória megadása kötelező.",
+        "hourly_rate_required": "Az óradíj megadása kötelező.",
+        "hourly_rate_positive": "Az óradíjnak nagyobbnak kell lennie 0-nál.",
+        "currency_required": "A pénznem megadása kötelező.",
+        "location_name_required": "A helyszín nevének megadása kötelező.",
+        "location_required": "Válassz helyszínt a térképen.",
+        "location_invalid": "A kiválasztott helyszín érvénytelen.",
+        "backend": {
+          "title": "A cím megadása kötelező.",
+          "description": "A leírás megadása kötelező.",
+          "category": "A kategória megadása kötelező.",
+          "hourlyRate": "Az óradíjnak nagyobbnak kell lennie 0-nál.",
+          "currency": "A pénznem megadása kötelező.",
+          "locationName": "A helyszín nevének megadása kötelező.",
+          "latitude": "Válassz érvényes helyszínt a térképen.",
+          "longitude": "Válassz érvényes helyszínt a térképen."
+        }
+      }
+    },
     "details": {
       "loading": "Munka részleteinek betöltése...",
       "status_label": "Állapot",

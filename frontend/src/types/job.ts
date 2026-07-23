@@ -1,15 +1,18 @@
 import type { UserSummary } from './user';
 
-export type JobCategory =
-  | 'CLEANING'
-  | 'MOVING'
-  | 'GARDENING'
-  | 'DELIVERY'
-  | 'BABYSITTING'
-  | 'PET_CARE'
-  | 'HANDYMAN'
-  | 'EVENT_HELP'
-  | 'OTHER';
+export const jobCategories = [
+  'CLEANING',
+  'MOVING',
+  'GARDENING',
+  'DELIVERY',
+  'BABYSITTING',
+  'PET_CARE',
+  'HANDYMAN',
+  'EVENT_HELP',
+  'OTHER',
+] as const;
+
+export type JobCategory = (typeof jobCategories)[number];
 
 export type JobStatus = 'OPEN' | 'ASSIGNED' | 'COMPLETED' | 'CANCELLED';
 
@@ -25,6 +28,17 @@ export type Job = {
   currency: Currency;
   locationName: string;
   createdAt: string;
+};
+
+export type JobCreatePayload = {
+  title: string;
+  description: string;
+  category: JobCategory;
+  hourlyRate: number;
+  currency: Currency;
+  locationName: string;
+  latitude: number;
+  longitude: number;
 };
 
 export type JobDetails = Job & {

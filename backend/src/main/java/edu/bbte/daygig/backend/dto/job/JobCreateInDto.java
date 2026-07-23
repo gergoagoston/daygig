@@ -10,8 +10,8 @@ import jakarta.validation.constraints.Size;
 import edu.bbte.daygig.backend.model.enums.Currency;
 import edu.bbte.daygig.backend.model.enums.JobCategory;
 
-public record JobCreateInDto(@NotBlank @Size(max = 160) String title,
-                             @NotBlank @Size(max = 4000) String description,
+public record JobCreateInDto(@NotBlank @Size(max = 50) String title,
+                             @NotBlank @Size(max = 1000) String description,
                              @NotNull JobCategory category,
                              @NotNull @Positive BigDecimal hourlyRate,
                              @NotNull Currency currency,

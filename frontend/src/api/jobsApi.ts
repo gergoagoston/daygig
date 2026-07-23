@@ -1,5 +1,5 @@
 import type { PageResponse } from '../types/common';
-import type { Job, JobDetails, JobsQueryParams } from '../types/job';
+import type { Job, JobCreatePayload, JobDetails, JobsQueryParams } from '../types/job';
 import httpClient from './httpClient';
 
 export async function getJobs(params?: JobsQueryParams): Promise<PageResponse<Job>> {
@@ -9,6 +9,11 @@ export async function getJobs(params?: JobsQueryParams): Promise<PageResponse<Jo
 
 export async function getMyJobs(): Promise<Job[]> {
   const response = await httpClient.get<Job[]>('/jobs/mine');
+  return response.data;
+}
+
+export async function createJob(payload: JobCreatePayload): Promise<Job> {
+  const response = await httpClient.post<Job>('/jobs', payload);
   return response.data;
 }
 

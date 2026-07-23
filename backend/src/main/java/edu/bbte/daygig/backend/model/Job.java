@@ -25,10 +25,10 @@ import edu.bbte.daygig.backend.model.enums.JobStatus;
 @Setter
 public class Job extends BaseEntity {
 
-    @Column(name = "title", nullable = false, length = 160)
+    @Column(name = "title", nullable = false, length = 50)
     private String title;
 
-    @Column(name = "description", nullable = false, length = 4000)
+    @Column(name = "description", nullable = false, length = 1000)
     private String description;
 
     @Enumerated(EnumType.STRING)

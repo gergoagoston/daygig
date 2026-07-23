@@ -102,6 +102,50 @@
     "card": {
       "hourly_rate": "{{rate}} {{currency}}/hour"
     },
+    "create": {
+      "nav_label": "Post a Job",
+      "title": "Post a Job",
+      "close": "Close",
+      "cancel": "Cancel",
+      "submit": "Create job",
+      "submitting": "Creating...",
+      "fields": {
+        "title": "Title",
+        "description": "Description",
+        "category": "Category",
+        "hourly_rate": "Hourly rate",
+        "currency": "Currency",
+        "location_name": "Location name",
+        "select_placeholder": "Select"
+      },
+      "map": {
+        "label": "Job location"
+      },
+      "errors": {
+        "generic": "Could not create job. Please try again.",
+        "title_required": "Title is required.",
+        "title_too_long": "Title must be 50 characters or fewer.",
+        "description_required": "Description is required.",
+        "description_too_long": "Description must be 1000 characters or fewer.",
+        "category_required": "Category is required.",
+        "hourly_rate_required": "Hourly rate is required.",
+        "hourly_rate_positive": "Hourly rate must be greater than 0.",
+        "currency_required": "Currency is required.",
+        "location_name_required": "Location name is required.",
+        "location_required": "Select a location on the map.",
+        "location_invalid": "Selected location is invalid.",
+        "backend": {
+          "title": "Title is required.",
+          "description": "Description is required.",
+          "category": "Category is required.",
+          "hourlyRate": "Hourly rate must be greater than 0.",
+          "currency": "Currency is required.",
+          "locationName": "Location name is required.",
+          "latitude": "Select a valid location on the map.",
+          "longitude": "Select a valid location on the map."
+        }
+      }
+    },
     "details": {
       "loading": "Loading job details...",
       "status_label": "Status",
