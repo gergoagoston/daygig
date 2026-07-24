@@ -1,6 +1,7 @@
 package edu.bbte.daygig.backend.config;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Profile;
@@ -81,6 +82,7 @@ public class DevDataSeeder implements ApplicationRunner {
         user.setLastName(lastName);
         user.setPhoneNumber(phoneNumber);
         user.setDeleted(false);
+        user.setTermsAcceptedAt(LocalDateTime.now());
 
         return userRepository.save(user);
     }

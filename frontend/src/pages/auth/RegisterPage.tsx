@@ -1,6 +1,6 @@
 import type { ChangeEvent, FormEvent } from 'react';
 import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { registerUser } from '../../api/authApi';
@@ -16,6 +16,7 @@ type FormValues = {
   password: string;
   confirmPassword: string;
   phoneNumber: string;
+  termsAccepted: boolean;
 };
 
 type FormErrors = Partial<Record<keyof FormValues | 'form', string>>;
@@ -27,6 +28,7 @@ const initialFormValues: FormValues = {
   password: '',
   confirmPassword: '',
   phoneNumber: '',
+  termsAccepted: false,
 };
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -68,12 +70,19 @@ function RegisterPage() {
       nextErrors.confirmPassword = t('auth.register.errors.passwords_do_not_match');
     }
 
+    if (!values.termsAccepted) {
+      nextErrors.termsAccepted = t('auth.register.errors.terms_required');
+    }
+
     return nextErrors;
   };
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    const nextValues = { ...formValues, [name]: value };
+    const { checked, name, type, value } = event.target;
+    const nextValues = {
+      ...formValues,
+      [name]: type === 'checkbox' ? checked : value,
+    } as FormValues;
 
     setFormValues(nextValues);
 
@@ -102,6 +111,7 @@ function RegisterPage() {
         email: formValues.email.trim(),
         password: formValues.password,
         phoneNumber: formValues.phoneNumber.trim(),
+        termsAccepted: formValues.termsAccepted,
       });
 
       navigate('/login', { replace: true });
@@ -198,7 +208,7 @@ function RegisterPage() {
 
       <Input
         id="register-phone-number"
-        className="mb-2"
+        className="mb-5"
         name="phoneNumber"
         label={t('auth.register.phone_number')}
         type="tel"
@@ -206,6 +216,39 @@ function RegisterPage() {
         onChange={handleChange}
         autoComplete="tel"
       />
+
+      <div className="mb-5 flex flex-col gap-2">
+        <div className="flex items-start gap-3 rounded-lg border border-border bg-page px-3.5 py-3">
+          <input
+            id="register-terms-accepted"
+            className="mt-1 size-4 rounded border-border accent-primary outline-none focus:ring-2 focus:ring-primary-soft"
+            name="termsAccepted"
+            type="checkbox"
+            checked={formValues.termsAccepted}
+            onChange={handleChange}
+            aria-describedby={errors.termsAccepted ? 'register-terms-accepted-error' : undefined}
+            aria-invalid={Boolean(errors.termsAccepted)}
+            required
+          />
+          <label
+            htmlFor="register-terms-accepted"
+            className="text-sm font-semibold leading-relaxed text-heading"
+          >
+            <Trans
+              i18nKey="auth.register.terms_consent"
+              components={{
+                termsLink: <Link to="/terms-and-conditions" target="_blank" rel="noreferrer" />,
+              }}
+            />
+          </label>
+        </div>
+
+        {errors.termsAccepted ? (
+          <p id="register-terms-accepted-error" className="text-sm text-danger">
+            {errors.termsAccepted}
+          </p>
+        ) : null}
+      </div>
 
       {errors.form ? (
         <p className="mb-4 rounded-lg bg-surface px-3.5 py-3 font-semibold text-danger">

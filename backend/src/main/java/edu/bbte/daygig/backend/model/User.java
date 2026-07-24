@@ -1,5 +1,6 @@
 package edu.bbte.daygig.backend.model;
 
+import java.time.LocalDateTime;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Enumerated;
@@ -43,6 +44,9 @@ public class User extends BaseEntity {
 
     @Column(nullable = true, name = "bio", length = 1000)
     private String bio;
+
+    @Column(name = "terms_accepted_at", nullable = false, updatable = false)
+    private LocalDateTime termsAcceptedAt;
 
     @Column(name = "is_deleted", nullable = false)
     private boolean isDeleted = false;

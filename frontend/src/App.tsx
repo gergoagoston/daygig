@@ -9,6 +9,7 @@ import JobDetailsPage from './pages/JobDetailsPage';
 import JobsPage from './pages/JobsPage';
 import MyApplicationsPage from './pages/MyApplicationsPage';
 import MyJobsPage from './pages/MyJobsPage';
+import TermsAndConditionsPage from './pages/TermsAndConditionsPage';
 import LoginPage from './pages/auth/LoginPage';
 import RegisterPage from './pages/auth/RegisterPage';
 
@@ -26,6 +27,7 @@ function App() {
           <Route path="/" element={<Navigate to="/jobs" replace />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/terms-and-conditions" element={<TermsAndConditionsPage />} />
           <Route path="/jobs" element={<JobsPage />} />
           <Route path="/jobs/:id" element={<JobDetailsPage />} />
           <Route element={<ProtectedRoute />}>

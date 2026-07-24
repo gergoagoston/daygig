@@ -1,6 +1,7 @@
 package edu.bbte.daygig.backend.job.integration;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.UUID;
 import jakarta.servlet.http.Cookie;
 import org.junit.jupiter.api.Test;
@@ -249,6 +250,7 @@ class JobControllerIntegrationTest {
         user.setLastName("Owner");
         user.setPhoneNumber("0712345678");
         user.setDeleted(false);
+        user.setTermsAcceptedAt(LocalDateTime.now());
 
         return userRepository.saveAndFlush(user);
     }

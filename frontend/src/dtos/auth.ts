@@ -9,4 +9,5 @@ export type RegisterUserDto = {
   email: string;
   password: string;
   phoneNumber: string;
+  termsAccepted: boolean;
 };
