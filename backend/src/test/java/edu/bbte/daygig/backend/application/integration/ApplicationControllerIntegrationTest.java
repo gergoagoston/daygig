@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
+import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
@@ -28,6 +29,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -162,8 +164,210 @@ class ApplicationControllerIntegrationTest {
                 .andExpect(jsonPath("$[*].job.status", containsInAnyOrder("OPEN", "ASSIGNED")));
     }
 
+    @Test
+    void getByJobReturnsApplicationsForJobOwner() throws Exception {
+        User owner = saveUser("owner-list-owner");
+        User applicant = saveUser("owner-list-applicant");
+        Job job = saveJob(owner, "Owner application list job", JobStatus.OPEN);
+        Application application = saveApplication(applicant, job, ApplicationStatus.PENDING);
+
+        mockMvc.perform(get("/jobs/{jobId}/applications", job.getId())
+                .cookie(accessTokenCookie(owner)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(1)))
+                .andExpect(jsonPath("$[0].id").value(application.getId().toString()))
+                .andExpect(jsonPath("$[0].status").value("PENDING"))
+                .andExpect(jsonPath("$[0].appliedAt").exists())
+                .andExpect(jsonPath("$[0].applicant.id").value(applicant.getId().toString()))
+                .andExpect(jsonPath("$[0].applicant.firstName").value(applicant.getFirstName()))
+                .andExpect(jsonPath("$[0].applicant.lastName").value(applicant.getLastName()));
+    }
+
+    @Test
+    void getByJobRejectsNonOwner() throws Exception {
+        User owner = saveUser("owner-list-forbidden-owner");
+        User otherUser = saveUser("owner-list-forbidden-other");
+        Job job = saveJob(owner, "Owner application forbidden job", JobStatus.OPEN);
+
+        mockMvc.perform(get("/jobs/{jobId}/applications", job.getId())
+                .cookie(accessTokenCookie(otherUser)))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.error").value("Forbidden"));
+    }
+
+    @Test
+    void updateStatusAcceptsPendingApplicationAndAssignsJob() throws Exception {
+        User owner = saveUser("accept-owner");
+        User acceptedApplicant = saveUser("accept-applicant");
+        User pendingApplicant = saveUser("accept-other-applicant");
+        Job job = saveJob(owner, "Accept job", JobStatus.OPEN);
+        Application acceptedApplication = saveApplication(acceptedApplicant, job, ApplicationStatus.PENDING);
+        Application pendingApplication = saveApplication(pendingApplicant, job, ApplicationStatus.PENDING);
+
+        mockMvc.perform(patch("/applications/{applicationId}/status", acceptedApplication.getId())
+                .cookie(accessTokenCookie(owner))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(statusUpdateJson(ApplicationStatus.ACCEPTED)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(acceptedApplication.getId().toString()))
+                .andExpect(jsonPath("$.status").value("ACCEPTED"))
+                .andExpect(jsonPath("$.applicant.id").value(acceptedApplicant.getId().toString()));
+
+        assertThat(applicationRepository.findById(acceptedApplication.getId()).orElseThrow().getStatus())
+                .isEqualTo(ApplicationStatus.ACCEPTED);
+        assertThat(applicationRepository.findById(pendingApplication.getId()).orElseThrow().getStatus())
+                .isEqualTo(ApplicationStatus.PENDING);
+        assertThat(jobRepository.findById(job.getId()).orElseThrow().getStatus()).isEqualTo(JobStatus.ASSIGNED);
+    }
+
+    @Test
+    void updateStatusAcceptsMultipleApplicationsForAssignedJob() throws Exception {
+        User owner = saveUser("multi-accept-owner");
+        User acceptedApplicant = saveUser("multi-accept-current");
+        User nextApplicant = saveUser("multi-accept-next");
+        Job job = saveJob(owner, "Multiple accept job", JobStatus.ASSIGNED);
+        Application acceptedApplication = saveApplication(acceptedApplicant, job, ApplicationStatus.ACCEPTED);
+        Application nextApplication = saveApplication(nextApplicant, job, ApplicationStatus.PENDING);
+
+        mockMvc.perform(patch("/applications/{applicationId}/status", nextApplication.getId())
+                .cookie(accessTokenCookie(owner))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(statusUpdateJson(ApplicationStatus.ACCEPTED)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.status").value("ACCEPTED"));
+
+        assertThat(applicationRepository.findById(acceptedApplication.getId()).orElseThrow().getStatus())
+                .isEqualTo(ApplicationStatus.ACCEPTED);
+        assertThat(applicationRepository.findById(nextApplication.getId()).orElseThrow().getStatus())
+                .isEqualTo(ApplicationStatus.ACCEPTED);
+        assertThat(jobRepository.findById(job.getId()).orElseThrow().getStatus()).isEqualTo(JobStatus.ASSIGNED);
+    }
+
+    @Test
+    void updateStatusRejectsPendingApplicationWithoutChangingJobStatus() throws Exception {
+        User owner = saveUser("reject-owner");
+        User applicant = saveUser("reject-applicant");
+        Job job = saveJob(owner, "Reject job", JobStatus.OPEN);
+        Application application = saveApplication(applicant, job, ApplicationStatus.PENDING);
+
+        mockMvc.perform(patch("/applications/{applicationId}/status", application.getId())
+                .cookie(accessTokenCookie(owner))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(statusUpdateJson(ApplicationStatus.REJECTED)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.status").value("REJECTED"));
+
+        assertThat(applicationRepository.findById(application.getId()).orElseThrow().getStatus())
+                .isEqualTo(ApplicationStatus.REJECTED);
+        assertThat(jobRepository.findById(job.getId()).orElseThrow().getStatus()).isEqualTo(JobStatus.OPEN);
+    }
+
+    @Test
+    void updateStatusRejectsAcceptedApplication() throws Exception {
+        User owner = saveUser("reject-accepted-owner");
+        User applicant = saveUser("reject-accepted-applicant");
+        Job job = saveJob(owner, "Reject accepted job", JobStatus.ASSIGNED);
+        Application application = saveApplication(applicant, job, ApplicationStatus.ACCEPTED);
+
+        mockMvc.perform(patch("/applications/{applicationId}/status", application.getId())
+                .cookie(accessTokenCookie(owner))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(statusUpdateJson(ApplicationStatus.REJECTED)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.status").value("REJECTED"));
+
+        assertThat(applicationRepository.findById(application.getId()).orElseThrow().getStatus())
+                .isEqualTo(ApplicationStatus.REJECTED);
+        assertThat(jobRepository.findById(job.getId()).orElseThrow().getStatus()).isEqualTo(JobStatus.ASSIGNED);
+    }
+
+    @Test
+    void updateStatusRejectsNonOwner() throws Exception {
+        User owner = saveUser("application-update-owner");
+        User otherUser = saveUser("application-update-other");
+        User applicant = saveUser("application-update-applicant");
+        Job job = saveJob(owner, "Application update forbidden job", JobStatus.OPEN);
+        Application application = saveApplication(applicant, job, ApplicationStatus.PENDING);
+
+        mockMvc.perform(patch("/applications/{applicationId}/status", application.getId())
+                .cookie(accessTokenCookie(otherUser))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(statusUpdateJson(ApplicationStatus.REJECTED)))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.error").value("Forbidden"));
+    }
+
+    @Test
+    void updateStatusRejectsCompletedJobApplications() throws Exception {
+        User owner = saveUser("completed-update-owner");
+        User applicant = saveUser("completed-update-applicant");
+        Job job = saveJob(owner, "Completed update job", JobStatus.COMPLETED);
+        Application application = saveApplication(applicant, job, ApplicationStatus.PENDING);
+
+        mockMvc.perform(patch("/applications/{applicationId}/status", application.getId())
+                .cookie(accessTokenCookie(owner))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(statusUpdateJson(ApplicationStatus.REJECTED)))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.error").value("Business Logic Error"))
+                .andExpect(jsonPath("$.message").value("Cannot update applications for a completed job"));
+    }
+
+    @Test
+    void updateStatusCompletesAcceptedApplicationAndCompletesJob() throws Exception {
+        User owner = saveUser("complete-application-owner");
+        User completedApplicant = saveUser("complete-application-worker");
+        User pendingApplicant = saveUser("complete-application-pending");
+        User acceptedApplicant = saveUser("complete-application-accepted");
+        Job job = saveJob(owner, "Complete application job", JobStatus.ASSIGNED);
+        Application completedApplication = saveApplication(completedApplicant, job, ApplicationStatus.ACCEPTED);
+        Application pendingApplication = saveApplication(pendingApplicant, job, ApplicationStatus.PENDING);
+        Application acceptedApplication = saveApplication(acceptedApplicant, job, ApplicationStatus.ACCEPTED);
+
+        mockMvc.perform(patch("/applications/{applicationId}/status", completedApplication.getId())
+                .cookie(accessTokenCookie(owner))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(statusUpdateJson(ApplicationStatus.COMPLETED)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(completedApplication.getId().toString()))
+                .andExpect(jsonPath("$.status").value("COMPLETED"))
+                .andExpect(jsonPath("$.applicant.id").value(completedApplicant.getId().toString()));
+
+        assertThat(applicationRepository.findById(completedApplication.getId()).orElseThrow().getStatus())
+                .isEqualTo(ApplicationStatus.COMPLETED);
+        assertThat(applicationRepository.findById(pendingApplication.getId()).orElseThrow().getStatus())
+                .isEqualTo(ApplicationStatus.REJECTED);
+        assertThat(applicationRepository.findById(acceptedApplication.getId()).orElseThrow().getStatus())
+                .isEqualTo(ApplicationStatus.REJECTED);
+        assertThat(jobRepository.findById(job.getId()).orElseThrow().getStatus()).isEqualTo(JobStatus.COMPLETED);
+    }
+
+    @Test
+    void updateStatusRejectsCompletingPendingApplication() throws Exception {
+        User owner = saveUser("complete-pending-owner");
+        User applicant = saveUser("complete-pending-applicant");
+        Job job = saveJob(owner, "Complete pending job", JobStatus.ASSIGNED);
+        Application application = saveApplication(applicant, job, ApplicationStatus.PENDING);
+
+        mockMvc.perform(patch("/applications/{applicationId}/status", application.getId())
+                .cookie(accessTokenCookie(owner))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(statusUpdateJson(ApplicationStatus.COMPLETED)))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.error").value("Business Logic Error"))
+                .andExpect(jsonPath("$.message").value("Only accepted applications can be completed"));
+    }
+
     private Cookie accessTokenCookie(User user) {
         return new Cookie(ACCESS_TOKEN_COOKIE_NAME, jwtService.generateToken(user));
+    }
+
+    private String statusUpdateJson(ApplicationStatus status) {
+        return """
+            {
+              "status": "%s"
+            }
+            """.formatted(status);
     }
 
     private User saveUser(String emailPrefix) {

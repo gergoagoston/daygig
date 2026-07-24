@@ -50,6 +50,16 @@ public class ApiExceptionHandler {
         return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
     }
 
+    @ExceptionHandler(ForbiddenException.class)
+    public ResponseEntity<ApiErrorResponse> handleForbidden(ForbiddenException ex,
+                                                           HttpServletRequest request) {
+        log.warn("Forbidden request at {}: {}", request.getRequestURI(), ex.getMessage());
+
+        ApiErrorResponse errorResponse = buildBaseErrorResponse(HttpStatus.FORBIDDEN, "Forbidden",
+                ex.getMessage(), request.getRequestURI(), null);
+        return new ResponseEntity<>(errorResponse, HttpStatus.FORBIDDEN);
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ApiErrorResponse> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
                                                                          HttpServletRequest request) {
