@@ -32,13 +32,13 @@ function Modal({ children, isOpen, onClose, title, titleId }: ModalProps) {
     <div className="fixed inset-0 z-50 grid bg-heading/45 p-4 sm:place-items-center">
       <div className="absolute inset-0" role="presentation" onClick={onClose} aria-hidden="true" />
       <section
-        className="relative max-h-[calc(100svh-32px)] w-full max-w-3xl overflow-y-auto rounded-lg border border-border bg-surface shadow-panel sm:p-6"
+        className="relative max-h-[calc(100svh-32px)] w-full max-w-3xl overflow-y-auto rounded-lg border border-border bg-surface p-4 shadow-panel sm:p-6"
         role="dialog"
         aria-modal="true"
         aria-labelledby={titleId}
       >
-        <div>
-          <h1 id={titleId} className="pb-3">
+        <div className="mb-5">
+          <h1 id={titleId} className="m-0 text-3xl">
             {title}
           </h1>
         </div>
