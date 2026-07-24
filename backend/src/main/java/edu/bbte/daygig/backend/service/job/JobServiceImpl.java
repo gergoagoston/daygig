@@ -9,9 +9,9 @@ import lombok.RequiredArgsConstructor;
 import edu.bbte.daygig.backend.dto.job.JobCreateInDto;
 import edu.bbte.daygig.backend.exception.ResourceNotFoundException;
 import edu.bbte.daygig.backend.mappers.JobMapper;
+import edu.bbte.daygig.backend.model.enums.JobStatus;
 import edu.bbte.daygig.backend.model.Job;
 import edu.bbte.daygig.backend.model.User;
-import edu.bbte.daygig.backend.model.enums.JobStatus;
 import edu.bbte.daygig.backend.repository.JobRepository;
 import edu.bbte.daygig.backend.repository.UserRepository;
 
