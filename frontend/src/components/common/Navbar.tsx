@@ -52,7 +52,7 @@ function Navbar({ onCreateJob }: NavbarProps) {
       </nav>
 
       <NavLink
-        className="order-1 justify-self-start text-lg font-extrabold text-heading no-underline! md:order-2 md:justify-self-center"
+        className="order-1 justify-self-start text-lg font-extrabold text-heading !no-underline md:order-2 md:justify-self-center"
         to="/jobs"
       >
         DayGig

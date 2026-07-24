@@ -16,7 +16,7 @@ type FieldProps = {
 };
 
 const fieldControlClasses =
-  'w-full rounded-lg border bg-page px-3.5 py-3 text-heading outline-none transition placeholder:text-body/70 focus:ring-3';
+  'w-full rounded-lg border bg-page px-3.5 py-3 text-heading outline-none transition placeholder:text-body/70 focus:ring-2';
 
 function getFieldControlClasses(hasError: boolean) {
   return `${fieldControlClasses} ${

@@ -1,5 +1,6 @@
 {
   "auth": {
+    "loading": "Se incarca contul...",
     "login": {
       "title": "Bine ai revenit",
       "subtitle": "Autentifica-te pentru a gestiona oportunitatile DayGig.",

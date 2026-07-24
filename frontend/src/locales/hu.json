@@ -1,5 +1,6 @@
 {
   "auth": {
+    "loading": "Fiók betöltése...",
     "login": {
       "title": "Üdvözöljük újra",
       "subtitle": "Jelentkezz be, és kezeld a DayGig lehetőségeidet.",

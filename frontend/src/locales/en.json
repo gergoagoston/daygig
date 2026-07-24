@@ -1,5 +1,6 @@
 {
   "auth": {
+    "loading": "Loading account...",
     "login": {
       "title": "Welcome Back",
       "subtitle": "Sign in to manage your DayGig opportunities.",
