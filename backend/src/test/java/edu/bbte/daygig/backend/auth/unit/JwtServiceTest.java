@@ -1,15 +1,13 @@
 package edu.bbte.daygig.backend.auth.unit;
 
-import edu.bbte.daygig.backend.model.Role;
+import java.util.UUID;
+import org.junit.jupiter.api.Test;
+import edu.bbte.daygig.backend.model.enums.Role;
 import edu.bbte.daygig.backend.model.User;
 import edu.bbte.daygig.backend.security.JwtProperties;
 import edu.bbte.daygig.backend.security.JwtService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
-import org.junit.jupiter.api.Test;
-
-import java.util.UUID;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -60,7 +58,7 @@ class JwtServiceTest {
         JwtService jwtService = jwtService(EXPIRATION_MINUTES);
 
         assertThatThrownBy(() -> jwtService.parseToken(" ")).isInstanceOf(JwtException.class)
-            .hasMessage("JWT token is missing");
+                .hasMessage("JWT token is missing");
     }
 
     @Test

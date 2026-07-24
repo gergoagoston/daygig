@@ -1,14 +1,14 @@
 package edu.bbte.daygig.backend.service.auth;
 
-import edu.bbte.daygig.backend.exception.AuthException;
-import edu.bbte.daygig.backend.exception.DuplicateResourceException;
-import edu.bbte.daygig.backend.model.Role;
-import edu.bbte.daygig.backend.model.User;
-import edu.bbte.daygig.backend.repository.UserRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import lombok.RequiredArgsConstructor;
+import edu.bbte.daygig.backend.exception.AuthException;
+import edu.bbte.daygig.backend.exception.DuplicateResourceException;
+import edu.bbte.daygig.backend.model.enums.Role;
+import edu.bbte.daygig.backend.model.User;
+import edu.bbte.daygig.backend.repository.UserRepository;
 
 @Service
 @RequiredArgsConstructor
@@ -19,10 +19,11 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     @Transactional(readOnly = true)
-    public User login(User user) {
-        User dbUser = userRepository.findByEmail(user.getEmail());
+    public User login(String email,
+                      String password) {
+        User dbUser = userRepository.findByEmail(email);
 
-        if (dbUser == null || !passwordEncoder.matches(user.getPassword(), dbUser.getPassword())) {
+        if (dbUser == null || !passwordEncoder.matches(password, dbUser.getPassword())) {
             throw new AuthException("Invalid email or password");
         }
 

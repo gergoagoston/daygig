@@ -1,18 +1,17 @@
 package edu.bbte.daygig.backend.auth.unit;
 
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.Mock;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import edu.bbte.daygig.backend.exception.AuthException;
 import edu.bbte.daygig.backend.exception.DuplicateResourceException;
-import edu.bbte.daygig.backend.model.Role;
+import edu.bbte.daygig.backend.model.enums.Role;
 import edu.bbte.daygig.backend.model.User;
 import edu.bbte.daygig.backend.repository.UserRepository;
 import edu.bbte.daygig.backend.service.auth.AuthServiceImpl;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.security.crypto.password.PasswordEncoder;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
@@ -38,41 +37,37 @@ class AuthServiceImplTest {
 
     @Test
     void loginReturnsUserWhenCredentialsAreValid() {
-        User loginUser = user(EMAIL, PASSWORD1);
         User storedUser = user(EMAIL, PASSWORD2);
 
         when(userRepository.findByEmail(EMAIL)).thenReturn(storedUser);
         when(passwordEncoder.matches(PASSWORD1, PASSWORD2)).thenReturn(true);
 
-        User result = authService.login(loginUser);
+        User result = authService.login(EMAIL, PASSWORD1);
 
         assertThat(result).isSameAs(storedUser);
     }
 
     @Test
     void loginRejectsUnknownEmail() {
-        User loginUser = user(EMAIL, PASSWORD1);
-
         when(userRepository.findByEmail(EMAIL)).thenReturn(null);
 
-        assertThatThrownBy(() -> authService.login(loginUser))
-            .isInstanceOf(AuthException.class)
-            .hasMessage("Invalid email or password");
+        assertThatThrownBy(() -> authService.login(EMAIL, PASSWORD1))
+                .isInstanceOf(AuthException.class)
+                .hasMessage("Invalid email or password");
 
         verify(passwordEncoder, never()).matches(any(), any());
     }
 
     @Test
     void loginRejectsInvalidPassword() {
-        User loginUser = user(EMAIL, PASSWORD1);
         User storedUser = user(EMAIL, PASSWORD2);
 
         when(userRepository.findByEmail(EMAIL)).thenReturn(storedUser);
         when(passwordEncoder.matches(PASSWORD1, PASSWORD2)).thenReturn(false);
 
-        assertThatThrownBy(() -> authService.login(loginUser))
-            .isInstanceOf(AuthException.class)
-            .hasMessage("Invalid email or password");
+        assertThatThrownBy(() -> authService.login(EMAIL, PASSWORD1))
+                .isInstanceOf(AuthException.class)
+                .hasMessage("Invalid email or password");
     }
 
     @Test
@@ -100,8 +95,8 @@ class AuthServiceImplTest {
         when(userRepository.findByEmail(EMAIL)).thenReturn(existingUser);
 
         assertThatThrownBy(() -> authService.register(newUser))
-            .isInstanceOf(DuplicateResourceException.class)
-            .hasMessage("Email is already taken");
+                .isInstanceOf(DuplicateResourceException.class)
+                .hasMessage("Email is already taken");
 
         verify(passwordEncoder, never()).encode(any());
         verify(userRepository, never()).save(any());

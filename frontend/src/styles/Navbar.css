@@ -1,0 +1,57 @@
+@reference '../index.css';
+
+.navbar-gomb {
+  @apply inline-flex items-center justify-center whitespace-nowrap rounded-lg border border-border bg-transparent px-3 py-2 text-sm font-bold text-heading no-underline transition-colors;
+}
+
+.navbar-gomb:is(:hover, [aria-current='page']) {
+  @apply border-primary bg-primary-soft;
+}
+
+.navbar-gomb:hover {
+  @apply text-primary;
+}
+
+.navbar-gomb:focus-visible {
+  outline: 3px solid var(--color-primary-soft);
+  outline-offset: 3px;
+}
+
+.navbar-create-gomb {
+  position: relative;
+  display: inline-flex;
+  width: 2.5rem;
+  height: 2.5rem;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--color-border);
+  border-radius: 0.5rem;
+  background: var(--color-surface);
+  transition:
+    background-color 150ms ease,
+    border-color 150ms ease;
+}
+
+.navbar-create-gomb::before,
+.navbar-create-gomb::after {
+  position: absolute;
+  width: 1.125rem;
+  height: 0.1875rem;
+  border-radius: 999px;
+  background: var(--color-primary);
+  content: '';
+}
+
+.navbar-create-gomb::after {
+  transform: rotate(90deg);
+}
+
+.navbar-create-gomb:hover {
+  border-color: var(--color-primary);
+  background: var(--color-primary-soft);
+}
+
+.navbar-create-gomb:focus-visible {
+  outline: 3px solid var(--color-primary-soft);
+  outline-offset: 3px;
+}

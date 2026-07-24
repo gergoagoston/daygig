@@ -1,24 +1,26 @@
 package edu.bbte.daygig.backend.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Index;
-import lombok.Getter;
-import lombok.Setter;
+import jakarta.persistence.Table;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
+import lombok.Getter;
+import lombok.Setter;
+import edu.bbte.daygig.backend.model.enums.Role;
 
 @Entity
-@Table(name = "user_accounts", indexes = {@Index(name = "idx_users_email", columnList = "email", unique = true)})
+@Table(name = "user_accounts", indexes = {
+    @Index(name = "idx_users_email", columnList = "email", unique = true)
+})
 @SQLDelete(sql = "UPDATE user_accounts SET is_deleted = true WHERE id = ?")
 @SQLRestriction("is_deleted = false")
 @Getter
 @Setter
 public class User extends BaseEntity {
-
 
     @Column(name = "email", nullable = false, unique = true)
     private String email;
@@ -30,10 +32,10 @@ public class User extends BaseEntity {
     @Column(name = "role", nullable = false)
     private Role role;
 
-    @Column(name = "first_name")
+    @Column(name = "first_name", nullable = false)
     private String firstName;
 
-    @Column(name = "last_name")
+    @Column(name = "last_name", nullable = false)
     private String lastName;
 
     @Column(name = "phone_number")
@@ -44,5 +46,4 @@ public class User extends BaseEntity {
 
     @Column(name = "is_deleted", nullable = false)
     private boolean isDeleted = false;
-
 }

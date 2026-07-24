@@ -22,6 +22,5 @@ public class UserRegisterInDto {
     @NotBlank(message = "Last name is required")
     private String lastName;
 
-    @NotBlank(message = "Phone number is required")
     private String phoneNumber;
 }

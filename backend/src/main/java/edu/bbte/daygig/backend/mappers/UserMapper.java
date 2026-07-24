@@ -1,10 +1,11 @@
 package edu.bbte.daygig.backend.mappers;
 
+import org.springframework.stereotype.Component;
 import edu.bbte.daygig.backend.dto.user.UserOutDto;
 import edu.bbte.daygig.backend.dto.user.UserRegisterInDto;
+import edu.bbte.daygig.backend.dto.user.UserSummaryOutDto;
 import edu.bbte.daygig.backend.dto.user.UserUpdateInDto;
 import edu.bbte.daygig.backend.model.User;
-import org.springframework.stereotype.Component;
 
 @Component
 public class UserMapper {
@@ -31,13 +32,11 @@ public class UserMapper {
     }
 
     public UserOutDto toDto(User user) {
-        return new UserOutDto(user.getId(),
-            user.getEmail(),
-            user.getRole(),
-            user.getFirstName(),
-            user.getLastName(),
-            user.getPhoneNumber(),
-            user.getBio(),
-            user.getCreatedAt());
+        return new UserOutDto(user.getId(), user.getEmail(), user.getRole(), user.getFirstName(), user.getLastName(),
+            user.getPhoneNumber(), user.getBio(), user.getCreatedAt());
+    }
+
+    public UserSummaryOutDto toSummaryDto(User user) {
+        return new UserSummaryOutDto(user.getId(), user.getFirstName(), user.getLastName());
     }
 }

@@ -5,7 +5,8 @@ public class ResourceNotFoundException extends ServiceException {
         super(message);
     }
 
-    public ResourceNotFoundException(String message, Throwable cause) {
+    public ResourceNotFoundException(String message,
+                                     Throwable cause) {
         super(message, cause);
     }
 }

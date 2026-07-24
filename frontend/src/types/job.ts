@@ -1,0 +1,56 @@
+import type { UserSummary } from './user';
+
+export const jobCategories = [
+  'CLEANING',
+  'MOVING',
+  'GARDENING',
+  'DELIVERY',
+  'BABYSITTING',
+  'PET_CARE',
+  'HANDYMAN',
+  'EVENT_HELP',
+  'OTHER',
+] as const;
+
+export type JobCategory = (typeof jobCategories)[number];
+
+export type JobStatus = 'OPEN' | 'ASSIGNED' | 'COMPLETED' | 'CANCELLED';
+
+export type Currency = 'RON' | 'EUR';
+
+export type Job = {
+  id: string;
+  title: string;
+  description: string;
+  category: JobCategory;
+  status: JobStatus;
+  hourlyRate: number;
+  currency: Currency;
+  locationName: string;
+  createdAt: string;
+};
+
+export type JobCreatePayload = {
+  title: string;
+  description: string;
+  category: JobCategory;
+  hourlyRate: number;
+  currency: Currency;
+  locationName: string;
+  latitude: number;
+  longitude: number;
+};
+
+export type JobDetails = Job & {
+  status: JobStatus;
+  approximateLatitude: number;
+  approximateLongitude: number;
+  locationRadiusMeters: number;
+  owner: UserSummary;
+};
+
+export type JobsQueryParams = {
+  page?: number;
+  size?: number;
+  sort?: string | string[];
+};

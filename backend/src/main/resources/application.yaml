@@ -9,5 +9,9 @@ server:
 app:
   jwt:
     secret: ${JWT_SECRET:ez-egy-nagyon-hosszu-es-biztonsagos-titkos-kulcs-ami-tobb-mint-32-karakter}
-    expirationMinutes: ${JWT_EXPIRATION_MINUTES:60}
-
+    expirationMinutes: ${JWT_EXPIRATION_MINUTES:720}
+  auth-cookie:
+    name: accessToken
+    secure: ${AUTH_COOKIE_SECURE:false}
+    sameSite: Strict
+    path: /api

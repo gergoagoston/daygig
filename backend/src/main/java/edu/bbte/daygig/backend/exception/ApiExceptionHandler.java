@@ -1,22 +1,21 @@
 package edu.bbte.daygig.backend.exception;
 
-import jakarta.servlet.http.HttpServletRequest;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.dao.DataAccessException;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.HttpMessageNotReadableException;
-import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
-
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestControllerAdvice
@@ -28,7 +27,7 @@ public class ApiExceptionHandler {
         log.warn("Authentication failed at {}: {}", request.getRequestURI(), ex.getMessage());
 
         ApiErrorResponse errorResponse = buildBaseErrorResponse(HttpStatus.UNAUTHORIZED, "Authentication Failed",
-            ex.getMessage(), request.getRequestURI(), null);
+                ex.getMessage(), request.getRequestURI(), null);
         return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
     }
 
@@ -37,7 +36,7 @@ public class ApiExceptionHandler {
                                                                    HttpServletRequest request) {
         log.warn("Resource not found: {}", ex.getMessage());
         ApiErrorResponse errorResponse = buildBaseErrorResponse(HttpStatus.NOT_FOUND, "Resource Not Found",
-            ex.getMessage(), request.getRequestURI(), null);
+                ex.getMessage(), request.getRequestURI(), null);
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
@@ -47,7 +46,7 @@ public class ApiExceptionHandler {
         log.warn("Resource conflict at {}: {}", request.getRequestURI(), ex.getMessage());
 
         ApiErrorResponse errorResponse = buildBaseErrorResponse(HttpStatus.CONFLICT, "Resource Conflict",
-            ex.getMessage(), request.getRequestURI(), null);
+                ex.getMessage(), request.getRequestURI(), null);
         return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
     }
 
@@ -56,16 +55,16 @@ public class ApiExceptionHandler {
                                                                          HttpServletRequest request) {
         Map<String, String> validationDetails = new HashMap<>();
         ex
-            .getBindingResult()
-            .getAllErrors()
-            .forEach(error -> {
-                String fieldName = getValidationFieldName(error);
-                String message = error.getDefaultMessage();
-                validationDetails.put(fieldName, message);
-            });
+                .getBindingResult()
+                .getAllErrors()
+                .forEach(error -> {
+                    String fieldName = getValidationFieldName(error);
+                    String message = error.getDefaultMessage();
+                    validationDetails.put(fieldName, message);
+                });
 
         ApiErrorResponse errorResponse = buildBaseErrorResponse(HttpStatus.BAD_REQUEST, "Validation Failed",
-            "Invalid fields in request", request.getRequestURI(), validationDetails);
+                "Invalid fields in request", request.getRequestURI(), validationDetails);
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
@@ -75,17 +74,17 @@ public class ApiExceptionHandler {
         log.warn("Malformed request body at {}: {}", request.getRequestURI(), ex.getMessage());
 
         ApiErrorResponse errorResponse = buildBaseErrorResponse(HttpStatus.BAD_REQUEST, "Malformed Request",
-            "Request body is missing or malformed", request.getRequestURI(), null);
+                "Request body is missing or malformed", request.getRequestURI(), null);
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public ResponseEntity<ApiErrorResponse> handleMethodArgumentTypeMismatch(MethodArgumentTypeMismatchException ex,
-                                                                            HttpServletRequest request) {
+                                                                             HttpServletRequest request) {
         Map<String, String> details = Map.of(ex.getName(), "Invalid value: " + ex.getValue());
 
         ApiErrorResponse errorResponse = buildBaseErrorResponse(HttpStatus.BAD_REQUEST, "Invalid Request Parameter",
-            "Invalid request parameter or path variable", request.getRequestURI(), details);
+                "Invalid request parameter or path variable", request.getRequestURI(), details);
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
@@ -95,8 +94,8 @@ public class ApiExceptionHandler {
         log.error("Database integrity violation occurred at path: {}", request.getRequestURI(), ex);
 
         ApiErrorResponse errorResponse = buildBaseErrorResponse(HttpStatus.CONFLICT, "Database Conflict",
-            "A database constraint was violated (e.g., duplicate data or missing relation).", request.getRequestURI(),
-            null);
+                "A database constraint was violated (e.g., duplicate data or missing relation).",
+                request.getRequestURI(), null);
         return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
     }
 
@@ -106,8 +105,9 @@ public class ApiExceptionHandler {
         log.error("Database error occurred at path: {}", request.getRequestURI(), ex);
 
         ApiErrorResponse errorResponse = buildBaseErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Database Error",
-            "A server-side database error occurred: " + ex.getMostSpecificCause().getMessage(),
-            request.getRequestURI(), null);
+                "A server-side database error occurred: " + ex
+                        .getMostSpecificCause()
+                        .getMessage(), request.getRequestURI(), null);
         return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
@@ -117,7 +117,7 @@ public class ApiExceptionHandler {
         log.warn("Business logic error at {}: {}", request.getRequestURI(), ex.getMessage());
 
         ApiErrorResponse errorResponse = buildBaseErrorResponse(HttpStatus.BAD_REQUEST, "Business Logic Error",
-            ex.getMessage(), request.getRequestURI(), null);
+                ex.getMessage(), request.getRequestURI(), null);
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
