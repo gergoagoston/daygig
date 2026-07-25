@@ -16,5 +16,9 @@ public interface JobService {
     Job create(JobCreateInDto jobCreateInDto,
                UUID ownerId);
 
+    Job complete(UUID jobId,
+                 UUID applicationId,
+                 UUID ownerId);
+
     Job getById(UUID id);
 }

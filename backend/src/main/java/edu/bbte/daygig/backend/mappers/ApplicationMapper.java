@@ -24,7 +24,11 @@ public class ApplicationMapper {
 
     private ApplicationJobOutDto toJobDto(Job job) {
         return new ApplicationJobOutDto(job.getId(), job.getTitle(), job.getCategory(), job.getLocationName(),
-                job.getHourlyRate(), job.getCurrency(), job.getStatus());
+                job.getHourlyRate(), job.getCurrency(), job.getStatus(),
+                job.getCompletedApplication() == null ? null : job
+                        .getCompletedApplication()
+                        .getId(),
+                job.getCompletedAt());
     }
 
     private UserSummaryOutDto toApplicantDto(User applicant) {

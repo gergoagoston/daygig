@@ -38,7 +38,7 @@ public class ApplicationServiceImpl implements ApplicationService {
         Application application = new Application();
         application.setApplicant(applicant);
         application.setJob(job);
-        application.setStatus(ApplicationStatus.PENDING);
+        application.setStatus(ApplicationStatus.ACTIVE);
 
         return applicationRepository.saveAndFlush(application);
     }
@@ -64,15 +64,13 @@ public class ApplicationServiceImpl implements ApplicationService {
     @Transactional
     public Application updateStatus(UUID applicationId,
                                     ApplicationStatus status,
-                                    UUID ownerId) {
+                                    UUID actorId) {
         Application application = applicationRepository
                 .findById(applicationId)
                 .orElseThrow(() -> new ResourceNotFoundException("Application not found with id: " + applicationId));
-        Job job = application.getJob();
 
-        ensureOwner(job, ownerId);
-        ensureJobIsNotCompleted(job);
-        applyStatusTransition(application, status);
+        ensureJobIsOpen(application.getJob());
+        applyStatusTransition(application, status, actorId);
 
         return applicationRepository.saveAndFlush(application);
     }
@@ -97,58 +95,36 @@ public class ApplicationServiceImpl implements ApplicationService {
     }
 
     private void applyStatusTransition(Application application,
-                                       ApplicationStatus status) {
+                                       ApplicationStatus status,
+                                       UUID actorId) {
         if (status == null) {
             throw unsupportedStatus();
         }
 
         switch (status) {
-            case ACCEPTED -> accept(application);
-            case REJECTED -> reject(application);
-            case COMPLETED -> complete(application);
+            case REJECTED -> reject(application, actorId);
+            case WITHDRAWN -> withdraw(application, actorId);
             default -> throw unsupportedStatus();
         }
     }
 
-    private void accept(Application application) {
-        Job job = application.getJob();
-
-        ensureApplicationStatusIsAnyOf(application, "Only pending applications can be accepted",
-                ApplicationStatus.PENDING);
-
-        if (job.getStatus() != JobStatus.OPEN && job.getStatus() != JobStatus.ASSIGNED) {
-            throw new ServiceException("Only open or assigned jobs can accept applications");
-        }
-
-        application.setStatus(ApplicationStatus.ACCEPTED);
-        job.setStatus(JobStatus.ASSIGNED);
-    }
-
-    private void reject(Application application) {
-        ensureApplicationStatusIsAnyOf(application, "Only pending or accepted applications can be rejected",
-                ApplicationStatus.PENDING, ApplicationStatus.ACCEPTED);
-
+    private void reject(Application application,
+                        UUID actorId) {
+        ensureOwner(application.getJob(), actorId);
+        ensureActive(application);
         application.setStatus(ApplicationStatus.REJECTED);
     }
 
-    private void complete(Application application) {
-        Job job = application.getJob();
-
-        ensureApplicationStatusIsAnyOf(application, "Only accepted applications can be completed",
-                ApplicationStatus.ACCEPTED);
-
-        if (job.getStatus() != JobStatus.ASSIGNED) {
-            throw new ServiceException("Only assigned jobs can be completed");
-        }
-
-        application.setStatus(ApplicationStatus.COMPLETED);
-        job.setStatus(JobStatus.COMPLETED);
-        rejectOtherActiveApplications(application);
+    private void withdraw(Application application,
+                          UUID actorId) {
+        ensureApplicant(application, actorId);
+        ensureActive(application);
+        application.setStatus(ApplicationStatus.WITHDRAWN);
     }
 
-    private void ensureJobIsNotCompleted(Job job) {
-        if (job.getStatus() == JobStatus.COMPLETED) {
-            throw new ServiceException("Cannot update applications for a completed job");
+    private void ensureJobIsOpen(Job job) {
+        if (job.getStatus() != JobStatus.OPEN) {
+            throw new ServiceException("Applications can only be updated for open jobs");
         }
     }
 
@@ -162,42 +138,23 @@ public class ApplicationServiceImpl implements ApplicationService {
         }
     }
 
-    private void ensureApplicationStatusIsAnyOf(Application application,
-                                                String errorMessage,
-                                                ApplicationStatus... allowedStatuses) {
-        for (ApplicationStatus allowedStatus : allowedStatuses) {
-            if (application.getStatus() == allowedStatus) {
-                return;
-            }
-        }
-
-        throw new ServiceException(errorMessage);
-    }
-
-    private void rejectOtherActiveApplications(Application completedApplication) {
-        applicationRepository
-                .findAllByJobIdOrderByCreatedAtDesc(completedApplication
-                        .getJob()
-                        .getId())
-                .stream()
-                .filter(application -> !isSameApplication(application, completedApplication))
-                .filter(this::isPendingOrAccepted)
-                .forEach(application -> application.setStatus(ApplicationStatus.REJECTED));
-    }
-
-    private boolean isSameApplication(Application firstApplication,
-                                      Application secondApplication) {
-        return firstApplication
+    private void ensureApplicant(Application application,
+                                 UUID applicantId) {
+        if (!application
+                .getApplicant()
                 .getId()
-                .equals(secondApplication.getId());
+                .equals(applicantId)) {
+            throw new ForbiddenException("Only the applicant can withdraw this application");
+        }
     }
 
-    private boolean isPendingOrAccepted(Application application) {
-        return application.getStatus() == ApplicationStatus.PENDING
-                || application.getStatus() == ApplicationStatus.ACCEPTED;
+    private void ensureActive(Application application) {
+        if (application.getStatus() != ApplicationStatus.ACTIVE) {
+            throw new ServiceException("Only active applications can be updated");
+        }
     }
 
     private ServiceException unsupportedStatus() {
-        return new ServiceException("Application status can only be changed to ACCEPTED, REJECTED or COMPLETED");
+        return new ServiceException("Application status can only be changed to REJECTED or WITHDRAWN");
     }
 }

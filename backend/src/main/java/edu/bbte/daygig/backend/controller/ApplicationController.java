@@ -53,12 +53,12 @@ public class ApplicationController {
                 .toList();
     }
 
-    @PatchMapping("/applications/{applicationId}/status")
-    public OwnerApplicationOutDto updateStatus(@PathVariable UUID applicationId,
-                                               @Valid @RequestBody ApplicationStatusUpdateInDto statusUpdateInDto,
-                                               @AuthenticationPrincipal JwtPrincipal principal) {
-        return applicationMapper.toOwnerDto(applicationService.updateStatus(applicationId,
-                statusUpdateInDto.getStatus(), currentUserId(principal)));
+    @PatchMapping("/applications/{applicationId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateStatus(@PathVariable UUID applicationId,
+                             @Valid @RequestBody ApplicationStatusUpdateInDto statusUpdateInDto,
+                             @AuthenticationPrincipal JwtPrincipal principal) {
+        applicationService.updateStatus(applicationId, statusUpdateInDto.getStatus(), currentUserId(principal));
     }
 
     private UUID currentUserId(JwtPrincipal principal) {

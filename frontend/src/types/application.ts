@@ -1,7 +1,8 @@
 import type { Currency, JobCategory, JobStatus } from './job';
 import type { UserSummary } from './user';
 
-export type ApplicationStatus = 'PENDING' | 'ACCEPTED' | 'COMPLETED' | 'REJECTED' | 'CANCELLED';
+export type ApplicationStatus = 'ACTIVE' | 'REJECTED' | 'WITHDRAWN';
+export type ApplicationStatusUpdate = Exclude<ApplicationStatus, 'ACTIVE'>;
 
 export type ApplicationJobSummary = {
   id: string;
@@ -11,6 +12,8 @@ export type ApplicationJobSummary = {
   hourlyRate: number;
   currency: Currency;
   status: JobStatus;
+  completedApplicationId: string | null;
+  completedAt: string | null;
 };
 
 export type Application = {
@@ -28,5 +31,5 @@ export type OwnerApplication = {
 };
 
 export type ApplicationStatusUpdatePayload = {
-  status: ApplicationStatus;
+  status: ApplicationStatusUpdate;
 };

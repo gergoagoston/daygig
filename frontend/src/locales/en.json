@@ -120,14 +120,17 @@
             "empty": "No applications yet.",
             "errors": {
                 "load_failed": "Could not load applications.",
-                "update_failed": "Could not update the application. Please try again."
+                "update_failed": "Could not update the application. Please try again.",
+                "complete_failed": "Could not complete the job. Please try again."
             },
             "actions": {
-                "ACCEPTED": "Accept",
                 "REJECTED": "Reject",
-                "COMPLETED": "Complete",
+                "complete": "Completed",
+                "complete_confirm": "Are you sure this applicant completed the job? This closes the job and allows rating them later.",
+                "completing": "Completing...",
                 "updating": "Updating..."
-            }
+            },
+            "completed_worker": "Completed this job"
         }
     },
     "applications": {
@@ -146,17 +149,19 @@
             "job_status": "Job status",
             "applied": "Applied",
             "view_job": "View job",
-            "chat": "Chat",
-            "chat_locked": "Chat locked"
+            "withdraw": "Withdraw application",
+            "withdrawing": "Withdrawing...",
+            "withdraw_confirm": "Are you sure you want to withdraw your application?",
+            "withdraw_failed": "Could not withdraw the application.",
+            "job_closed": "Job closed",
+            "completed_worker": "You completed this job"
         }
     },
     "application": {
         "status": {
-            "PENDING": "Pending",
-            "ACCEPTED": "Accepted",
-            "COMPLETED": "Completed",
+            "ACTIVE": "Applied",
             "REJECTED": "Rejected",
-            "CANCELLED": "Cancelled"
+            "WITHDRAWN": "Withdrawn"
         }
     },
     "jobs": {
@@ -233,7 +238,8 @@
                 "already_applied": "You have applied to this job.",
                 "duplicate": "You have already applied for this job.",
                 "generic_error": "Something went wrong. Please try again later.",
-                "own_job": "You cannot apply to your own job."
+                "own_job": "You cannot apply to your own job.",
+                "job_closed": "This job is no longer accepting applications."
             },
             "errors": {
                 "load_failed": "Could not load job details. Please try again."
@@ -241,7 +247,6 @@
         },
         "statuses": {
             "OPEN": "Open",
-            "ASSIGNED": "Assigned",
             "COMPLETED": "Completed",
             "CANCELLED": "Cancelled"
         },

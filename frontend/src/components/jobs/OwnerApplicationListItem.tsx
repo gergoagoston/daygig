@@ -1,14 +1,15 @@
 import { useTranslation } from 'react-i18next';
 
-import type { ApplicationStatus, OwnerApplication } from '../../types/application';
+import type { OwnerApplication } from '../../types/application';
 
 type OwnerApplicationListItemProps = {
   application: OwnerApplication;
-  isJobCompleted: boolean;
-  isUpdating: boolean;
-  updatingApplicationId?: string;
-  updatingStatus?: ApplicationStatus;
-  onUpdateStatus: (applicationId: string, status: ApplicationStatus) => void;
+  completedApplicationId: string | null;
+  isCompleting: boolean;
+  isJobOpen: boolean;
+  isRejecting: boolean;
+  onComplete: (applicationId: string) => void;
+  onReject: (applicationId: string) => void;
 };
 
 const actionButtonClass =
@@ -19,48 +20,19 @@ function getApplicantName(application: OwnerApplication) {
   return fullName || application.applicant.id;
 }
 
-function getAvailableActions(
-  status: ApplicationStatus,
-  isJobCompleted: boolean
-): ApplicationStatus[] {
-  if (isJobCompleted) {
-    return [];
-  }
-
-  if (status === 'PENDING') {
-    return ['ACCEPTED', 'REJECTED'];
-  }
-
-  if (status === 'ACCEPTED') {
-    return ['REJECTED', 'COMPLETED'];
-  }
-
-  return [];
-}
-
-function getActionClass(status: ApplicationStatus) {
-  if (status === 'ACCEPTED') {
-    return `${actionButtonClass} border-primary bg-primary-soft text-primary hover:border-primary`;
-  }
-
-  if (status === 'COMPLETED') {
-    return `${actionButtonClass} border-action bg-action text-action-text`;
-  }
-
-  return `${actionButtonClass} border-danger bg-danger-soft text-danger`;
-}
-
 function OwnerApplicationListItem({
   application,
-  isJobCompleted,
-  isUpdating,
-  updatingApplicationId,
-  updatingStatus,
-  onUpdateStatus,
+  completedApplicationId,
+  isCompleting,
+  isJobOpen,
+  isRejecting,
+  onComplete,
+  onReject,
 }: OwnerApplicationListItemProps) {
   const { t } = useTranslation();
-  const actions = getAvailableActions(application.status, isJobCompleted);
-  const isUpdatingThisApplication = isUpdating && updatingApplicationId === application.id;
+  const isCompletedWorker = completedApplicationId === application.id;
+  const canManage = isJobOpen && application.status === 'ACTIVE';
+  const isBusy = isCompleting || isRejecting;
 
   return (
     <li className="px-3 py-2.5">
@@ -68,29 +40,34 @@ function OwnerApplicationListItem({
         <div className="min-w-0">
           <p className="truncate text-sm font-bold text-heading">{getApplicantName(application)}</p>
           <p className="text-xs font-semibold text-body">
-            {t(`application.status.${application.status}`)}
+            {isCompletedWorker
+              ? t('posted_jobs.applications.completed_worker')
+              : t(`application.status.${application.status}`)}
           </p>
         </div>
 
-        {actions.length > 0 ? (
+        {canManage ? (
           <div className="flex flex-wrap gap-2">
-            {actions.map((status) => {
-              const isThisActionUpdating = isUpdatingThisApplication && updatingStatus === status;
-
-              return (
-                <button
-                  key={status}
-                  className={getActionClass(status)}
-                  type="button"
-                  disabled={isUpdating}
-                  onClick={() => onUpdateStatus(application.id, status)}
-                >
-                  {isThisActionUpdating
-                    ? t('posted_jobs.applications.actions.updating')
-                    : t(`posted_jobs.applications.actions.${status}`)}
-                </button>
-              );
-            })}
+            <button
+              className={`${actionButtonClass} border-action bg-action text-action-text`}
+              type="button"
+              disabled={isBusy}
+              onClick={() => onComplete(application.id)}
+            >
+              {isCompleting
+                ? t('posted_jobs.applications.actions.completing')
+                : t('posted_jobs.applications.actions.complete')}
+            </button>
+            <button
+              className={`${actionButtonClass} border-danger bg-danger-soft text-danger`}
+              type="button"
+              disabled={isBusy}
+              onClick={() => onReject(application.id)}
+            >
+              {isRejecting
+                ? t('posted_jobs.applications.actions.updating')
+                : t('posted_jobs.applications.actions.REJECTED')}
+            </button>
           </div>
         ) : null}
       </div>

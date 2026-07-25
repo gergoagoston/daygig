@@ -17,5 +17,5 @@ public interface ApplicationService {
 
     Application updateStatus(UUID applicationId,
                              ApplicationStatus status,
-                             UUID ownerId);
+                             UUID actorId);
 }

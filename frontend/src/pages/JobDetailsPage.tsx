@@ -30,11 +30,18 @@ function JobDetailsPage() {
     queryFn: () => getJobById(id ?? ''),
     enabled: hasJobId,
   });
-  const { apply, applyMessage, hasApplied, isApplying, isCheckingApplicationStatus } =
-    useApplyToJob({
-      jobId: currentJobId,
-      enabled: hasJobId && isAuthenticated && !isInitializing,
-    });
+  const {
+    apply,
+    applicationId,
+    applicationStatus,
+    applyMessage,
+    hasApplied,
+    isApplying,
+    isCheckingApplicationStatus,
+  } = useApplyToJob({
+    jobId: currentJobId,
+    enabled: hasJobId && isAuthenticated && !isInitializing,
+  });
   const language = i18n.resolvedLanguage ?? i18n.language;
   const isOwnJob = Boolean(job?.owner.id && user?.id && job.owner.id === user.id);
 
@@ -92,6 +99,8 @@ function JobDetailsPage() {
                   <div>
                     <JobApplyPanel
                       applyMessage={applyMessage}
+                      applicationId={applicationId}
+                      applicationStatus={applicationStatus}
                       hasApplied={hasApplied}
                       isApplyDisabled={!hasJobId || isInitializing}
                       isApplying={isApplying}
@@ -99,6 +108,7 @@ function JobDetailsPage() {
                       isOwnJob={isOwnJob}
                       jobId={job.id}
                       jobStatus={job.status}
+                      completedApplicationId={job.completedApplicationId}
                       onApply={handleApply}
                     />
                   </div>

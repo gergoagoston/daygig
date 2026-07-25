@@ -37,5 +37,5 @@ public class Application extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
-    private ApplicationStatus status = ApplicationStatus.PENDING;
+    private ApplicationStatus status = ApplicationStatus.ACTIVE;
 }

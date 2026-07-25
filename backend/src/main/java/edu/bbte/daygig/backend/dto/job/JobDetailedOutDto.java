@@ -11,5 +11,6 @@ import edu.bbte.daygig.backend.model.enums.JobStatus;
 public record JobDetailedOutDto(UUID id, String title, String description, JobCategory category, JobStatus status,
                                 BigDecimal hourlyRate, Currency currency, String locationName,
                                 BigDecimal approximateLatitude, BigDecimal approximateLongitude,
-                                Integer locationRadiusMeters, UserSummaryOutDto owner, LocalDateTime createdAt) {
+                                Integer locationRadiusMeters, UserSummaryOutDto owner, LocalDateTime createdAt,
+                                UUID completedApplicationId, LocalDateTime completedAt) {
 }

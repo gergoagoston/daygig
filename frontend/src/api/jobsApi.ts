@@ -21,3 +21,10 @@ export async function getJobById(id: string): Promise<JobDetails> {
   const response = await httpClient.get<JobDetails>(`/jobs/${id}`);
   return response.data;
 }
+
+export async function completeJob(jobId: string, applicationId: string): Promise<JobDetails> {
+  const response = await httpClient.put<JobDetails>(`/jobs/${jobId}/completion`, {
+    applicationId,
+  });
+  return response.data;
+}

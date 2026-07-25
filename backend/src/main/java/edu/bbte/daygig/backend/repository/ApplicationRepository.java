@@ -18,7 +18,7 @@ public interface ApplicationRepository extends JpaRepository<Application, UUID> 
     boolean existsByApplicantIdAndJobId(UUID applicantId,
                                         UUID jobId);
 
-    @EntityGraph(attributePaths = "job")
+    @EntityGraph(attributePaths = {"job", "job.completedApplication"})
     List<Application> findAllByApplicantId(UUID applicantId);
 
     @EntityGraph(attributePaths = {"applicant", "job.owner"})

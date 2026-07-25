@@ -74,9 +74,13 @@ function useApplyToJob({ jobId, enabled }: UseApplyToJobOptions) {
   const applyMessage = canUseApplications && applyState.jobId === jobId ? applyState.message : null;
   const hasAppliedFromCurrentAction =
     canUseApplications && applyState.jobId === jobId && applyState.hasApplied;
-  const hasAppliedFromServer =
-    canUseApplications && myApplications.some((application) => application.job.id === jobId);
+  const currentApplication = myApplications.find((application) => application.job.id === jobId);
+  const hasAppliedFromServer = canUseApplications && Boolean(currentApplication);
   const hasApplied = hasAppliedFromCurrentAction || hasAppliedFromServer;
+  const applicationId =
+    currentApplication?.id ?? (hasAppliedFromCurrentAction ? applyMutation.data?.id : undefined);
+  const applicationStatus =
+    currentApplication?.status ?? (hasAppliedFromCurrentAction ? 'ACTIVE' : undefined);
 
   const apply = () => {
     if (!jobId) {
@@ -89,6 +93,8 @@ function useApplyToJob({ jobId, enabled }: UseApplyToJobOptions) {
   return {
     apply,
     applyMessage,
+    applicationId,
+    applicationStatus,
     hasApplied,
     isApplying: applyMutation.isPending,
     isCheckingApplicationStatus: canUseApplications && isLoadingMyApplications,

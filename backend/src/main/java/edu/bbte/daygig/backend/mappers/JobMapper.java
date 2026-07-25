@@ -2,6 +2,7 @@ package edu.bbte.daygig.backend.mappers;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.UUID;
 import org.springframework.stereotype.Component;
 import lombok.RequiredArgsConstructor;
 import edu.bbte.daygig.backend.dto.job.JobCreateInDto;
@@ -33,14 +34,22 @@ public class JobMapper {
 
     public JobOutDto toListDto(Job job) {
         return new JobOutDto(job.getId(), job.getTitle(), job.getDescription(), job.getCategory(), job.getStatus(),
-                job.getHourlyRate(), job.getCurrency(), job.getLocationName(), job.getCreatedAt());
+                job.getHourlyRate(), job.getCurrency(), job.getLocationName(), job.getCreatedAt(),
+                completedApplicationId(job), job.getCompletedAt());
     }
 
     public JobDetailedOutDto toDetailsDto(Job job) {
         return new JobDetailedOutDto(job.getId(), job.getTitle(), job.getDescription(), job.getCategory(),
                 job.getStatus(), job.getHourlyRate(), job.getCurrency(), job.getLocationName(),
                 approximateCoordinate(job.getLatitude()), approximateCoordinate(job.getLongitude()),
-                PUBLIC_LOCATION_RADIUS_METERS, userMapper.toSummaryDto(job.getOwner()), job.getCreatedAt());
+                PUBLIC_LOCATION_RADIUS_METERS, userMapper.toSummaryDto(job.getOwner()), job.getCreatedAt(),
+                completedApplicationId(job), job.getCompletedAt());
+    }
+
+    private UUID completedApplicationId(Job job) {
+        return job.getCompletedApplication() == null ? null : job
+                .getCompletedApplication()
+                .getId();
     }
 
     private BigDecimal approximateCoordinate(BigDecimal coordinate) {

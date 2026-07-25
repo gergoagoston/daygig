@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next';
 
 import useJobApplications from '../../hooks/useJobApplications';
+import useCompleteJob from '../../hooks/useCompleteJob';
 import useUpdateOwnerApplicationStatus from '../../hooks/useUpdateOwnerApplicationStatus';
 import type { JobStatus } from '../../types/job';
 import OwnerApplicationListItem from './OwnerApplicationListItem';
@@ -8,14 +9,27 @@ import OwnerApplicationListItem from './OwnerApplicationListItem';
 type OwnerApplicationsPanelProps = {
   jobId: string;
   jobStatus: JobStatus;
+  completedApplicationId: string | null;
 };
 
-function OwnerApplicationsPanel({ jobId, jobStatus }: OwnerApplicationsPanelProps) {
+function OwnerApplicationsPanel({
+  jobId,
+  jobStatus,
+  completedApplicationId,
+}: OwnerApplicationsPanelProps) {
   const { t } = useTranslation();
-  const isJobCompleted = jobStatus === 'COMPLETED';
+  const isJobOpen = jobStatus === 'OPEN';
   const { applications, isError, isLoading } = useJobApplications(jobId);
-  const { isUpdateError, isUpdating, updateStatus, updatingApplicationId, updatingStatus } =
+  const { isUpdateError, isUpdating, updateStatus, updatingApplicationId } =
     useUpdateOwnerApplicationStatus(jobId);
+  const { complete, completingApplicationId, isCompleteError, isCompleting } =
+    useCompleteJob(jobId);
+
+  const handleComplete = (applicationId: string) => {
+    if (window.confirm(t('posted_jobs.applications.actions.complete_confirm'))) {
+      complete(applicationId);
+    }
+  };
 
   return (
     <section className="grid gap-3" aria-labelledby={`job-${jobId}-applications`}>
@@ -49,11 +63,12 @@ function OwnerApplicationsPanel({ jobId, jobStatus }: OwnerApplicationsPanelProp
               <OwnerApplicationListItem
                 key={application.id}
                 application={application}
-                isJobCompleted={isJobCompleted}
-                isUpdating={isUpdating}
-                updatingApplicationId={updatingApplicationId}
-                updatingStatus={updatingStatus}
-                onUpdateStatus={updateStatus}
+                completedApplicationId={completedApplicationId}
+                isCompleting={isCompleting && completingApplicationId === application.id}
+                isJobOpen={isJobOpen}
+                isRejecting={isUpdating && updatingApplicationId === application.id}
+                onComplete={handleComplete}
+                onReject={(applicationId) => updateStatus(applicationId, 'REJECTED')}
               />
             ))}
           </ul>
@@ -62,6 +77,12 @@ function OwnerApplicationsPanel({ jobId, jobStatus }: OwnerApplicationsPanelProp
 
       {isUpdateError ? (
         <p className="text-sm text-danger">{t('posted_jobs.applications.errors.update_failed')}</p>
+      ) : null}
+
+      {isCompleteError ? (
+        <p className="text-sm text-danger">
+          {t('posted_jobs.applications.errors.complete_failed')}
+        </p>
       ) : null}
     </section>
   );

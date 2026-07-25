@@ -1,12 +1,12 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { updateApplicationStatus } from '../api/applicationsApi';
-import type { ApplicationStatus } from '../types/application';
+import type { ApplicationStatusUpdate } from '../types/application';
 import { getJobApplicationsQueryKey } from './useJobApplications';
 
 type StatusUpdateVariables = {
   applicationId: string;
-  status: ApplicationStatus;
+  status: ApplicationStatusUpdate;
 };
 
 function useUpdateOwnerApplicationStatus(jobId: string) {
@@ -25,7 +25,7 @@ function useUpdateOwnerApplicationStatus(jobId: string) {
     },
   });
 
-  const updateStatus = (applicationId: string, status: ApplicationStatus) => {
+  const updateStatus = (applicationId: string, status: ApplicationStatusUpdate) => {
     statusMutation.mutate({ applicationId, status });
   };
 

@@ -120,14 +120,17 @@
             "empty": "Még nincs jelentkezés.",
             "errors": {
                 "load_failed": "Nem sikerült betölteni a jelentkezéseket.",
-                "update_failed": "Nem sikerült frissíteni a jelentkezést. Próbáld újra."
+                "update_failed": "Nem sikerült frissíteni a jelentkezést. Próbáld újra.",
+                "complete_failed": "Nem sikerült lezárni a munkát. Próbáld újra."
             },
             "actions": {
-                "ACCEPTED": "Elfogadás",
                 "REJECTED": "Elutasítás",
-                "COMPLETED": "Befejezés",
+                "complete": "Befejezve",
+                "complete_confirm": "Biztosan ő végezte el a munkát? Ez lezárja a munkát, és később őt lehet értékelni.",
+                "completing": "Lezárás...",
                 "updating": "Frissítés..."
-            }
+            },
+            "completed_worker": "Ő végezte el a munkát"
         }
     },
     "applications": {
@@ -146,17 +149,19 @@
             "job_status": "Munka állapota",
             "applied": "Jelentkezve",
             "view_job": "Munka megnyitása",
-            "chat": "Chat",
-            "chat_locked": "Chat zárolva"
+            "withdraw": "Jelentkezés visszavonása",
+            "withdrawing": "Visszavonás...",
+            "withdraw_confirm": "Biztosan visszavonod a jelentkezésedet?",
+            "withdraw_failed": "Nem sikerült visszavonni a jelentkezést.",
+            "job_closed": "A munka lezárult",
+            "completed_worker": "Te végezted el"
         }
     },
     "application": {
         "status": {
-            "PENDING": "Függőben",
-            "ACCEPTED": "Elfogadva",
-            "COMPLETED": "Befejezve",
+            "ACTIVE": "Jelentkezve",
             "REJECTED": "Elutasítva",
-            "CANCELLED": "Visszavonva"
+            "WITHDRAWN": "Visszavonva"
         }
     },
     "jobs": {
@@ -233,7 +238,8 @@
                 "already_applied": "Már jelentkeztél erre a munkára.",
                 "duplicate": "Erre a munkára már jelentkeztél.",
                 "generic_error": "Valami hiba történt. Próbáld újra később.",
-                "own_job": "Nem jelentkezhetsz a saját munkádra."
+                "own_job": "Nem jelentkezhetsz a saját munkádra.",
+                "job_closed": "Ez a munka már nem fogad jelentkezéseket."
             },
             "errors": {
                 "load_failed": "Nem sikerült betölteni a munka részleteit. Próbáld újra."
@@ -241,7 +247,6 @@
         },
         "statuses": {
             "OPEN": "Nyitott",
-            "ASSIGNED": "Kiosztva",
             "COMPLETED": "Befejezve",
             "CANCELLED": "Lezárva"
         },

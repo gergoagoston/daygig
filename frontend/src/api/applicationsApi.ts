@@ -1,6 +1,6 @@
 import type {
   Application,
-  ApplicationStatus,
+  ApplicationStatusUpdate,
   ApplicationStatusUpdatePayload,
   OwnerApplication,
 } from '../types/application';
@@ -23,12 +23,8 @@ export async function getJobApplications(jobId: string): Promise<OwnerApplicatio
 
 export async function updateApplicationStatus(
   applicationId: string,
-  status: ApplicationStatus
-): Promise<OwnerApplication> {
+  status: ApplicationStatusUpdate
+): Promise<void> {
   const payload: ApplicationStatusUpdatePayload = { status };
-  const response = await httpClient.patch<OwnerApplication>(
-    `/applications/${applicationId}/status`,
-    payload
-  );
-  return response.data;
+  await httpClient.patch(`/applications/${applicationId}`, payload);
 }

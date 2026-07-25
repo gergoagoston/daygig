@@ -18,7 +18,7 @@ function formatRate(value: number, language: string) {
 function ApplicationCard({ application }: ApplicationCardProps) {
   const { i18n, t } = useTranslation();
   const language = i18n.resolvedLanguage ?? i18n.language;
-  const canChat = application.status === 'ACCEPTED';
+  const isCompletedWorker = application.job.completedApplicationId === application.id;
 
   return (
     <article className="group flex h-full flex-col rounded-lg border border-border bg-surface p-5 text-heading shadow-panel">
@@ -32,7 +32,11 @@ function ApplicationCard({ application }: ApplicationCardProps) {
           </p>
         </div>
         <span className="shrink-0 rounded-full bg-primary-soft px-3 py-1 text-sm font-bold text-primary">
-          {t(`application.status.${application.status}`)}
+          {isCompletedWorker
+            ? t('applications.card.completed_worker')
+            : application.job.status !== 'OPEN' && application.status === 'ACTIVE'
+              ? t('applications.card.job_closed')
+              : t(`application.status.${application.status}`)}
         </span>
       </div>
 
@@ -64,20 +68,6 @@ function ApplicationCard({ application }: ApplicationCardProps) {
         <Link className="navbar-gomb" to={`/jobs/${application.job.id}`}>
           {t('applications.card.view_job')}
         </Link>
-
-        {canChat ? (
-          <Link className="navbar-gomb" to={`/applications/${application.id}/chat`}>
-            {t('applications.card.chat')}
-          </Link>
-        ) : (
-          <button
-            className="inline-flex items-center justify-center whitespace-nowrap rounded-lg border border-border bg-transparent px-3 py-2 text-sm font-bold text-body opacity-65"
-            type="button"
-            disabled
-          >
-            {t('applications.card.chat_locked')}
-          </button>
-        )}
       </div>
     </article>
   );

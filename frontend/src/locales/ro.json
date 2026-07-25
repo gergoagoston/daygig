@@ -120,14 +120,17 @@
             "empty": "Nu exista aplicatii inca.",
             "errors": {
                 "load_failed": "Nu am putut incarca aplicatiile.",
-                "update_failed": "Nu am putut actualiza aplicatia. Incearca din nou."
+                "update_failed": "Nu am putut actualiza aplicatia. Incearca din nou.",
+                "complete_failed": "Nu am putut finaliza jobul. Incearca din nou."
             },
             "actions": {
-                "ACCEPTED": "Accepta",
                 "REJECTED": "Respinge",
-                "COMPLETED": "Finalizeaza",
+                "complete": "Finalizat",
+                "complete_confirm": "Sigur acest candidat a finalizat jobul? Jobul va fi inchis si candidatul va putea fi evaluat ulterior.",
+                "completing": "Se finalizeaza...",
                 "updating": "Se actualizeaza..."
-            }
+            },
+            "completed_worker": "A finalizat acest job"
         }
     },
     "applications": {
@@ -146,17 +149,19 @@
             "job_status": "Status job",
             "applied": "Aplicat la",
             "view_job": "Vezi jobul",
-            "chat": "Chat",
-            "chat_locked": "Chat blocat"
+            "withdraw": "Retrage aplicatia",
+            "withdrawing": "Se retrage...",
+            "withdraw_confirm": "Sigur vrei sa retragi aplicatia?",
+            "withdraw_failed": "Nu am putut retrage aplicatia.",
+            "job_closed": "Job inchis",
+            "completed_worker": "Ai finalizat acest job"
         }
     },
     "application": {
         "status": {
-            "PENDING": "In asteptare",
-            "ACCEPTED": "Acceptata",
-            "COMPLETED": "Finalizata",
+            "ACTIVE": "Aplicat",
             "REJECTED": "Respinsa",
-            "CANCELLED": "Anulata"
+            "WITHDRAWN": "Retrasa"
         }
     },
     "jobs": {
@@ -233,7 +238,8 @@
                 "already_applied": "Ai aplicat pentru acest job.",
                 "duplicate": "Ai aplicat deja pentru acest job.",
                 "generic_error": "A aparut o eroare. Incearca din nou mai tarziu.",
-                "own_job": "Nu poti aplica la propriul job."
+                "own_job": "Nu poti aplica la propriul job.",
+                "job_closed": "Acest job nu mai accepta aplicatii."
             },
             "errors": {
                 "load_failed": "Nu am putut incarca detaliile jobului. Incearca din nou."
@@ -241,7 +247,6 @@
         },
         "statuses": {
             "OPEN": "Deschis",
-            "ASSIGNED": "Atribuit",
             "COMPLETED": "Finalizat",
             "CANCELLED": "Inchis"
         },

@@ -8,5 +8,6 @@ import edu.bbte.daygig.backend.model.enums.JobCategory;
 import edu.bbte.daygig.backend.model.enums.JobStatus;
 
 public record JobOutDto(UUID id, String title, String description, JobCategory category, JobStatus status,
-                        BigDecimal hourlyRate, Currency currency, String locationName, LocalDateTime createdAt) {
+                        BigDecimal hourlyRate, Currency currency, String locationName, LocalDateTime createdAt,
+                        UUID completedApplicationId, LocalDateTime completedAt) {
 }

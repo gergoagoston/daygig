@@ -17,10 +17,11 @@ public interface JobRepository extends JpaRepository<Job, UUID> {
     Page<Job> findAllByStatus(JobStatus status,
                               Pageable pageable);
 
+    @EntityGraph(attributePaths = "completedApplication")
     List<Job> findAllByOwnerIdOrderByCreatedAtDesc(UUID ownerId);
 
     @Override
-    @EntityGraph(attributePaths = "owner")
+    @EntityGraph(attributePaths = {"owner", "completedApplication"})
     Optional<Job> findById(UUID id);
 
     boolean existsByTitle(String title);

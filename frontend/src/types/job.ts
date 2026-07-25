@@ -14,7 +14,7 @@ export const jobCategories = [
 
 export type JobCategory = (typeof jobCategories)[number];
 
-export type JobStatus = 'OPEN' | 'ASSIGNED' | 'COMPLETED' | 'CANCELLED';
+export type JobStatus = 'OPEN' | 'COMPLETED' | 'CANCELLED';
 
 export type Currency = 'RON' | 'EUR';
 
@@ -28,6 +28,8 @@ export type Job = {
   currency: Currency;
   locationName: string;
   createdAt: string;
+  completedApplicationId: string | null;
+  completedAt: string | null;
 };
 
 export type JobCreatePayload = {

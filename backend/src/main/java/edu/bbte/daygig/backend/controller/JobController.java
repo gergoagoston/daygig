@@ -11,12 +11,14 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import lombok.RequiredArgsConstructor;
 import edu.bbte.daygig.backend.dto.common.PageOutDto;
+import edu.bbte.daygig.backend.dto.job.JobCompletionInDto;
 import edu.bbte.daygig.backend.dto.job.JobCreateInDto;
 import edu.bbte.daygig.backend.dto.job.JobDetailedOutDto;
 import edu.bbte.daygig.backend.dto.job.JobOutDto;
@@ -62,6 +64,14 @@ public class JobController {
     @GetMapping("/{id}")
     public JobDetailedOutDto getById(@PathVariable UUID id) {
         return jobMapper.toDetailsDto(jobService.getById(id));
+    }
+
+    @PutMapping("/{id}/completion")
+    public JobDetailedOutDto complete(@PathVariable UUID id,
+                                      @Valid @RequestBody JobCompletionInDto completionInDto,
+                                      @AuthenticationPrincipal JwtPrincipal principal) {
+        return jobMapper.toDetailsDto(jobService.complete(id, completionInDto.applicationId(),
+                currentUserId(principal)));
     }
 
     private UUID currentUserId(JwtPrincipal principal) {
