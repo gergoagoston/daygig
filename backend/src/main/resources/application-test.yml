@@ -12,6 +12,10 @@ spring:
     properties:
       hibernate:
         "[format_sql]": true
+  sql:
+    init:
+      mode: always
+      schema-locations: classpath:db/test/functions.sql
 
 logging:
   level:

@@ -5,11 +5,13 @@ import java.util.UUID;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import edu.bbte.daygig.backend.dto.job.JobCreateInDto;
+import edu.bbte.daygig.backend.dto.job.JobSearchInDto;
 import edu.bbte.daygig.backend.model.Job;
 
 public interface JobService {
 
-    Page<Job> getOpenJobs(Pageable pageable);
+    Page<Job> getOpenJobs(JobSearchInDto search,
+                          Pageable pageable);
 
     List<Job> getMine(UUID ownerId);
 

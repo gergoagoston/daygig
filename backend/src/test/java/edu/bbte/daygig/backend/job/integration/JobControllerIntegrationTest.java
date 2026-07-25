@@ -100,6 +100,91 @@ class JobControllerIntegrationTest {
     }
 
     @Test
+    void getJobsSearchesAllTextFieldsCaseAndAccentInsensitively() throws Exception {
+        User owner = saveUser("text-search-owner");
+        Job matchingJob = saveJob(owner, "Tavaszi TAKARÍTÁS", JobCategory.CLEANING, JobStatus.OPEN);
+        matchingJob.setDescription("Gyors ablakmosás tapasztalattal");
+        matchingJob.setLocationName("Marosvásárhely");
+        jobRepository.saveAndFlush(matchingJob);
+
+        Job partialMatch = saveJob(owner, "Takarítás", JobCategory.CLEANING, JobStatus.OPEN);
+        partialMatch.setDescription("Általános segítség");
+        partialMatch.setLocationName("Marosvásárhely");
+        jobRepository.saveAndFlush(partialMatch);
+
+        mockMvc.perform(get("/jobs")
+                .param("q", "TAKARITAS ablakmosas marosvasarhely"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.content", hasSize(1)))
+                .andExpect(jsonPath("$.content[0].id").value(matchingJob.getId().toString()))
+                .andExpect(jsonPath("$.totalElements").value(1));
+    }
+
+    @Test
+    void getJobsCombinesCategoryAndHourlyRateFilters() throws Exception {
+        User owner = saveUser("filter-owner");
+        Job matchingJob = saveJob(owner, "Matching job", JobCategory.CLEANING, JobStatus.OPEN);
+        matchingJob.setHourlyRate(new BigDecimal("60.00"));
+        jobRepository.saveAndFlush(matchingJob);
+
+        Job belowMinimum = saveJob(owner, "Cheap cleaning", JobCategory.CLEANING, JobStatus.OPEN);
+        belowMinimum.setHourlyRate(new BigDecimal("40.00"));
+        jobRepository.saveAndFlush(belowMinimum);
+
+        Job aboveMaximum = saveJob(owner, "Expensive cleaning", JobCategory.CLEANING, JobStatus.OPEN);
+        aboveMaximum.setHourlyRate(new BigDecimal("90.00"));
+        jobRepository.saveAndFlush(aboveMaximum);
+
+        Job wrongCategory = saveJob(owner, "Delivery in range", JobCategory.DELIVERY, JobStatus.OPEN);
+        wrongCategory.setHourlyRate(new BigDecimal("60.00"));
+        jobRepository.saveAndFlush(wrongCategory);
+
+        Job completedJob = saveJob(owner, "Completed cleaning", JobCategory.CLEANING, JobStatus.COMPLETED);
+        completedJob.setHourlyRate(new BigDecimal("60.00"));
+        jobRepository.saveAndFlush(completedJob);
+
+        mockMvc.perform(get("/jobs")
+                .param("category", "CLEANING")
+                .param("minHourlyRate", "50")
+                .param("maxHourlyRate", "80"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.content", hasSize(1)))
+                .andExpect(jsonPath("$.content[0].id").value(matchingJob.getId().toString()))
+                .andExpect(jsonPath("$.totalElements").value(1));
+    }
+
+    @Test
+    void getJobsKeepsPaginationBackendDrivenWithFilters() throws Exception {
+        User owner = saveUser("filtered-pagination-owner");
+        saveJob(owner, "First cleaning", JobCategory.CLEANING, JobStatus.OPEN);
+        saveJob(owner, "Second cleaning", JobCategory.CLEANING, JobStatus.OPEN);
+        saveJob(owner, "Third cleaning", JobCategory.CLEANING, JobStatus.OPEN);
+        saveJob(owner, "Moving job", JobCategory.MOVING, JobStatus.OPEN);
+
+        mockMvc.perform(get("/jobs")
+                .param("category", "CLEANING")
+                .param("page", "1")
+                .param("size", "2"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.content", hasSize(1)))
+                .andExpect(jsonPath("$.page").value(1))
+                .andExpect(jsonPath("$.size").value(2))
+                .andExpect(jsonPath("$.totalElements").value(3))
+                .andExpect(jsonPath("$.totalPages").value(2))
+                .andExpect(jsonPath("$.first").value(false))
+                .andExpect(jsonPath("$.last").value(true));
+    }
+
+    @Test
+    void getJobsRejectsInvalidHourlyRateRange() throws Exception {
+        mockMvc.perform(get("/jobs")
+                .param("minHourlyRate", "80")
+                .param("maxHourlyRate", "50"))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.error").value("Validation Failed"));
+    }
+
+    @Test
     void getMineReturnsOnlyCurrentUsersJobs() throws Exception {
         User owner = saveUser("mine-owner");
         User otherOwner = saveUser("mine-other-owner");

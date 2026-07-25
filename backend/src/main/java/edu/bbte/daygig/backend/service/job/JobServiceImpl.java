@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import edu.bbte.daygig.backend.dto.job.JobCreateInDto;
+import edu.bbte.daygig.backend.dto.job.JobSearchInDto;
 import edu.bbte.daygig.backend.exception.DuplicateResourceException;
 import edu.bbte.daygig.backend.exception.ForbiddenException;
 import edu.bbte.daygig.backend.exception.ResourceNotFoundException;
@@ -21,6 +22,7 @@ import edu.bbte.daygig.backend.model.Job;
 import edu.bbte.daygig.backend.model.User;
 import edu.bbte.daygig.backend.repository.ApplicationRepository;
 import edu.bbte.daygig.backend.repository.JobRepository;
+import edu.bbte.daygig.backend.repository.JobSpecifications;
 import edu.bbte.daygig.backend.repository.UserRepository;
 
 @Service
@@ -33,8 +35,9 @@ public class JobServiceImpl implements JobService {
     private final JobMapper jobMapper;
 
     @Override
-    public Page<Job> getOpenJobs(Pageable pageable) {
-        return jobRepository.findAllByStatus(JobStatus.OPEN, pageable);
+    public Page<Job> getOpenJobs(JobSearchInDto search,
+                                 Pageable pageable) {
+        return jobRepository.findAll(JobSpecifications.openJobsMatching(search), pageable);
     }
 
     @Override
