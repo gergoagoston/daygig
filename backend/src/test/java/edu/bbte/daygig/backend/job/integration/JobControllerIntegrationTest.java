@@ -142,7 +142,7 @@ class JobControllerIntegrationTest {
                 .andExpect(jsonPath("$.category").value("DELIVERY"))
                 .andExpect(jsonPath("$.status").value("OPEN"))
                 .andExpect(jsonPath("$.hourlyRate").value(60.0))
-                .andExpect(jsonPath("$.currency").value("EUR"))
+                .andExpect(jsonPath("$.currency").value("RON"))
                 .andExpect(jsonPath("$.locationName").value("Oradea"))
                 .andReturn()
                 .getResponse()
@@ -153,6 +153,7 @@ class JobControllerIntegrationTest {
 
         assertThat(createdJob.getOwner().getId()).isEqualTo(owner.getId());
         assertThat(createdJob.getStatus()).isEqualTo(JobStatus.OPEN);
+        assertThat(createdJob.getCurrency()).isEqualTo(Currency.RON);
         assertThat(createdJob.getLatitude()).isEqualByComparingTo(new BigDecimal("47.046500"));
         assertThat(createdJob.getLongitude()).isEqualByComparingTo(new BigDecimal("21.918900"));
     }
@@ -178,7 +179,6 @@ class JobControllerIntegrationTest {
                           "description": "",
                           "category": null,
                           "hourlyRate": -5,
-                          "currency": null,
                           "locationName": "",
                           "latitude": 95,
                           "longitude": -190
@@ -190,7 +190,6 @@ class JobControllerIntegrationTest {
                 .andExpect(jsonPath("$.details.description").exists())
                 .andExpect(jsonPath("$.details.category").exists())
                 .andExpect(jsonPath("$.details.hourlyRate").exists())
-                .andExpect(jsonPath("$.details.currency").exists())
                 .andExpect(jsonPath("$.details.locationName").exists())
                 .andExpect(jsonPath("$.details.latitude").exists())
                 .andExpect(jsonPath("$.details.longitude").exists());
@@ -358,7 +357,6 @@ class JobControllerIntegrationTest {
                   "description": "Created job description",
                   "category": "DELIVERY",
                   "hourlyRate": 60.00,
-                  "currency": "EUR",
                   "locationName": "Oradea",
                   "latitude": 47.046500,
                   "longitude": 21.918900

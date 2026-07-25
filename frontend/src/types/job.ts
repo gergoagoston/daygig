@@ -16,7 +16,7 @@ export type JobCategory = (typeof jobCategories)[number];
 
 export type JobStatus = 'OPEN' | 'COMPLETED' | 'CANCELLED';
 
-export type Currency = 'RON' | 'EUR';
+export type Currency = 'RON';
 
 export type Job = {
   id: string;
@@ -37,7 +37,6 @@ export type JobCreatePayload = {
   description: string;
   category: JobCategory;
   hourlyRate: number;
-  currency: Currency;
   locationName: string;
   latitude: number;
   longitude: number;

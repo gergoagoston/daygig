@@ -10,7 +10,6 @@ import Select from '../../ui/Select';
 import Textarea from '../../ui/Textarea';
 import {
   createJobSchema,
-  currencies,
   defaultJobCreateValues,
   toJobCreatePayload,
   type JobCreateFormValues,
@@ -84,7 +83,7 @@ function JobCreateForm({ onCancel }: JobCreateFormProps) {
         {...register('description')}
       />
 
-      <div className="grid gap-5 md:grid-cols-3">
+      <div className="grid gap-5 md:grid-cols-2">
         <Select
           id="create-job-category"
           label={t('jobs.create.fields.category')}
@@ -102,7 +101,7 @@ function JobCreateForm({ onCancel }: JobCreateFormProps) {
 
         <Input
           id="create-job-hourly-rate"
-          label={t('jobs.create.fields.hourly_rate')}
+          label={`${t('jobs.create.fields.hourly_rate')} (RON)`}
           inputMode="decimal"
           min="0"
           step="0.01"
@@ -111,21 +110,6 @@ function JobCreateForm({ onCancel }: JobCreateFormProps) {
           required
           {...register('hourlyRate')}
         />
-
-        <Select
-          id="create-job-currency"
-          label={t('jobs.create.fields.currency')}
-          error={errors.currency?.message}
-          required
-          {...register('currency')}
-        >
-          <option value="">{t('jobs.create.fields.select_placeholder')}</option>
-          {currencies.map((currency) => (
-            <option key={currency} value={currency}>
-              {currency}
-            </option>
-          ))}
-        </Select>
       </div>
 
       <div className="grid gap-2">

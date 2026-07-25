@@ -1,12 +1,7 @@
 import axios from 'axios';
 import { z } from 'zod';
 
-import {
-  jobCategories,
-  type Currency,
-  type JobCategory,
-  type JobCreatePayload,
-} from '../../../types/job';
+import { jobCategories, type JobCategory, type JobCreatePayload } from '../../../types/job';
 
 type Translate = (key: string) => string;
 
@@ -15,21 +10,17 @@ export type JobCreateFormValues = {
   description: string;
   category: string;
   hourlyRate: string;
-  currency: string;
   locationName: string;
   latitude: string;
   longitude: string;
   form?: string;
 };
 
-export const currencies = ['RON', 'EUR'] as const;
-
 export const defaultJobCreateValues: JobCreateFormValues = {
   title: '',
   description: '',
   category: '',
   hourlyRate: '',
-  currency: '',
   locationName: '',
   latitude: '',
   longitude: '',
@@ -60,12 +51,6 @@ export function createJobSchema(t: Translate) {
       .refine((value) => Number.isFinite(Number(value)) && Number(value) > 0, {
         message: t('jobs.create.errors.hourly_rate_positive'),
       }),
-    currency: z
-      .string()
-      .min(1, t('jobs.create.errors.currency_required'))
-      .refine((value) => currencies.includes(value as Currency), {
-        message: t('jobs.create.errors.currency_required'),
-      }),
     locationName: z.string().trim().min(1, t('jobs.create.errors.location_name_required')),
     latitude: z
       .string()
@@ -90,7 +75,6 @@ export function toJobCreatePayload(values: JobCreateFormValues): JobCreatePayloa
     description: values.description.trim(),
     category: values.category as JobCategory,
     hourlyRate: Number(values.hourlyRate),
-    currency: values.currency as Currency,
     locationName: values.locationName.trim(),
     latitude: Number(values.latitude),
     longitude: Number(values.longitude),

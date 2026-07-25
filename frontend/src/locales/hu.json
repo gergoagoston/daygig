@@ -188,7 +188,6 @@
                 "description": "Leírás",
                 "category": "Kategória",
                 "hourly_rate": "Óradíj",
-                "currency": "Pénznem",
                 "location_name": "Helyszín neve",
                 "select_placeholder": "Válassz"
             },
@@ -204,7 +203,6 @@
                 "category_required": "A kategória megadása kötelező.",
                 "hourly_rate_required": "Az óradíj megadása kötelező.",
                 "hourly_rate_positive": "Az óradíjnak nagyobbnak kell lennie 0-nál.",
-                "currency_required": "A pénznem megadása kötelező.",
                 "location_name_required": "A helyszín nevének megadása kötelező.",
                 "location_required": "Válassz helyszínt a térképen.",
                 "location_invalid": "A kiválasztott helyszín érvénytelen.",
@@ -213,7 +211,6 @@
                     "description": "A leírás megadása kötelező.",
                     "category": "A kategória megadása kötelező.",
                     "hourlyRate": "Az óradíjnak nagyobbnak kell lennie 0-nál.",
-                    "currency": "A pénznem megadása kötelező.",
                     "locationName": "A helyszín nevének megadása kötelező.",
                     "latitude": "Válassz érvényes helyszínt a térképen.",
                     "longitude": "Válassz érvényes helyszínt a térképen."

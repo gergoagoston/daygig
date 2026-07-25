@@ -25,7 +25,6 @@ public class JobMapper {
         job.setDescription(jobCreateInDto.description());
         job.setCategory(jobCreateInDto.category());
         job.setHourlyRate(jobCreateInDto.hourlyRate());
-        job.setCurrency(jobCreateInDto.currency());
         job.setLocationName(jobCreateInDto.locationName());
         job.setLatitude(jobCreateInDto.latitude());
         job.setLongitude(jobCreateInDto.longitude());

@@ -188,7 +188,6 @@
                 "description": "Descriere",
                 "category": "Categorie",
                 "hourly_rate": "Tarif orar",
-                "currency": "Moneda",
                 "location_name": "Numele locatiei",
                 "select_placeholder": "Selecteaza"
             },
@@ -204,7 +203,6 @@
                 "category_required": "Categoria este obligatorie.",
                 "hourly_rate_required": "Tariful orar este obligatoriu.",
                 "hourly_rate_positive": "Tariful orar trebuie sa fie mai mare decat 0.",
-                "currency_required": "Moneda este obligatorie.",
                 "location_name_required": "Numele locatiei este obligatoriu.",
                 "location_required": "Selecteaza o locatie pe harta.",
                 "location_invalid": "Locatia selectata este invalida.",
@@ -213,7 +211,6 @@
                     "description": "Descrierea este obligatorie.",
                     "category": "Categoria este obligatorie.",
                     "hourlyRate": "Tariful orar trebuie sa fie mai mare decat 0.",
-                    "currency": "Moneda este obligatorie.",
                     "locationName": "Numele locatiei este obligatoriu.",
                     "latitude": "Selecteaza o locatie valida pe harta.",
                     "longitude": "Selecteaza o locatie valida pe harta."

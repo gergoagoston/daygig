@@ -188,7 +188,6 @@
                 "description": "Description",
                 "category": "Category",
                 "hourly_rate": "Hourly rate",
-                "currency": "Currency",
                 "location_name": "Location name",
                 "select_placeholder": "Select"
             },
@@ -204,7 +203,6 @@
                 "category_required": "Category is required.",
                 "hourly_rate_required": "Hourly rate is required.",
                 "hourly_rate_positive": "Hourly rate must be greater than 0.",
-                "currency_required": "Currency is required.",
                 "location_name_required": "Location name is required.",
                 "location_required": "Select a location on the map.",
                 "location_invalid": "Selected location is invalid.",
@@ -213,7 +211,6 @@
                     "description": "Description is required.",
                     "category": "Category is required.",
                     "hourlyRate": "Hourly rate must be greater than 0.",
-                    "currency": "Currency is required.",
                     "locationName": "Location name is required.",
                     "latitude": "Select a valid location on the map.",
                     "longitude": "Select a valid location on the map."
