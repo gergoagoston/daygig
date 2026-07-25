@@ -108,6 +108,26 @@
         },
         "errors": {
             "load_failed": "Could not load your posted jobs. Please try again."
+        },
+        "card": {
+            "location": "Location",
+            "hourly_rate": "Hourly rate"
+        },
+        "applications": {
+            "title": "Applications",
+            "count": "{{count}} submitted",
+            "loading": "Loading applications...",
+            "empty": "No applications yet.",
+            "errors": {
+                "load_failed": "Could not load applications.",
+                "update_failed": "Could not update the application. Please try again."
+            },
+            "actions": {
+                "ACCEPTED": "Accept",
+                "REJECTED": "Reject",
+                "COMPLETED": "Complete",
+                "updating": "Updating..."
+            }
         }
     },
     "applications": {
@@ -134,6 +154,7 @@
         "status": {
             "PENDING": "Pending",
             "ACCEPTED": "Accepted",
+            "COMPLETED": "Completed",
             "REJECTED": "Rejected",
             "CANCELLED": "Cancelled"
         }

@@ -86,10 +86,10 @@ function JobDetailsPage() {
               </article>
 
               <aside className="border-t border-border bg-page px-6 py-7 sm:px-8 lg:border-l lg:border-t-0">
-                <div className="grid h-full gap-8 lg:sticky lg:top-24 lg:min-h-72">
+                <div className="flex flex-col gap-6 lg:sticky lg:top-24">
                   <JobDetailsInfo job={job} language={language} />
 
-                  <div className="self-end">
+                  <div>
                     <JobApplyPanel
                       applyMessage={applyMessage}
                       hasApplied={hasApplied}
@@ -97,6 +97,8 @@ function JobDetailsPage() {
                       isApplying={isApplying}
                       isCheckingApplicationStatus={isCheckingApplicationStatus}
                       isOwnJob={isOwnJob}
+                      jobId={job.id}
+                      jobStatus={job.status}
                       onApply={handleApply}
                     />
                   </div>

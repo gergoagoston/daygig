@@ -108,6 +108,26 @@
         },
         "errors": {
             "load_failed": "Nem sikerült betölteni a meghirdetett munkáidat. Próbáld újra."
+        },
+        "card": {
+            "location": "Helyszín",
+            "hourly_rate": "Óradíj"
+        },
+        "applications": {
+            "title": "Jelentkezések",
+            "count": "{{count}} beküldve",
+            "loading": "Jelentkezések betöltése...",
+            "empty": "Még nincs jelentkezés.",
+            "errors": {
+                "load_failed": "Nem sikerült betölteni a jelentkezéseket.",
+                "update_failed": "Nem sikerült frissíteni a jelentkezést. Próbáld újra."
+            },
+            "actions": {
+                "ACCEPTED": "Elfogadás",
+                "REJECTED": "Elutasítás",
+                "COMPLETED": "Befejezés",
+                "updating": "Frissítés..."
+            }
         }
     },
     "applications": {
@@ -134,6 +154,7 @@
         "status": {
             "PENDING": "Függőben",
             "ACCEPTED": "Elfogadva",
+            "COMPLETED": "Befejezve",
             "REJECTED": "Elutasítva",
             "CANCELLED": "Visszavonva"
         }

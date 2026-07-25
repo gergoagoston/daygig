@@ -108,6 +108,26 @@
         },
         "errors": {
             "load_failed": "Nu am putut incarca joburile tale publicate. Incearca din nou."
+        },
+        "card": {
+            "location": "Locatie",
+            "hourly_rate": "Tarif orar"
+        },
+        "applications": {
+            "title": "Aplicatii",
+            "count": "{{count}} trimise",
+            "loading": "Se incarca aplicatiile...",
+            "empty": "Nu exista aplicatii inca.",
+            "errors": {
+                "load_failed": "Nu am putut incarca aplicatiile.",
+                "update_failed": "Nu am putut actualiza aplicatia. Incearca din nou."
+            },
+            "actions": {
+                "ACCEPTED": "Accepta",
+                "REJECTED": "Respinge",
+                "COMPLETED": "Finalizeaza",
+                "updating": "Se actualizeaza..."
+            }
         }
     },
     "applications": {
@@ -134,6 +154,7 @@
         "status": {
             "PENDING": "In asteptare",
             "ACCEPTED": "Acceptata",
+            "COMPLETED": "Finalizata",
             "REJECTED": "Respinsa",
             "CANCELLED": "Anulata"
         }

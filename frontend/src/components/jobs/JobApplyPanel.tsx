@@ -1,7 +1,9 @@
 import { useTranslation } from 'react-i18next';
 
 import type { ApplyMessage } from '../../hooks/useApplyToJob';
+import type { JobStatus } from '../../types/job';
 import Button from '../ui/Button';
+import OwnerApplicationsPanel from './OwnerApplicationsPanel';
 
 type JobApplyPanelProps = {
   applyMessage: ApplyMessage | null;
@@ -9,6 +11,8 @@ type JobApplyPanelProps = {
   isApplyDisabled: boolean;
   isApplying: boolean;
   isCheckingApplicationStatus: boolean;
+  jobId: string;
+  jobStatus: JobStatus;
   isOwnJob: boolean;
   onApply: () => void;
 };
@@ -31,6 +35,8 @@ function JobApplyPanel({
   isApplyDisabled,
   isApplying,
   isCheckingApplicationStatus,
+  jobId,
+  jobStatus,
   isOwnJob,
   onApply,
 }: JobApplyPanelProps) {
@@ -46,10 +52,8 @@ function JobApplyPanel({
         </p>
       ) : null}
 
-      {isOwnJob ? (
-        <p className="rounded-lg border border-border bg-surface p-4 font-semibold text-body">
-          {t('jobs.details.apply.own_job')}
-        </p>
+      {isOwnJob && jobId ? (
+        <OwnerApplicationsPanel jobId={jobId} jobStatus={jobStatus} />
       ) : isCheckingApplicationStatus ? null : hasApplied && !applyMessage ? (
         <p className="rounded-lg border border-primary bg-primary-soft p-4 font-semibold text-primary">
           {t('jobs.details.apply.already_applied')}
