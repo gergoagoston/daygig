@@ -185,6 +185,57 @@ class JobControllerIntegrationTest {
     }
 
     @Test
+    void getJobsRejectsIncompleteOrInvalidDistanceFilter() throws Exception {
+        mockMvc.perform(get("/jobs")
+                .param("latitude", "46.77"))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.error").value("Validation Failed"));
+
+        mockMvc.perform(get("/jobs")
+                .param("maxDistanceKm", "50"))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.error").value("Validation Failed"));
+
+        mockMvc.perform(get("/jobs")
+                .param("latitude", "46.77")
+                .param("longitude", "23.59"))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.error").value("Validation Failed"));
+
+        mockMvc.perform(get("/jobs")
+                .param("latitude", "46.77")
+                .param("longitude", "23.59")
+                .param("maxDistanceKm", "201"))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.error").value("Validation Failed"));
+    }
+
+    @Test
+    void getJobsRejectsDistanceSort() throws Exception {
+        mockMvc.perform(get("/jobs")
+                .param("sort", "distance,asc"))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.message").value("Unsupported job sort property: distance"));
+    }
+
+    @Test
+    void getJobsSortsByHourlyRate() throws Exception {
+        User owner = saveUser("hourly-sort-owner");
+        Job lowerRateJob = saveJob(owner, "Lower rate job", JobCategory.CLEANING, JobStatus.OPEN);
+        lowerRateJob.setHourlyRate(new BigDecimal("40.00"));
+        jobRepository.saveAndFlush(lowerRateJob);
+        Job higherRateJob = saveJob(owner, "Higher rate job", JobCategory.CLEANING, JobStatus.OPEN);
+        higherRateJob.setHourlyRate(new BigDecimal("80.00"));
+        jobRepository.saveAndFlush(higherRateJob);
+
+        mockMvc.perform(get("/jobs")
+                .param("sort", "hourlyRate,desc"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.content[0].id").value(higherRateJob.getId().toString()))
+                .andExpect(jsonPath("$.content[1].id").value(lowerRateJob.getId().toString()));
+    }
+
+    @Test
     void getMineReturnsOnlyCurrentUsersJobs() throws Exception {
         User owner = saveUser("mine-owner");
         User otherOwner = saveUser("mine-other-owner");

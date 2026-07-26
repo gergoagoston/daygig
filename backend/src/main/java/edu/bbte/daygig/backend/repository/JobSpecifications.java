@@ -1,9 +1,11 @@
 package edu.bbte.daygig.backend.repository;
 
+import java.math.BigDecimal;
 import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.Expression;
 import jakarta.persistence.criteria.Predicate;
 import org.springframework.data.jpa.domain.Specification;
@@ -40,6 +42,13 @@ public final class JobSpecifications {
             addTextSearchPredicates(search.q(), root.get("title"), root.get("description"),
                     root.get("locationName"), criteriaBuilder, predicates);
 
+            if (search.hasDistanceFilter()) {
+                Expression<Double> distanceKm = distanceKm(search, root.get("latitude"), root.get("longitude"),
+                        criteriaBuilder);
+                predicates.add(criteriaBuilder.lessThanOrEqualTo(distanceKm,
+                        search.maxDistanceKm().doubleValue()));
+            }
+
             return criteriaBuilder.and(predicates.toArray(Predicate[]::new));
         };
     }
@@ -48,7 +57,7 @@ public final class JobSpecifications {
                                                 Expression<String> title,
                                                 Expression<String> description,
                                                 Expression<String> locationName,
-                                                jakarta.persistence.criteria.CriteriaBuilder criteriaBuilder,
+                                                CriteriaBuilder criteriaBuilder,
                                                 List<Predicate> predicates) {
         if (query == null || query.isBlank()) {
             return;
@@ -65,6 +74,17 @@ public final class JobSpecifications {
             predicates.add(criteriaBuilder.like(normalizedText, "%" + escapeLike(normalizedToken) + "%",
                     LIKE_ESCAPE_CHARACTER));
         }
+    }
+
+    private static Expression<Double> distanceKm(JobSearchInDto search,
+                                                 Expression<BigDecimal> latitude,
+                                                 Expression<BigDecimal> longitude,
+                                                 CriteriaBuilder criteriaBuilder) {
+        return criteriaBuilder.function("calculate_distance_km", Double.class,
+                latitude,
+                longitude,
+                criteriaBuilder.literal(search.latitude()),
+                criteriaBuilder.literal(search.longitude()));
     }
 
     private static String normalizeToken(String token) {

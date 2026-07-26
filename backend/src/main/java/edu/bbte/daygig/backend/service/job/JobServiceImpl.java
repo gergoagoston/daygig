@@ -2,9 +2,11 @@ package edu.bbte.daygig.backend.service.job;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +31,9 @@ import edu.bbte.daygig.backend.repository.UserRepository;
 @RequiredArgsConstructor
 public class JobServiceImpl implements JobService {
 
+    private static final Set<String> ALLOWED_PUBLIC_SORT_PROPERTIES = Set.of(
+            "createdAt", "hourlyRate");
+
     private final JobRepository jobRepository;
     private final ApplicationRepository applicationRepository;
     private final UserRepository userRepository;
@@ -37,6 +42,7 @@ public class JobServiceImpl implements JobService {
     @Override
     public Page<Job> getOpenJobs(JobSearchInDto search,
                                  Pageable pageable) {
+        validatePublicSort(pageable.getSort());
         return jobRepository.findAll(JobSpecifications.openJobsMatching(search), pageable);
     }
 
@@ -124,4 +130,13 @@ public class JobServiceImpl implements JobService {
             throw new ForbiddenException("Only the job owner can complete this job");
         }
     }
+
+    private void validatePublicSort(Sort sort) {
+        sort.forEach(order -> {
+            if (!ALLOWED_PUBLIC_SORT_PROPERTIES.contains(order.getProperty())) {
+                throw new ServiceException("Unsupported job sort property: " + order.getProperty());
+            }
+        });
+    }
+
 }
