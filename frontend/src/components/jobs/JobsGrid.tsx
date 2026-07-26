@@ -7,7 +7,7 @@ type JobsGridProps = {
 
 function JobsGrid({ jobs }: JobsGridProps) {
   return (
-    <div className="grid grid-cols-[repeat(auto-fit,minmax(400px,600px))] justify-center gap-4">
+    <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3 min-[1900px]:grid-cols-4">
       {jobs.map((job) => (
         <JobCard key={job.id} job={job} />
       ))}

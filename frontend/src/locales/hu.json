@@ -1,262 +1,294 @@
 {
-    "auth": {
-        "loading": "Fiók betöltése...",
-        "login": {
-            "title": "Üdvözöljük újra",
-            "subtitle": "Jelentkezz be, és kezeld a DayGig lehetőségeidet.",
-            "email": "Email",
-            "password": "Jelszó",
-            "submit_button": "Bejelentkezés",
-            "submitting": "Bejelentkezés...",
-            "register_prompt": "Még nincs fiókod?",
-            "errors": {
-                "email_required": "Az email megadása kötelező.",
-                "email_invalid": "Adj meg egy érvényes email címet.",
-                "password_required": "A jelszó megadása kötelező.",
-                "invalid_credentials": "Hibás bejelentkezési adatok.",
-                "generic": "A bejelentkezés sikertelen. Próbáld újra."
-            }
-        },
-        "register": {
-            "title": "Fiók létrehozása",
-            "subtitle": "Csatlakozz a DayGighez, és találj rugalmas munkalehetőségeket.",
-            "first_name": "Keresztnév",
-            "last_name": "Vezetéknév",
-            "phone_number": "Telefonszám",
-            "email": "Email",
-            "password": "Jelszó",
-            "confirm_password": "Jelszó megerősítése",
-            "submit_button": "Fiók létrehozása",
-            "submitting": "Fiók létrehozása...",
-            "login_prompt": "Már van fiókod?",
-            "terms_consent": "Elolvastam és elfogadom a <termsLink>Felhasználási feltételeket</termsLink>, és tudomásul veszem, hogy a DayGig csak kapcsolatot teremt a felhasználók között.",
-            "errors": {
-                "first_name_required": "A keresztnév megadása kötelező.",
-                "last_name_required": "A vezetéknév megadása kötelező.",
-                "email_required": "Az email megadása kötelező.",
-                "email_invalid": "Adj meg egy érvényes email címet.",
-                "email_exists": "Ezzel az email címmel már létezik fiók.",
-                "password_required": "A jelszó megadása kötelező.",
-                "password_min_length": "A jelszónak legalább 8 karakter hosszúnak kell lennie.",
-                "confirm_password_required": "Erősítsd meg a jelszavad.",
-                "passwords_do_not_match": "A jelszavak nem egyeznek.",
-                "terms_required": "A regisztrációhoz el kell fogadnod a Felhasználási feltételeket.",
-                "generic": "A regisztráció sikertelen. Próbáld újra."
-            }
-        }
+  "auth": {
+    "loading": "Fiók betöltése...",
+    "login": {
+      "title": "Üdvözöljük újra",
+      "subtitle": "Jelentkezz be, és kezeld a DayGig lehetőségeidet.",
+      "email": "Email",
+      "password": "Jelszó",
+      "submit_button": "Bejelentkezés",
+      "submitting": "Bejelentkezés...",
+      "register_prompt": "Még nincs fiókod?",
+      "errors": {
+        "email_required": "Az email megadása kötelező.",
+        "email_invalid": "Adj meg egy érvényes email címet.",
+        "password_required": "A jelszó megadása kötelező.",
+        "invalid_credentials": "Hibás bejelentkezési adatok.",
+        "generic": "A bejelentkezés sikertelen. Próbáld újra."
+      }
     },
-    "navigation": {
-        "main": "Fő navigáció",
-        "my_jobs": "Meghirdetett munkáim",
-        "my_applications": "Jelentkezéseim",
-        "login": "Bejelentkezés",
-        "register": "Regisztráció",
-        "logout": "Kijelentkezés",
-        "language": "Nyelv"
-    },
-    "legal": {
-        "terms": {
-            "title": "Felhasználási feltételek",
-            "subtitle": "Kérjük, olvasd el ezeket a feltételeket a DayGig fiók létrehozása előtt. Leírják a DayGig szerepét és a felhasználók felelősségét.",
-            "back_to_register": "Vissza a regisztrációhoz",
-            "sections": {
-                "platform_role": {
-                    "title": "A DayGig szerepe",
-                    "body": "A DayGig egy online platform, amely segít alkalmi munkák, segítségkérések és szolgáltatási lehetőségek közzétételében, illetve lehetőséget ad arra, hogy más felhasználók kapcsolatba lépjenek vagy jelentkezzenek ezekre."
-                },
-                "not_a_party": {
-                    "title": "A DayGig nem szerződő fél",
-                    "body": "A DayGig nem munkáltató, nem munkaerő-közvetítő ügynökség, nem fizetési szolgáltató, nem közvetítő döntőbíró, és nem szerződő fél a felhasználók között létrejövő megállapodásokban. A DayGig csak a kapcsolatfelvételt segítő eszközöket biztosítja."
-                },
-                "user_responsibility": {
-                    "title": "A döntéseidért te felelsz",
-                    "body": "A felhasználók saját felelősségükre döntik el, kivel veszik fel a kapcsolatot, milyen munkát vállalnak el, milyen ajánlatot tesznek, hol és mikor találkoznak, illetve milyen feltételekben állapodnak meg."
-                },
-                "offline_incidents": {
-                    "title": "Offline interakciók és incidensek",
-                    "body": "A DayGig nem vállal felelősséget személyes biztonsági problémákért, nem biztonságos viselkedésért, balesetekért, sérülésekért, károkért, veszteségekért, zaklatásért vagy bármilyen más incidensért, amely az alkalmazáson kívül vagy a felhasználók közötti offline interakciók során történik."
-                },
-                "agreements_and_payments": {
-                    "title": "Megállapodások és fizetések",
-                    "body": "A felhasználók felelősek azért, hogy világosan egyeztessék a munka részleteit, az időpontot, a helyszínt, a díjazást, a fizetés módját és minden más fontos feltételt. A DayGig nem felel fizetési vitákért, elmaradt fizetésért, lemondott megállapodásokért, minőségi vitákért vagy a felhasználók közötti megállapodásokért."
-                },
-                "verification": {
-                    "title": "Felhasználói információk",
-                    "body": "A DayGig nem ellenőrzi teljes körűen minden felhasználó személyazonosságát, megbízhatóságát, képzettségét, engedélyeit vagy az általuk megadott információk pontosságát. A felhasználóknak saját megítélésük alapján kell dönteniük találkozás vagy munkavégzés előtt."
-                },
-                "conduct": {
-                    "title": "Elvárt magatartás",
-                    "body": "A felhasználók kötelesek a DayGiget jogszerűen, tisztességesen, mások biztonságát, jogait és méltóságát tiszteletben tartva használni. Félrevezető, sértő, jogellenes, veszélyes vagy zaklató tartalom és magatartás nem megengedett."
-                },
-                "moderation": {
-                    "title": "Moderáció",
-                    "body": "A DayGig eltávolíthat olyan tartalmakat, munkahirdetéseket, jelentkezéseket vagy fiókokat, amelyek sértik az alkalmazás szabályait, más felhasználóknak kárt okoznak, vagy jogszabálysértés gyanúját vetik fel."
-                },
-                "acceptance": {
-                    "title": "Elfogadás regisztrációkor",
-                    "body": "A regisztrációval kijelented, hogy elolvastad és elfogadod ezeket a Felhasználási feltételeket, és tudomásul veszed, hogy a DayGig kapcsolatteremtő platformként működik."
-                }
-            }
+    "register": {
+      "title": "Fiók létrehozása",
+      "subtitle": "Csatlakozz a DayGighez, és találj rugalmas munkalehetőségeket.",
+      "first_name": "Keresztnév",
+      "last_name": "Vezetéknév",
+      "phone_number": "Telefonszám",
+      "email": "Email",
+      "password": "Jelszó",
+      "confirm_password": "Jelszó megerősítése",
+      "submit_button": "Fiók létrehozása",
+      "submitting": "Fiók létrehozása...",
+      "login_prompt": "Már van fiókod?",
+      "terms_consent": "Elolvastam és elfogadom a <termsLink>Felhasználási feltételeket</termsLink>, és tudomásul veszem, hogy a DayGig csak kapcsolatot teremt a felhasználók között.",
+      "errors": {
+        "first_name_required": "A keresztnév megadása kötelező.",
+        "last_name_required": "A vezetéknév megadása kötelező.",
+        "email_required": "Az email megadása kötelező.",
+        "email_invalid": "Adj meg egy érvényes email címet.",
+        "email_exists": "Ezzel az email címmel már létezik fiók.",
+        "password_required": "A jelszó megadása kötelező.",
+        "password_min_length": "A jelszónak legalább 8 karakter hosszúnak kell lennie.",
+        "confirm_password_required": "Erősítsd meg a jelszavad.",
+        "passwords_do_not_match": "A jelszavak nem egyeznek.",
+        "terms_required": "A regisztrációhoz el kell fogadnod a Felhasználási feltételeket.",
+        "generic": "A regisztráció sikertelen. Próbáld újra."
+      }
+    }
+  },
+  "navigation": {
+    "main": "Fő navigáció",
+    "my_jobs": "Meghirdetett munkáim",
+    "my_applications": "Jelentkezéseim",
+    "login": "Bejelentkezés",
+    "register": "Regisztráció",
+    "logout": "Kijelentkezés",
+    "language": "Nyelv"
+  },
+  "legal": {
+    "terms": {
+      "title": "Felhasználási feltételek",
+      "subtitle": "Kérjük, olvasd el ezeket a feltételeket a DayGig fiók létrehozása előtt. Leírják a DayGig szerepét és a felhasználók felelősségét.",
+      "back_to_register": "Vissza a regisztrációhoz",
+      "sections": {
+        "platform_role": {
+          "title": "A DayGig szerepe",
+          "body": "A DayGig egy online platform, amely segít alkalmi munkák, segítségkérések és szolgáltatási lehetőségek közzétételében, illetve lehetőséget ad arra, hogy más felhasználók kapcsolatba lépjenek vagy jelentkezzenek ezekre."
+        },
+        "not_a_party": {
+          "title": "A DayGig nem szerződő fél",
+          "body": "A DayGig nem munkáltató, nem munkaerő-közvetítő ügynökség, nem fizetési szolgáltató, nem közvetítő döntőbíró, és nem szerződő fél a felhasználók között létrejövő megállapodásokban. A DayGig csak a kapcsolatfelvételt segítő eszközöket biztosítja."
+        },
+        "user_responsibility": {
+          "title": "A döntéseidért te felelsz",
+          "body": "A felhasználók saját felelősségükre döntik el, kivel veszik fel a kapcsolatot, milyen munkát vállalnak el, milyen ajánlatot tesznek, hol és mikor találkoznak, illetve milyen feltételekben állapodnak meg."
+        },
+        "offline_incidents": {
+          "title": "Offline interakciók és incidensek",
+          "body": "A DayGig nem vállal felelősséget személyes biztonsági problémákért, nem biztonságos viselkedésért, balesetekért, sérülésekért, károkért, veszteségekért, zaklatásért vagy bármilyen más incidensért, amely az alkalmazáson kívül vagy a felhasználók közötti offline interakciók során történik."
+        },
+        "agreements_and_payments": {
+          "title": "Megállapodások és fizetések",
+          "body": "A felhasználók felelősek azért, hogy világosan egyeztessék a munka részleteit, az időpontot, a helyszínt, a díjazást, a fizetés módját és minden más fontos feltételt. A DayGig nem felel fizetési vitákért, elmaradt fizetésért, lemondott megállapodásokért, minőségi vitákért vagy a felhasználók közötti megállapodásokért."
+        },
+        "verification": {
+          "title": "Felhasználói információk",
+          "body": "A DayGig nem ellenőrzi teljes körűen minden felhasználó személyazonosságát, megbízhatóságát, képzettségét, engedélyeit vagy az általuk megadott információk pontosságát. A felhasználóknak saját megítélésük alapján kell dönteniük találkozás vagy munkavégzés előtt."
+        },
+        "conduct": {
+          "title": "Elvárt magatartás",
+          "body": "A felhasználók kötelesek a DayGiget jogszerűen, tisztességesen, mások biztonságát, jogait és méltóságát tiszteletben tartva használni. Félrevezető, sértő, jogellenes, veszélyes vagy zaklató tartalom és magatartás nem megengedett."
+        },
+        "moderation": {
+          "title": "Moderáció",
+          "body": "A DayGig eltávolíthat olyan tartalmakat, munkahirdetéseket, jelentkezéseket vagy fiókokat, amelyek sértik az alkalmazás szabályait, más felhasználóknak kárt okoznak, vagy jogszabálysértés gyanúját vetik fel."
+        },
+        "acceptance": {
+          "title": "Elfogadás regisztrációkor",
+          "body": "A regisztrációval kijelented, hogy elolvastad és elfogadod ezeket a Felhasználási feltételeket, és tudomásul veszed, hogy a DayGig kapcsolatteremtő platformként működik."
         }
+      }
+    }
+  },
+  "posted_jobs": {
+    "title": "Meghirdetett munkáim",
+    "loading": "Meghirdetett munkák betöltése...",
+    "empty": {
+      "title": "Még nincs meghirdetett munkád",
+      "description": "Az általad közzétett munkák itt fognak megjelenni."
     },
-    "posted_jobs": {
-        "title": "Meghirdetett munkáim",
-        "loading": "Meghirdetett munkák betöltése...",
-        "empty": {
-            "title": "Még nincs meghirdetett munkád",
-            "description": "Az általad közzétett munkák itt fognak megjelenni."
-        },
-        "errors": {
-            "load_failed": "Nem sikerült betölteni a meghirdetett munkáidat. Próbáld újra."
-        },
-        "card": {
-            "location": "Helyszín",
-            "hourly_rate": "Óradíj"
-        },
-        "applications": {
-            "title": "Jelentkezések",
-            "count": "{{count}} beküldve",
-            "loading": "Jelentkezések betöltése...",
-            "empty": "Még nincs jelentkezés.",
-            "errors": {
-                "load_failed": "Nem sikerült betölteni a jelentkezéseket.",
-                "update_failed": "Nem sikerült frissíteni a jelentkezést. Próbáld újra.",
-                "complete_failed": "Nem sikerült lezárni a munkát. Próbáld újra."
-            },
-            "actions": {
-                "REJECTED": "Elutasítás",
-                "complete": "Befejezve",
-                "complete_confirm": "Biztosan ő végezte el a munkát? Ez lezárja a munkát, és később őt lehet értékelni.",
-                "completing": "Lezárás...",
-                "updating": "Frissítés..."
-            },
-            "completed_worker": "Ő végezte el a munkát"
-        }
+    "errors": {
+      "load_failed": "Nem sikerült betölteni a meghirdetett munkáidat. Próbáld újra."
+    },
+    "card": {
+      "location": "Helyszín",
+      "hourly_rate": "Óradíj"
     },
     "applications": {
-        "title": "Jelentkezéseim",
-        "loading": "Jelentkezések betöltése...",
-        "empty": {
-            "title": "Még nincs jelentkezésed",
-            "description": "Azok a munkák, amelyekre jelentkezel, itt fognak megjelenni."
-        },
-        "errors": {
-            "load_failed": "Nem sikerült betölteni a jelentkezéseidet. Próbáld újra."
-        },
-        "card": {
-            "location": "Helyszín",
-            "hourly_rate": "Óradíj",
-            "job_status": "Munka állapota",
-            "applied": "Jelentkezve",
-            "view_job": "Munka megnyitása",
-            "withdraw": "Jelentkezés visszavonása",
-            "withdrawing": "Visszavonás...",
-            "withdraw_confirm": "Biztosan visszavonod a jelentkezésedet?",
-            "withdraw_failed": "Nem sikerült visszavonni a jelentkezést.",
-            "job_closed": "A munka lezárult",
-            "completed_worker": "Te végezted el"
-        }
-    },
-    "application": {
-        "status": {
-            "ACTIVE": "Jelentkezve",
-            "REJECTED": "Elutasítva",
-            "WITHDRAWN": "Visszavonva"
-        }
-    },
-    "jobs": {
-        "loading": "Munkák betöltése...",
-        "empty": {
-            "title": "Még nincs nyitott munka",
-            "description": "Nézz vissza később az új DayGig lehetőségekért."
-        },
-        "errors": {
-            "load_failed": "Nem sikerült betölteni a munkákat. Próbáld újra."
-        },
-        "card": {
-            "hourly_rate": "{{rate}} {{currency}}/óra"
-        },
-        "create": {
-            "nav_label": "Munka meghirdetése",
-            "title": "Munka meghirdetése",
-            "close": "Bezárás",
-            "cancel": "Mégse",
-            "submit": "Munka létrehozása",
-            "submitting": "Létrehozás...",
-            "fields": {
-                "title": "Cím",
-                "description": "Leírás",
-                "category": "Kategória",
-                "hourly_rate": "Óradíj",
-                "location_name": "Helyszín neve",
-                "select_placeholder": "Válassz"
-            },
-            "map": {
-                "label": "Munka helyszíne"
-            },
-            "errors": {
-                "generic": "Nem sikerült létrehozni a munkát. Próbáld újra.",
-                "title_required": "A cím megadása kötelező.",
-                "title_too_long": "A cím legfeljebb 50 karakter lehet.",
-                "description_required": "A leírás megadása kötelező.",
-                "description_too_long": "A leírás legfeljebb 1000 karakter lehet.",
-                "category_required": "A kategória megadása kötelező.",
-                "hourly_rate_required": "Az óradíj megadása kötelező.",
-                "hourly_rate_positive": "Az óradíjnak nagyobbnak kell lennie 0-nál.",
-                "location_name_required": "A helyszín nevének megadása kötelező.",
-                "location_required": "Válassz helyszínt a térképen.",
-                "location_invalid": "A kiválasztott helyszín érvénytelen.",
-                "backend": {
-                    "title": "A cím megadása kötelező.",
-                    "description": "A leírás megadása kötelező.",
-                    "category": "A kategória megadása kötelező.",
-                    "hourlyRate": "Az óradíjnak nagyobbnak kell lennie 0-nál.",
-                    "locationName": "A helyszín nevének megadása kötelező.",
-                    "latitude": "Válassz érvényes helyszínt a térképen.",
-                    "longitude": "Válassz érvényes helyszínt a térképen."
-                }
-            }
-        },
-        "details": {
-            "loading": "Munka részleteinek betöltése...",
-            "status_label": "Állapot",
-            "hourly_rate": "Óradíj",
-            "location": "Helyszín",
-            "owner": "Hirdető",
-            "published_on": "Közzétéve",
-            "map": {
-                "approximate_location": "Hozzávetőleges helyszín",
-                "missing_location": "Ehhez a munkához nem érhető el helyszínadat."
-            },
-            "apply": {
-                "button": "Jelentkezés",
-                "submitting": "Jelentkezés...",
-                "success": "A jelentkezés sikeresen elküldve!",
-                "already_applied": "Már jelentkeztél erre a munkára.",
-                "duplicate": "Erre a munkára már jelentkeztél.",
-                "generic_error": "Valami hiba történt. Próbáld újra később.",
-                "own_job": "Nem jelentkezhetsz a saját munkádra.",
-                "job_closed": "Ez a munka már nem fogad jelentkezéseket."
-            },
-            "errors": {
-                "load_failed": "Nem sikerült betölteni a munka részleteit. Próbáld újra."
-            }
-        },
-        "statuses": {
-            "OPEN": "Nyitott",
-            "COMPLETED": "Befejezve",
-            "CANCELLED": "Lezárva"
-        },
-        "categories": {
-            "CLEANING": "Takarítás",
-            "MOVING": "Költöztetés",
-            "GARDENING": "Kertészkedés",
-            "DELIVERY": "Kiszállítás",
-            "BABYSITTING": "Gyerekfelügyelet",
-            "PET_CARE": "Állatgondozás",
-            "HANDYMAN": "Ezermester",
-            "EVENT_HELP": "Rendezvénysegítés",
-            "OTHER": "Egyéb"
-        }
+      "title": "Jelentkezések",
+      "count": "{{count}} beküldve",
+      "loading": "Jelentkezések betöltése...",
+      "empty": "Még nincs jelentkezés.",
+      "errors": {
+        "load_failed": "Nem sikerült betölteni a jelentkezéseket.",
+        "update_failed": "Nem sikerült frissíteni a jelentkezést. Próbáld újra.",
+        "complete_failed": "Nem sikerült lezárni a munkát. Próbáld újra."
+      },
+      "actions": {
+        "REJECTED": "Elutasítás",
+        "complete": "Befejezve",
+        "complete_confirm": "Biztosan ő végezte el a munkát? Ez lezárja a munkát, és később őt lehet értékelni.",
+        "completing": "Lezárás...",
+        "updating": "Frissítés..."
+      },
+      "completed_worker": "Ő végezte el a munkát"
     }
+  },
+  "applications": {
+    "title": "Jelentkezéseim",
+    "loading": "Jelentkezések betöltése...",
+    "empty": {
+      "title": "Még nincs jelentkezésed",
+      "description": "Azok a munkák, amelyekre jelentkezel, itt fognak megjelenni."
+    },
+    "errors": {
+      "load_failed": "Nem sikerült betölteni a jelentkezéseidet. Próbáld újra."
+    },
+    "card": {
+      "location": "Helyszín",
+      "hourly_rate": "Óradíj",
+      "job_status": "Munka állapota",
+      "applied": "Jelentkezve",
+      "view_job": "Munka megnyitása",
+      "withdraw": "Jelentkezés visszavonása",
+      "withdrawing": "Visszavonás...",
+      "withdraw_confirm": "Biztosan visszavonod a jelentkezésedet?",
+      "withdraw_failed": "Nem sikerült visszavonni a jelentkezést.",
+      "job_closed": "A munka lezárult",
+      "completed_worker": "Te végezted el"
+    }
+  },
+  "application": {
+    "status": {
+      "ACTIVE": "Jelentkezve",
+      "REJECTED": "Elutasítva",
+      "WITHDRAWN": "Visszavonva"
+    }
+  },
+  "jobs": {
+    "loading": "Munkák betöltése...",
+    "empty": {
+      "title": "Még nincs nyitott munka",
+      "description": "Nézz vissza később az új DayGig lehetőségekért.",
+      "filtered_title": "Nincs megfelelő munka",
+      "filtered_description": "Próbálj más keresési feltételeket."
+    },
+    "errors": {
+      "load_failed": "Nem sikerült betölteni a munkákat. Próbáld újra."
+    },
+    "search": {
+      "title": "Munkák keresése",
+      "results_count": "Találatok: {{count}}",
+      "fields": {
+        "query": "Keresés",
+        "query_placeholder": "Cím, leírás vagy helyszín",
+        "category": "Kategória",
+        "all_categories": "Minden kategória",
+        "sort": "Rendezés",
+        "min_hourly_rate": "Min. óradíj (RON)",
+        "max_hourly_rate": "Max. óradíj (RON)"
+      },
+      "sort": {
+        "createdAt_desc": "Legújabb elöl",
+        "createdAt_asc": "Legrégebbi elöl",
+        "hourlyRate_desc": "Legmagasabb óradíj",
+        "hourlyRate_asc": "Legalacsonyabb óradíj"
+      },
+      "actions": {
+        "search": "Keresés",
+        "searching": "Keresés...",
+        "reset": "Szűrők törlése"
+      },
+      "errors": {
+        "query_too_long": "A keresés legfeljebb 100 karakter lehet.",
+        "category_invalid": "Válassz érvényes kategóriát.",
+        "hourly_rate_invalid": "Adj meg egy érvényes, nem negatív óradíjat.",
+        "hourly_rate_range": "A maximum óradíj nem lehet kisebb a minimumnál."
+      }
+    },
+    "card": {
+      "hourly_rate": "{{rate}} {{currency}}/óra"
+    },
+    "create": {
+      "nav_label": "Munka meghirdetése",
+      "title": "Munka meghirdetése",
+      "close": "Bezárás",
+      "cancel": "Mégse",
+      "submit": "Munka létrehozása",
+      "submitting": "Létrehozás...",
+      "fields": {
+        "title": "Cím",
+        "description": "Leírás",
+        "category": "Kategória",
+        "hourly_rate": "Óradíj",
+        "location_name": "Helyszín neve",
+        "select_placeholder": "Válassz"
+      },
+      "map": {
+        "label": "Munka helyszíne"
+      },
+      "errors": {
+        "generic": "Nem sikerült létrehozni a munkát. Próbáld újra.",
+        "title_required": "A cím megadása kötelező.",
+        "title_too_long": "A cím legfeljebb 50 karakter lehet.",
+        "description_required": "A leírás megadása kötelező.",
+        "description_too_long": "A leírás legfeljebb 1000 karakter lehet.",
+        "category_required": "A kategória megadása kötelező.",
+        "hourly_rate_required": "Az óradíj megadása kötelező.",
+        "hourly_rate_positive": "Az óradíjnak nagyobbnak kell lennie 0-nál.",
+        "location_name_required": "A helyszín nevének megadása kötelező.",
+        "location_required": "Válassz helyszínt a térképen.",
+        "location_invalid": "A kiválasztott helyszín érvénytelen.",
+        "backend": {
+          "title": "A cím megadása kötelező.",
+          "description": "A leírás megadása kötelező.",
+          "category": "A kategória megadása kötelező.",
+          "hourlyRate": "Az óradíjnak nagyobbnak kell lennie 0-nál.",
+          "locationName": "A helyszín nevének megadása kötelező.",
+          "latitude": "Válassz érvényes helyszínt a térképen.",
+          "longitude": "Válassz érvényes helyszínt a térképen."
+        }
+      }
+    },
+    "details": {
+      "loading": "Munka részleteinek betöltése...",
+      "status_label": "Állapot",
+      "hourly_rate": "Óradíj",
+      "location": "Helyszín",
+      "owner": "Hirdető",
+      "published_on": "Közzétéve",
+      "map": {
+        "approximate_location": "Hozzávetőleges helyszín",
+        "missing_location": "Ehhez a munkához nem érhető el helyszínadat."
+      },
+      "apply": {
+        "button": "Jelentkezés",
+        "submitting": "Jelentkezés...",
+        "success": "A jelentkezés sikeresen elküldve!",
+        "already_applied": "Már jelentkeztél erre a munkára.",
+        "duplicate": "Erre a munkára már jelentkeztél.",
+        "generic_error": "Valami hiba történt. Próbáld újra később.",
+        "own_job": "Nem jelentkezhetsz a saját munkádra.",
+        "job_closed": "Ez a munka már nem fogad jelentkezéseket."
+      },
+      "errors": {
+        "load_failed": "Nem sikerült betölteni a munka részleteit. Próbáld újra."
+      }
+    },
+    "statuses": {
+      "OPEN": "Nyitott",
+      "COMPLETED": "Befejezve",
+      "CANCELLED": "Lezárva"
+    },
+    "categories": {
+      "CLEANING": "Takarítás",
+      "MOVING": "Költöztetés",
+      "GARDENING": "Kertészkedés",
+      "DELIVERY": "Kiszállítás",
+      "BABYSITTING": "Gyerekfelügyelet",
+      "PET_CARE": "Állatgondozás",
+      "HANDYMAN": "Ezermester",
+      "EVENT_HELP": "Rendezvénysegítés",
+      "OTHER": "Egyéb"
+    }
+  }
 }

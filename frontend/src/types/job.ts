@@ -54,4 +54,8 @@ export type JobsQueryParams = {
   page?: number;
   size?: number;
   sort?: string | string[];
+  q?: string;
+  category?: JobCategory;
+  minHourlyRate?: number;
+  maxHourlyRate?: number;
 };

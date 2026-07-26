@@ -1,262 +1,294 @@
 {
-    "auth": {
-        "loading": "Se incarca contul...",
-        "login": {
-            "title": "Bine ai revenit",
-            "subtitle": "Autentifica-te pentru a gestiona oportunitatile DayGig.",
-            "email": "Email",
-            "password": "Parola",
-            "submit_button": "Autentificare",
-            "submitting": "Autentificare...",
-            "register_prompt": "Nu ai cont?",
-            "errors": {
-                "email_required": "Emailul este obligatoriu.",
-                "email_invalid": "Introdu o adresa de email valida.",
-                "password_required": "Parola este obligatorie.",
-                "invalid_credentials": "Credentiale invalide.",
-                "generic": "Autentificarea a esuat. Incearca din nou."
-            }
-        },
-        "register": {
-            "title": "Creeaza un cont",
-            "subtitle": "Alatura-te DayGig si gaseste oportunitati de lucru flexibile.",
-            "first_name": "Prenume",
-            "last_name": "Nume",
-            "phone_number": "Numar de telefon",
-            "email": "Email",
-            "password": "Parola",
-            "confirm_password": "Confirma parola",
-            "submit_button": "Creeaza contul",
-            "submitting": "Se creeaza contul...",
-            "login_prompt": "Ai deja un cont?",
-            "terms_consent": "Am citit si accept <termsLink>Termenii si conditiile</termsLink> si inteleg ca DayGig doar conecteaza utilizatorii.",
-            "errors": {
-                "first_name_required": "Prenumele este obligatoriu.",
-                "last_name_required": "Numele este obligatoriu.",
-                "email_required": "Emailul este obligatoriu.",
-                "email_invalid": "Introdu o adresa de email valida.",
-                "email_exists": "Exista deja un cont cu acest email.",
-                "password_required": "Parola este obligatorie.",
-                "password_min_length": "Parola trebuie sa aiba cel putin 8 caractere.",
-                "confirm_password_required": "Confirma parola.",
-                "passwords_do_not_match": "Parolele nu se potrivesc.",
-                "terms_required": "Trebuie sa accepti Termenii si conditiile pentru a te inregistra.",
-                "generic": "Inregistrarea a esuat. Incearca din nou."
-            }
-        }
+  "auth": {
+    "loading": "Se incarca contul...",
+    "login": {
+      "title": "Bine ai revenit",
+      "subtitle": "Autentifica-te pentru a gestiona oportunitatile DayGig.",
+      "email": "Email",
+      "password": "Parola",
+      "submit_button": "Autentificare",
+      "submitting": "Autentificare...",
+      "register_prompt": "Nu ai cont?",
+      "errors": {
+        "email_required": "Emailul este obligatoriu.",
+        "email_invalid": "Introdu o adresa de email valida.",
+        "password_required": "Parola este obligatorie.",
+        "invalid_credentials": "Credentiale invalide.",
+        "generic": "Autentificarea a esuat. Incearca din nou."
+      }
     },
-    "navigation": {
-        "main": "Navigare principala",
-        "my_jobs": "Joburile publicate",
-        "my_applications": "Aplicatiile mele",
-        "login": "Autentificare",
-        "register": "Inregistrare",
-        "logout": "Deconectare",
-        "language": "Limba"
-    },
-    "legal": {
-        "terms": {
-            "title": "Termeni si conditii",
-            "subtitle": "Te rugam sa citesti acesti termeni inainte de a crea un cont DayGig. Ei explica rolul DayGig si responsabilitatile tale cand interactionezi cu alti utilizatori.",
-            "back_to_register": "Inapoi la inregistrare",
-            "sections": {
-                "platform_role": {
-                    "title": "Rolul DayGig",
-                    "body": "DayGig este o platforma online care ajuta utilizatorii sa publice oportunitati de lucru ocazional, cereri de ajutor si oferte de servicii, si permite altor utilizatori sa ii contacteze sau sa aplice."
-                },
-                "not_a_party": {
-                    "title": "DayGig nu este parte in acordurile dintre utilizatori",
-                    "body": "DayGig nu este angajator, agentie de recrutare, furnizor de plati, mediator sau parte contractanta in acordurile facute intre utilizatori. DayGig ofera doar instrumente care ajuta utilizatorii sa se conecteze."
-                },
-                "user_responsibility": {
-                    "title": "Deciziile tale sunt responsabilitatea ta",
-                    "body": "Utilizatorii decid pe propria raspundere pe cine contacteaza, ce lucru accepta, ce oferta fac, unde si cand se intalnesc si ce conditii accepta."
-                },
-                "offline_incidents": {
-                    "title": "Interactiuni si incidente offline",
-                    "body": "DayGig nu este responsabil pentru probleme de siguranta personala, comportament nesigur, accidente, raniri, daune, pierderi, hartuire sau alte incidente care se intampla in afara aplicatiei sau in timpul interactiunilor offline dintre utilizatori."
-                },
-                "agreements_and_payments": {
-                    "title": "Acorduri si plati",
-                    "body": "Utilizatorii sunt responsabili sa stabileasca clar detaliile lucrului, ora, locatia, compensatia, metoda de plata si orice alte conditii importante. DayGig nu este responsabil pentru dispute de plata, munca neplatita, intelegeri anulate, dispute privind calitatea sau acorduri facute intre utilizatori."
-                },
-                "verification": {
-                    "title": "Informatii despre utilizatori",
-                    "body": "DayGig nu verifica integral identitatea, increderea, calificarile, permisele sau exactitatea informatiilor furnizate de fiecare utilizator. Utilizatorii trebuie sa isi foloseasca propria judecata inainte de a se intalni sau de a lucra cu cineva."
-                },
-                "conduct": {
-                    "title": "Comportament asteptat",
-                    "body": "Utilizatorii trebuie sa foloseasca DayGig legal, onest si cu respect pentru siguranta, drepturile si demnitatea celorlalti. Continutul si comportamentul inselator, abuziv, ilegal, periculos sau de hartuire nu sunt permise."
-                },
-                "moderation": {
-                    "title": "Moderare",
-                    "body": "DayGig poate elimina continut, anunturi de job, aplicatii sau conturi care incalca regulile aplicatiei, afecteaza alti utilizatori sau par sa incalce legea aplicabila."
-                },
-                "acceptance": {
-                    "title": "Acceptare la inregistrare",
-                    "body": "Prin inregistrare, confirmi ca ai citit si acceptat acesti Termeni si conditii si intelegi ca DayGig functioneaza ca o platforma de conectare."
-                }
-            }
+    "register": {
+      "title": "Creeaza un cont",
+      "subtitle": "Alatura-te DayGig si gaseste oportunitati de lucru flexibile.",
+      "first_name": "Prenume",
+      "last_name": "Nume",
+      "phone_number": "Numar de telefon",
+      "email": "Email",
+      "password": "Parola",
+      "confirm_password": "Confirma parola",
+      "submit_button": "Creeaza contul",
+      "submitting": "Se creeaza contul...",
+      "login_prompt": "Ai deja un cont?",
+      "terms_consent": "Am citit si accept <termsLink>Termenii si conditiile</termsLink> si inteleg ca DayGig doar conecteaza utilizatorii.",
+      "errors": {
+        "first_name_required": "Prenumele este obligatoriu.",
+        "last_name_required": "Numele este obligatoriu.",
+        "email_required": "Emailul este obligatoriu.",
+        "email_invalid": "Introdu o adresa de email valida.",
+        "email_exists": "Exista deja un cont cu acest email.",
+        "password_required": "Parola este obligatorie.",
+        "password_min_length": "Parola trebuie sa aiba cel putin 8 caractere.",
+        "confirm_password_required": "Confirma parola.",
+        "passwords_do_not_match": "Parolele nu se potrivesc.",
+        "terms_required": "Trebuie sa accepti Termenii si conditiile pentru a te inregistra.",
+        "generic": "Inregistrarea a esuat. Incearca din nou."
+      }
+    }
+  },
+  "navigation": {
+    "main": "Navigare principala",
+    "my_jobs": "Joburile publicate",
+    "my_applications": "Aplicatiile mele",
+    "login": "Autentificare",
+    "register": "Inregistrare",
+    "logout": "Deconectare",
+    "language": "Limba"
+  },
+  "legal": {
+    "terms": {
+      "title": "Termeni si conditii",
+      "subtitle": "Te rugam sa citesti acesti termeni inainte de a crea un cont DayGig. Ei explica rolul DayGig si responsabilitatile tale cand interactionezi cu alti utilizatori.",
+      "back_to_register": "Inapoi la inregistrare",
+      "sections": {
+        "platform_role": {
+          "title": "Rolul DayGig",
+          "body": "DayGig este o platforma online care ajuta utilizatorii sa publice oportunitati de lucru ocazional, cereri de ajutor si oferte de servicii, si permite altor utilizatori sa ii contacteze sau sa aplice."
+        },
+        "not_a_party": {
+          "title": "DayGig nu este parte in acordurile dintre utilizatori",
+          "body": "DayGig nu este angajator, agentie de recrutare, furnizor de plati, mediator sau parte contractanta in acordurile facute intre utilizatori. DayGig ofera doar instrumente care ajuta utilizatorii sa se conecteze."
+        },
+        "user_responsibility": {
+          "title": "Deciziile tale sunt responsabilitatea ta",
+          "body": "Utilizatorii decid pe propria raspundere pe cine contacteaza, ce lucru accepta, ce oferta fac, unde si cand se intalnesc si ce conditii accepta."
+        },
+        "offline_incidents": {
+          "title": "Interactiuni si incidente offline",
+          "body": "DayGig nu este responsabil pentru probleme de siguranta personala, comportament nesigur, accidente, raniri, daune, pierderi, hartuire sau alte incidente care se intampla in afara aplicatiei sau in timpul interactiunilor offline dintre utilizatori."
+        },
+        "agreements_and_payments": {
+          "title": "Acorduri si plati",
+          "body": "Utilizatorii sunt responsabili sa stabileasca clar detaliile lucrului, ora, locatia, compensatia, metoda de plata si orice alte conditii importante. DayGig nu este responsabil pentru dispute de plata, munca neplatita, intelegeri anulate, dispute privind calitatea sau acorduri facute intre utilizatori."
+        },
+        "verification": {
+          "title": "Informatii despre utilizatori",
+          "body": "DayGig nu verifica integral identitatea, increderea, calificarile, permisele sau exactitatea informatiilor furnizate de fiecare utilizator. Utilizatorii trebuie sa isi foloseasca propria judecata inainte de a se intalni sau de a lucra cu cineva."
+        },
+        "conduct": {
+          "title": "Comportament asteptat",
+          "body": "Utilizatorii trebuie sa foloseasca DayGig legal, onest si cu respect pentru siguranta, drepturile si demnitatea celorlalti. Continutul si comportamentul inselator, abuziv, ilegal, periculos sau de hartuire nu sunt permise."
+        },
+        "moderation": {
+          "title": "Moderare",
+          "body": "DayGig poate elimina continut, anunturi de job, aplicatii sau conturi care incalca regulile aplicatiei, afecteaza alti utilizatori sau par sa incalce legea aplicabila."
+        },
+        "acceptance": {
+          "title": "Acceptare la inregistrare",
+          "body": "Prin inregistrare, confirmi ca ai citit si acceptat acesti Termeni si conditii si intelegi ca DayGig functioneaza ca o platforma de conectare."
         }
+      }
+    }
+  },
+  "posted_jobs": {
+    "title": "Joburile publicate",
+    "loading": "Se incarca joburile publicate...",
+    "empty": {
+      "title": "Nu ai joburi publicate inca",
+      "description": "Joburile pe care le publici vor aparea aici."
     },
-    "posted_jobs": {
-        "title": "Joburile publicate",
-        "loading": "Se incarca joburile publicate...",
-        "empty": {
-            "title": "Nu ai joburi publicate inca",
-            "description": "Joburile pe care le publici vor aparea aici."
-        },
-        "errors": {
-            "load_failed": "Nu am putut incarca joburile tale publicate. Incearca din nou."
-        },
-        "card": {
-            "location": "Locatie",
-            "hourly_rate": "Tarif orar"
-        },
-        "applications": {
-            "title": "Aplicatii",
-            "count": "{{count}} trimise",
-            "loading": "Se incarca aplicatiile...",
-            "empty": "Nu exista aplicatii inca.",
-            "errors": {
-                "load_failed": "Nu am putut incarca aplicatiile.",
-                "update_failed": "Nu am putut actualiza aplicatia. Incearca din nou.",
-                "complete_failed": "Nu am putut finaliza jobul. Incearca din nou."
-            },
-            "actions": {
-                "REJECTED": "Respinge",
-                "complete": "Finalizat",
-                "complete_confirm": "Sigur acest candidat a finalizat jobul? Jobul va fi inchis si candidatul va putea fi evaluat ulterior.",
-                "completing": "Se finalizeaza...",
-                "updating": "Se actualizeaza..."
-            },
-            "completed_worker": "A finalizat acest job"
-        }
+    "errors": {
+      "load_failed": "Nu am putut incarca joburile tale publicate. Incearca din nou."
+    },
+    "card": {
+      "location": "Locatie",
+      "hourly_rate": "Tarif orar"
     },
     "applications": {
-        "title": "Aplicatiile mele",
-        "loading": "Se incarca aplicatiile...",
-        "empty": {
-            "title": "Nu ai aplicatii inca",
-            "description": "Joburile la care aplici vor aparea aici."
-        },
-        "errors": {
-            "load_failed": "Nu am putut incarca aplicatiile tale. Incearca din nou."
-        },
-        "card": {
-            "location": "Locatie",
-            "hourly_rate": "Tarif orar",
-            "job_status": "Status job",
-            "applied": "Aplicat la",
-            "view_job": "Vezi jobul",
-            "withdraw": "Retrage aplicatia",
-            "withdrawing": "Se retrage...",
-            "withdraw_confirm": "Sigur vrei sa retragi aplicatia?",
-            "withdraw_failed": "Nu am putut retrage aplicatia.",
-            "job_closed": "Job inchis",
-            "completed_worker": "Ai finalizat acest job"
-        }
-    },
-    "application": {
-        "status": {
-            "ACTIVE": "Aplicat",
-            "REJECTED": "Respinsa",
-            "WITHDRAWN": "Retrasa"
-        }
-    },
-    "jobs": {
-        "loading": "Se incarca joburile...",
-        "empty": {
-            "title": "Nu exista joburi deschise",
-            "description": "Revino mai tarziu pentru oportunitati DayGig noi."
-        },
-        "errors": {
-            "load_failed": "Nu am putut incarca joburile. Incearca din nou."
-        },
-        "card": {
-            "hourly_rate": "{{rate}} {{currency}}/ora"
-        },
-        "create": {
-            "nav_label": "Publica un job",
-            "title": "Publica un job",
-            "close": "Inchide",
-            "cancel": "Anuleaza",
-            "submit": "Creeaza jobul",
-            "submitting": "Se creeaza...",
-            "fields": {
-                "title": "Titlu",
-                "description": "Descriere",
-                "category": "Categorie",
-                "hourly_rate": "Tarif orar",
-                "location_name": "Numele locatiei",
-                "select_placeholder": "Selecteaza"
-            },
-            "map": {
-                "label": "Locatia jobului"
-            },
-            "errors": {
-                "generic": "Nu am putut crea jobul. Incearca din nou.",
-                "title_required": "Titlul este obligatoriu.",
-                "title_too_long": "Titlul trebuie sa aiba cel mult 50 de caractere.",
-                "description_required": "Descrierea este obligatorie.",
-                "description_too_long": "Descrierea trebuie sa aiba cel mult 1000 de caractere.",
-                "category_required": "Categoria este obligatorie.",
-                "hourly_rate_required": "Tariful orar este obligatoriu.",
-                "hourly_rate_positive": "Tariful orar trebuie sa fie mai mare decat 0.",
-                "location_name_required": "Numele locatiei este obligatoriu.",
-                "location_required": "Selecteaza o locatie pe harta.",
-                "location_invalid": "Locatia selectata este invalida.",
-                "backend": {
-                    "title": "Titlul este obligatoriu.",
-                    "description": "Descrierea este obligatorie.",
-                    "category": "Categoria este obligatorie.",
-                    "hourlyRate": "Tariful orar trebuie sa fie mai mare decat 0.",
-                    "locationName": "Numele locatiei este obligatoriu.",
-                    "latitude": "Selecteaza o locatie valida pe harta.",
-                    "longitude": "Selecteaza o locatie valida pe harta."
-                }
-            }
-        },
-        "details": {
-            "loading": "Se incarca detaliile jobului...",
-            "status_label": "Status",
-            "hourly_rate": "Tarif orar",
-            "location": "Locatie",
-            "owner": "Publicat de",
-            "published_on": "Publicat la",
-            "map": {
-                "approximate_location": "Locatie aproximativa",
-                "missing_location": "Datele despre locatie nu sunt disponibile pentru acest job."
-            },
-            "apply": {
-                "button": "Aplica",
-                "submitting": "Se aplica...",
-                "success": "Aplicatia a fost trimisa cu succes!",
-                "already_applied": "Ai aplicat pentru acest job.",
-                "duplicate": "Ai aplicat deja pentru acest job.",
-                "generic_error": "A aparut o eroare. Incearca din nou mai tarziu.",
-                "own_job": "Nu poti aplica la propriul job.",
-                "job_closed": "Acest job nu mai accepta aplicatii."
-            },
-            "errors": {
-                "load_failed": "Nu am putut incarca detaliile jobului. Incearca din nou."
-            }
-        },
-        "statuses": {
-            "OPEN": "Deschis",
-            "COMPLETED": "Finalizat",
-            "CANCELLED": "Inchis"
-        },
-        "categories": {
-            "CLEANING": "Curatenie",
-            "MOVING": "Mutari",
-            "GARDENING": "Gradinarit",
-            "DELIVERY": "Livrare",
-            "BABYSITTING": "Ingrijire copii",
-            "PET_CARE": "Ingrijire animale",
-            "HANDYMAN": "Mester",
-            "EVENT_HELP": "Ajutor evenimente",
-            "OTHER": "Altceva"
-        }
+      "title": "Aplicatii",
+      "count": "{{count}} trimise",
+      "loading": "Se incarca aplicatiile...",
+      "empty": "Nu exista aplicatii inca.",
+      "errors": {
+        "load_failed": "Nu am putut incarca aplicatiile.",
+        "update_failed": "Nu am putut actualiza aplicatia. Incearca din nou.",
+        "complete_failed": "Nu am putut finaliza jobul. Incearca din nou."
+      },
+      "actions": {
+        "REJECTED": "Respinge",
+        "complete": "Finalizat",
+        "complete_confirm": "Sigur acest candidat a finalizat jobul? Jobul va fi inchis si candidatul va putea fi evaluat ulterior.",
+        "completing": "Se finalizeaza...",
+        "updating": "Se actualizeaza..."
+      },
+      "completed_worker": "A finalizat acest job"
     }
+  },
+  "applications": {
+    "title": "Aplicatiile mele",
+    "loading": "Se incarca aplicatiile...",
+    "empty": {
+      "title": "Nu ai aplicatii inca",
+      "description": "Joburile la care aplici vor aparea aici."
+    },
+    "errors": {
+      "load_failed": "Nu am putut incarca aplicatiile tale. Incearca din nou."
+    },
+    "card": {
+      "location": "Locatie",
+      "hourly_rate": "Tarif orar",
+      "job_status": "Status job",
+      "applied": "Aplicat la",
+      "view_job": "Vezi jobul",
+      "withdraw": "Retrage aplicatia",
+      "withdrawing": "Se retrage...",
+      "withdraw_confirm": "Sigur vrei sa retragi aplicatia?",
+      "withdraw_failed": "Nu am putut retrage aplicatia.",
+      "job_closed": "Job inchis",
+      "completed_worker": "Ai finalizat acest job"
+    }
+  },
+  "application": {
+    "status": {
+      "ACTIVE": "Aplicat",
+      "REJECTED": "Respinsa",
+      "WITHDRAWN": "Retrasa"
+    }
+  },
+  "jobs": {
+    "loading": "Se incarca joburile...",
+    "empty": {
+      "title": "Nu exista joburi deschise",
+      "description": "Revino mai tarziu pentru oportunitati DayGig noi.",
+      "filtered_title": "Nu exista joburi potrivite",
+      "filtered_description": "Incearca alte criterii de cautare."
+    },
+    "errors": {
+      "load_failed": "Nu am putut incarca joburile. Incearca din nou."
+    },
+    "search": {
+      "title": "Cauta joburi",
+      "results_count": "Rezultate: {{count}}",
+      "fields": {
+        "query": "Cautare",
+        "query_placeholder": "Titlu, descriere sau locatie",
+        "category": "Categorie",
+        "all_categories": "Toate categoriile",
+        "sort": "Sortare",
+        "min_hourly_rate": "Tarif min. (RON)",
+        "max_hourly_rate": "Tarif max. (RON)"
+      },
+      "sort": {
+        "createdAt_desc": "Cele mai noi",
+        "createdAt_asc": "Cele mai vechi",
+        "hourlyRate_desc": "Tariful cel mai mare",
+        "hourlyRate_asc": "Tariful cel mai mic"
+      },
+      "actions": {
+        "search": "Cauta",
+        "searching": "Se cauta...",
+        "reset": "Sterge filtrele"
+      },
+      "errors": {
+        "query_too_long": "Cautarea poate avea cel mult 100 de caractere.",
+        "category_invalid": "Selecteaza o categorie valida.",
+        "hourly_rate_invalid": "Introdu un tarif orar valid si nenegativ.",
+        "hourly_rate_range": "Tariful maxim nu poate fi mai mic decat cel minim."
+      }
+    },
+    "card": {
+      "hourly_rate": "{{rate}} {{currency}}/ora"
+    },
+    "create": {
+      "nav_label": "Publica un job",
+      "title": "Publica un job",
+      "close": "Inchide",
+      "cancel": "Anuleaza",
+      "submit": "Creeaza jobul",
+      "submitting": "Se creeaza...",
+      "fields": {
+        "title": "Titlu",
+        "description": "Descriere",
+        "category": "Categorie",
+        "hourly_rate": "Tarif orar",
+        "location_name": "Numele locatiei",
+        "select_placeholder": "Selecteaza"
+      },
+      "map": {
+        "label": "Locatia jobului"
+      },
+      "errors": {
+        "generic": "Nu am putut crea jobul. Incearca din nou.",
+        "title_required": "Titlul este obligatoriu.",
+        "title_too_long": "Titlul trebuie sa aiba cel mult 50 de caractere.",
+        "description_required": "Descrierea este obligatorie.",
+        "description_too_long": "Descrierea trebuie sa aiba cel mult 1000 de caractere.",
+        "category_required": "Categoria este obligatorie.",
+        "hourly_rate_required": "Tariful orar este obligatoriu.",
+        "hourly_rate_positive": "Tariful orar trebuie sa fie mai mare decat 0.",
+        "location_name_required": "Numele locatiei este obligatoriu.",
+        "location_required": "Selecteaza o locatie pe harta.",
+        "location_invalid": "Locatia selectata este invalida.",
+        "backend": {
+          "title": "Titlul este obligatoriu.",
+          "description": "Descrierea este obligatorie.",
+          "category": "Categoria este obligatorie.",
+          "hourlyRate": "Tariful orar trebuie sa fie mai mare decat 0.",
+          "locationName": "Numele locatiei este obligatoriu.",
+          "latitude": "Selecteaza o locatie valida pe harta.",
+          "longitude": "Selecteaza o locatie valida pe harta."
+        }
+      }
+    },
+    "details": {
+      "loading": "Se incarca detaliile jobului...",
+      "status_label": "Status",
+      "hourly_rate": "Tarif orar",
+      "location": "Locatie",
+      "owner": "Publicat de",
+      "published_on": "Publicat la",
+      "map": {
+        "approximate_location": "Locatie aproximativa",
+        "missing_location": "Datele despre locatie nu sunt disponibile pentru acest job."
+      },
+      "apply": {
+        "button": "Aplica",
+        "submitting": "Se aplica...",
+        "success": "Aplicatia a fost trimisa cu succes!",
+        "already_applied": "Ai aplicat pentru acest job.",
+        "duplicate": "Ai aplicat deja pentru acest job.",
+        "generic_error": "A aparut o eroare. Incearca din nou mai tarziu.",
+        "own_job": "Nu poti aplica la propriul job.",
+        "job_closed": "Acest job nu mai accepta aplicatii."
+      },
+      "errors": {
+        "load_failed": "Nu am putut incarca detaliile jobului. Incearca din nou."
+      }
+    },
+    "statuses": {
+      "OPEN": "Deschis",
+      "COMPLETED": "Finalizat",
+      "CANCELLED": "Inchis"
+    },
+    "categories": {
+      "CLEANING": "Curatenie",
+      "MOVING": "Mutari",
+      "GARDENING": "Gradinarit",
+      "DELIVERY": "Livrare",
+      "BABYSITTING": "Ingrijire copii",
+      "PET_CARE": "Ingrijire animale",
+      "HANDYMAN": "Mester",
+      "EVENT_HELP": "Ajutor evenimente",
+      "OTHER": "Altceva"
+    }
+  }
 }

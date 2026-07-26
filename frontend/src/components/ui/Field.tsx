@@ -16,7 +16,7 @@ type FieldProps = {
 };
 
 const fieldControlClasses =
-  'w-full rounded-lg border bg-page px-3.5 py-3 text-heading outline-none transition placeholder:text-body/70 focus:ring-2';
+  'min-w-0 w-full rounded-lg border bg-page px-3.5 py-3 text-heading outline-none transition placeholder:text-body/70 focus:ring-2';
 
 function getFieldControlClasses(hasError: boolean) {
   return `${fieldControlClasses} ${
@@ -31,7 +31,7 @@ function Field({ children, className = '', error, id, label, required = false }:
   const errorId = hasError ? `${id}-error` : undefined;
 
   return (
-    <div className={`flex flex-col gap-2 text-left ${className}`}>
+    <div className={`flex min-w-0 flex-col gap-2 text-left ${className}`}>
       <label htmlFor={id} className="font-semibold text-heading">
         {label}
         {required ? <span className="text-danger"> *</span> : null}
