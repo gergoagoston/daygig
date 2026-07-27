@@ -109,7 +109,7 @@ class AuthControllerIntegrationTest {
                 .getResponse()
                 .getCookie("accessToken");
 
-        mockMvc.perform(get("/auth/me")
+        mockMvc.perform(get("/users/me")
                 .cookie(accessTokenCookie))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.email").value(user.email()))
@@ -122,7 +122,7 @@ class AuthControllerIntegrationTest {
 
     @Test
     void meRejectsRequestWithoutTokenCookie() throws Exception {
-        mockMvc.perform(get("/auth/me"))
+        mockMvc.perform(get("/users/me"))
                 .andExpect(status().isUnauthorized())
                 .andExpect(jsonPath("$.error").value("Unauthorized: Missing or invalid token"));
     }

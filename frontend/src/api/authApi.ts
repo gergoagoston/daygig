@@ -15,5 +15,5 @@ export function logoutUser() {
 }
 
 export function getCurrentUser() {
-  return httpClient.get<UserOutDto>('/auth/me');
+  return httpClient.get<UserOutDto>('/users/me');
 }
