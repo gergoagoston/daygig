@@ -8,5 +8,6 @@ export type UserOutDto = {
   lastName: string;
   phoneNumber: string | null;
   bio: string | null;
+  avatarUrl: string | null;
   createdAt: string;
 };

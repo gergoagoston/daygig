@@ -17,6 +17,7 @@ import edu.bbte.daygig.backend.model.User;
 import edu.bbte.daygig.backend.security.AuthCookieService;
 import edu.bbte.daygig.backend.security.JwtService;
 import edu.bbte.daygig.backend.service.auth.AuthService;
+import edu.bbte.daygig.backend.service.avatar.UserAvatarService;
 
 @RestController
 @RequestMapping("/auth")
@@ -27,6 +28,7 @@ public class AuthController {
     private final JwtService jwtService;
     private final AuthCookieService authCookieService;
     private final UserMapper userMapper;
+    private final UserAvatarService userAvatarService;
 
     @PostMapping("/login")
     public ResponseEntity<UserOutDto> login(@Valid @RequestBody UserLoginInDto loginInDto) {
@@ -57,6 +59,6 @@ public class AuthController {
         return ResponseEntity
                 .status(status)
                 .header(HttpHeaders.SET_COOKIE, authCookieService.createAccessTokenCookie(token))
-                .body(userMapper.toDto(user));
+                .body(userMapper.toDto(user, userAvatarService.getAvatarUrl(user.getId())));
     }
 }

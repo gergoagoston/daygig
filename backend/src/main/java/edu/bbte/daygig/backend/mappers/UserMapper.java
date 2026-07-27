@@ -20,14 +20,16 @@ public class UserMapper {
         return user;
     }
 
-    public UserOutDto toDto(User user) {
+    public UserOutDto toDto(User user,
+                            String avatarUrl) {
         return new UserOutDto(user.getId(), user.getEmail(), user.getRole(), user.getFirstName(), user.getLastName(),
-            user.getPhoneNumber(), user.getBio(), user.getCreatedAt());
+            user.getPhoneNumber(), user.getBio(), avatarUrl, user.getCreatedAt());
     }
 
-    public UserProfileOutDto toProfileDto(User user) {
+    public UserProfileOutDto toProfileDto(User user,
+                                          String avatarUrl) {
         return new UserProfileOutDto(user.getId(), user.getFirstName(), user.getLastName(), user.getBio(),
-                user.getCreatedAt());
+                avatarUrl, user.getCreatedAt());
     }
 
     public UserSummaryOutDto toSummaryDto(User user) {
