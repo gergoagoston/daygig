@@ -58,4 +58,7 @@ export type JobsQueryParams = {
   category?: JobCategory;
   minHourlyRate?: number;
   maxHourlyRate?: number;
+  latitude?: number;
+  longitude?: number;
+  maxDistanceKm?: number;
 };

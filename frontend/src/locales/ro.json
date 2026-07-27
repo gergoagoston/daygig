@@ -175,6 +175,13 @@
     "errors": {
       "load_failed": "Nu am putut incarca joburile. Incearca din nou."
     },
+    "pagination": {
+      "label": "Paginarea rezultatelor",
+      "page_size": "Joburi pe pagina",
+      "previous": "Inapoi",
+      "next": "Inainte",
+      "page_status": "Pagina {{current}} din {{total}}"
+    },
     "search": {
       "title": "Cauta joburi",
       "results_count": "Rezultate: {{count}}",
@@ -198,11 +205,39 @@
         "searching": "Se cauta...",
         "reset": "Sterge filtrele"
       },
+      "location": {
+        "label": "Locatia cautarii",
+        "status": {
+          "none": "Nicio locatie selectata",
+          "browser": "Locatia curenta",
+          "map": "Selectata pe harta"
+        },
+        "use_current": "Foloseste locatia mea",
+        "locating": "Se determina locatia...",
+        "select_map": "Selecteaza pe harta",
+        "clear": "Sterge locatia",
+        "distance": "Raza cautarii",
+        "distance_value": "{{distance}} km",
+        "modal_title": "Alege locatia",
+        "map_label": "Punctul de pornire al cautarii",
+        "cancel": "Anuleaza",
+        "confirm": "Foloseste locatia",
+        "errors": {
+          "unavailable": "Geolocatia nu este disponibila in acest browser.",
+          "permission_denied": "Accesul la locatie a fost refuzat. Poti selecta o locatie pe harta.",
+          "position_unavailable": "Locatia ta nu este disponibila momentan. Incearca selectarea pe harta.",
+          "timeout": "Determinarea locatiei a expirat. Incearca din nou sau foloseste harta.",
+          "generic": "Locatia ta nu a putut fi determinata."
+        }
+      },
       "errors": {
         "query_too_long": "Cautarea poate avea cel mult 100 de caractere.",
         "category_invalid": "Selecteaza o categorie valida.",
         "hourly_rate_invalid": "Introdu un tarif orar valid si nenegativ.",
-        "hourly_rate_range": "Tariful maxim nu poate fi mai mic decat cel minim."
+        "hourly_rate_range": "Tariful maxim nu poate fi mai mic decat cel minim.",
+        "location_invalid": "Selecteaza o locatie valida pentru cautare.",
+        "distance_invalid": "Raza cautarii trebuie sa fie intre 5 si 200 km.",
+        "location_incomplete": "Locatia si raza cautarii trebuie furnizate impreuna."
       }
     },
     "card": {

@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 import { getJobs } from '../api/jobsApi';
 import JobsGrid from '../components/jobs/JobsGrid';
+import JobsPagination from '../components/jobs/JobsPagination';
 import JobSearchPanel from '../components/jobs/search/JobSearchPanel';
 import {
   defaultJobSearchValues,
@@ -14,14 +15,11 @@ import {
 import EmptyState from '../components/ui/EmptyState';
 import ErrorState from '../components/ui/ErrorState';
 import LoadingState from '../components/ui/LoadingState';
-import type { JobsQueryParams } from '../types/job';
-
-const JOBS_PAGE_SIZE = 20;
 
 function JobsPage() {
   const { t } = useTranslation();
-  const [queryParams, setQueryParams] = useState<JobsQueryParams>(() =>
-    toJobsQueryParams(defaultJobSearchValues, 0, JOBS_PAGE_SIZE)
+  const [queryParams, setQueryParams] = useState(() =>
+    toJobsQueryParams(defaultJobSearchValues, 0, 12)
   );
   const {
     data: jobsPage,
@@ -36,7 +34,22 @@ function JobsPage() {
   const hasActiveFilters = hasJobFilters(queryParams);
 
   function handleSearch(values: JobSearchFormValues) {
-    setQueryParams(toJobsQueryParams(values, 0, JOBS_PAGE_SIZE));
+    setQueryParams((currentParams) => toJobsQueryParams(values, 0, currentParams.size));
+  }
+
+  function handlePageChange(page: number) {
+    setQueryParams((currentParams) => ({
+      ...currentParams,
+      page,
+    }));
+  }
+
+  function handlePageSizeChange(size: number) {
+    setQueryParams((currentParams) => ({
+      ...currentParams,
+      page: 0,
+      size,
+    }));
   }
 
   return (
@@ -66,6 +79,14 @@ function JobsPage() {
                 })}
               </p>
               <JobsGrid jobs={jobs} />
+              <JobsPagination
+                isFetching={isFetching}
+                page={jobsPage?.page ?? 0}
+                size={jobsPage?.size ?? queryParams.size}
+                totalPages={jobsPage?.totalPages ?? 1}
+                onPageChange={handlePageChange}
+                onPageSizeChange={handlePageSizeChange}
+              />
             </div>
           ) : null}
         </section>

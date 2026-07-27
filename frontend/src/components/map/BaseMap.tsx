@@ -33,7 +33,7 @@ function BaseMap({ center, children, className = '', zoom = 13 }: BaseMapProps) 
       attributionControl={false}
       center={center}
       className={`h-72 w-full ${className}`}
-      scrollWheelZoom={false}
+      scrollWheelZoom
       zoom={zoom}
     >
       <MapCenterController center={center} zoom={zoom} />

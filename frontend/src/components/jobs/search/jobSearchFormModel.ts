@@ -19,6 +19,14 @@ export type JobSearchFormValues = {
   minHourlyRate: string;
   maxHourlyRate: string;
   sort: JobSortOption;
+  latitude: string;
+  longitude: string;
+  maxDistanceKm: string;
+};
+
+export type AppliedJobsQueryParams = JobsQueryParams & {
+  page: number;
+  size: number;
 };
 
 export const defaultJobSearchValues: JobSearchFormValues = {
@@ -27,6 +35,9 @@ export const defaultJobSearchValues: JobSearchFormValues = {
   minHourlyRate: '',
   maxHourlyRate: '',
   sort: 'createdAt,desc',
+  latitude: '',
+  longitude: '',
+  maxDistanceKm: '',
 };
 
 function optionalHourlyRate(t: Translate) {
@@ -37,6 +48,20 @@ function optionalHourlyRate(t: Translate) {
       (value) => value === '' || (Number.isFinite(Number(value)) && Number(value) >= 0),
       t('jobs.search.errors.hourly_rate_invalid')
     );
+}
+
+function optionalCoordinate(minimum: number, maximum: number, message: string) {
+  return z
+    .string()
+    .trim()
+    .refine((value) => {
+      if (value === '') {
+        return true;
+      }
+
+      const coordinate = Number(value);
+      return Number.isFinite(coordinate) && coordinate >= minimum && coordinate <= maximum;
+    }, message);
 }
 
 export function createJobSearchSchema(t: Translate) {
@@ -52,6 +77,19 @@ export function createJobSearchSchema(t: Translate) {
       minHourlyRate: optionalHourlyRate(t),
       maxHourlyRate: optionalHourlyRate(t),
       sort: z.enum(jobSortOptions),
+      latitude: optionalCoordinate(-90, 90, t('jobs.search.errors.location_invalid')),
+      longitude: optionalCoordinate(-180, 180, t('jobs.search.errors.location_invalid')),
+      maxDistanceKm: z
+        .string()
+        .trim()
+        .refine((value) => {
+          if (value === '') {
+            return true;
+          }
+
+          const distance = Number(value);
+          return Number.isFinite(distance) && distance >= 5 && distance <= 200;
+        }, t('jobs.search.errors.distance_invalid')),
     })
     .superRefine((values, context) => {
       if (
@@ -65,6 +103,17 @@ export function createJobSearchSchema(t: Translate) {
           path: ['maxHourlyRate'],
         });
       }
+
+      const locationValues = [values.latitude, values.longitude, values.maxDistanceKm];
+      const providedLocationValues = locationValues.filter((value) => value !== '').length;
+
+      if (providedLocationValues > 0 && providedLocationValues < locationValues.length) {
+        context.addIssue({
+          code: 'custom',
+          message: t('jobs.search.errors.location_incomplete'),
+          path: ['maxDistanceKm'],
+        });
+      }
     });
 }
 
@@ -72,8 +121,10 @@ export function toJobsQueryParams(
   values: JobSearchFormValues,
   page: number,
   size: number
-): JobsQueryParams {
+): AppliedJobsQueryParams {
   const query = values.q.trim();
+  const hasLocation =
+    values.latitude !== '' && values.longitude !== '' && values.maxDistanceKm !== '';
 
   return {
     page,
@@ -83,6 +134,13 @@ export function toJobsQueryParams(
     ...(values.category ? { category: values.category as JobCategory } : {}),
     ...(values.minHourlyRate !== '' ? { minHourlyRate: Number(values.minHourlyRate) } : {}),
     ...(values.maxHourlyRate !== '' ? { maxHourlyRate: Number(values.maxHourlyRate) } : {}),
+    ...(hasLocation
+      ? {
+          latitude: Number(values.latitude),
+          longitude: Number(values.longitude),
+          maxDistanceKm: Number(values.maxDistanceKm),
+        }
+      : {}),
   };
 }
 
@@ -91,6 +149,7 @@ export function hasJobFilters(params: JobsQueryParams) {
     params.q ||
     params.category ||
     params.minHourlyRate !== undefined ||
-    params.maxHourlyRate !== undefined
+    params.maxHourlyRate !== undefined ||
+    params.latitude !== undefined
   );
 }

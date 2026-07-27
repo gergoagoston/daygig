@@ -175,6 +175,13 @@
     "errors": {
       "load_failed": "Could not load jobs. Please try again."
     },
+    "pagination": {
+      "label": "Job results pagination",
+      "page_size": "Jobs per page",
+      "previous": "Previous",
+      "next": "Next",
+      "page_status": "Page {{current}} of {{total}}"
+    },
     "search": {
       "title": "Find jobs",
       "results_count": "Results: {{count}}",
@@ -198,11 +205,39 @@
         "searching": "Searching...",
         "reset": "Clear filters"
       },
+      "location": {
+        "label": "Search location",
+        "status": {
+          "none": "No location selected",
+          "browser": "Current location",
+          "map": "Selected on map"
+        },
+        "use_current": "Use my location",
+        "locating": "Locating...",
+        "select_map": "Select on map",
+        "clear": "Clear location",
+        "distance": "Search radius",
+        "distance_value": "{{distance}} km",
+        "modal_title": "Choose location",
+        "map_label": "Search origin",
+        "cancel": "Cancel",
+        "confirm": "Use location",
+        "errors": {
+          "unavailable": "Geolocation is not available in this browser.",
+          "permission_denied": "Location access was denied. You can select a location on the map.",
+          "position_unavailable": "Your location is currently unavailable. Try the map instead.",
+          "timeout": "Location detection timed out. Please try again or use the map.",
+          "generic": "Could not determine your location."
+        }
+      },
       "errors": {
         "query_too_long": "Search must be 100 characters or fewer.",
         "category_invalid": "Select a valid category.",
         "hourly_rate_invalid": "Enter a valid non-negative hourly rate.",
-        "hourly_rate_range": "Maximum hourly rate cannot be lower than minimum."
+        "hourly_rate_range": "Maximum hourly rate cannot be lower than minimum.",
+        "location_invalid": "Select a valid search location.",
+        "distance_invalid": "Search radius must be between 5 and 200 km.",
+        "location_incomplete": "A location and search radius must be provided together."
       }
     },
     "card": {

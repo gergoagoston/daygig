@@ -175,6 +175,13 @@
     "errors": {
       "load_failed": "Nem sikerült betölteni a munkákat. Próbáld újra."
     },
+    "pagination": {
+      "label": "Munkatalálatok lapozása",
+      "page_size": "Munka oldalanként",
+      "previous": "Előző",
+      "next": "Következő",
+      "page_status": "{{current}} / {{total}}. oldal"
+    },
     "search": {
       "title": "Munkák keresése",
       "results_count": "Találatok: {{count}}",
@@ -198,11 +205,39 @@
         "searching": "Keresés...",
         "reset": "Szűrők törlése"
       },
+      "location": {
+        "label": "Keresési hely",
+        "status": {
+          "none": "Nincs hely kiválasztva",
+          "browser": "Jelenlegi helyzet",
+          "map": "Térképes hely"
+        },
+        "use_current": "Saját helyzetem",
+        "locating": "Helyzet meghatározása...",
+        "select_map": "Kiválasztás térképen",
+        "clear": "Hely törlése",
+        "distance": "Keresési körzet",
+        "distance_value": "{{distance}} km",
+        "modal_title": "Hely kiválasztása",
+        "map_label": "Keresés középpontja",
+        "cancel": "Mégse",
+        "confirm": "Hely használata",
+        "errors": {
+          "unavailable": "A helymeghatározás nem érhető el ebben a böngészőben.",
+          "permission_denied": "A helyhozzáférést elutasítottad. A térképen továbbra is választhatsz helyet.",
+          "position_unavailable": "A helyzeted jelenleg nem érhető el. Próbáld meg a térképes kiválasztást.",
+          "timeout": "A helymeghatározás túllépte az időkorlátot. Próbáld újra vagy használd a térképet.",
+          "generic": "Nem sikerült meghatározni a helyzetedet."
+        }
+      },
       "errors": {
         "query_too_long": "A keresés legfeljebb 100 karakter lehet.",
         "category_invalid": "Válassz érvényes kategóriát.",
         "hourly_rate_invalid": "Adj meg egy érvényes, nem negatív óradíjat.",
-        "hourly_rate_range": "A maximum óradíj nem lehet kisebb a minimumnál."
+        "hourly_rate_range": "A maximum óradíj nem lehet kisebb a minimumnál.",
+        "location_invalid": "Válassz érvényes keresési helyet.",
+        "distance_invalid": "A keresési körzet 5 és 200 km között lehet.",
+        "location_incomplete": "A keresési helyet és a keresési körzetet együtt kell megadni."
       }
     },
     "card": {
