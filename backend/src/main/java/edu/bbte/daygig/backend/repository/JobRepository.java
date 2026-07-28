@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
+import edu.bbte.daygig.backend.model.enums.JobStatus;
 import edu.bbte.daygig.backend.model.Job;
 
 @Repository
@@ -20,4 +21,10 @@ public interface JobRepository extends JpaRepository<Job, UUID>, JpaSpecificatio
     Optional<Job> findById(UUID id);
 
     boolean existsByTitle(String title);
+
+    long countByOwnerIdAndStatus(UUID ownerId,
+                                 JobStatus status);
+
+    long countByCompletedApplicationApplicantIdAndStatus(UUID applicantId,
+                                                          JobStatus status);
 }

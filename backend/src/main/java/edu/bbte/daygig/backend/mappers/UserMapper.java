@@ -1,6 +1,7 @@
 package edu.bbte.daygig.backend.mappers;
 
 import org.springframework.stereotype.Component;
+import edu.bbte.daygig.backend.dto.rating.RatingSummaryOutDto;
 import edu.bbte.daygig.backend.dto.user.UserOutDto;
 import edu.bbte.daygig.backend.dto.user.UserProfileOutDto;
 import edu.bbte.daygig.backend.dto.user.UserRegisterInDto;
@@ -27,9 +28,14 @@ public class UserMapper {
     }
 
     public UserProfileOutDto toProfileDto(User user,
-                                          String avatarUrl) {
+                                          String avatarUrl,
+                                          RatingSummaryOutDto workerRating,
+                                          RatingSummaryOutDto jobOwnerRating,
+                                          long completedJobsAsWorker,
+                                          long completedJobsAsOwner) {
         return new UserProfileOutDto(user.getId(), user.getFirstName(), user.getLastName(), user.getBio(),
-                avatarUrl, user.getCreatedAt());
+                avatarUrl, user.getCreatedAt(), workerRating, jobOwnerRating, completedJobsAsWorker,
+                completedJobsAsOwner);
     }
 
     public UserSummaryOutDto toSummaryDto(User user) {

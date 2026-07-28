@@ -1,14 +1,17 @@
 package edu.bbte.daygig.backend.rating.integration;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.UUID;
+import jakarta.persistence.EntityManager;
 import jakarta.servlet.http.Cookie;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +31,9 @@ import edu.bbte.daygig.backend.repository.RatingRepository;
 import edu.bbte.daygig.backend.repository.UserRepository;
 import edu.bbte.daygig.backend.security.JwtService;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.nullValue;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -56,6 +62,12 @@ class RatingControllerIntegrationTest {
     private RatingRepository ratingRepository;
 
     @Autowired
+    private JdbcTemplate jdbcTemplate;
+
+    @Autowired
+    private EntityManager entityManager;
+
+    @Autowired
     private JwtService jwtService;
 
     @Test
@@ -68,8 +80,7 @@ class RatingControllerIntegrationTest {
                 .content(ratingJson(5, "  Careful and reliable work.  ")))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.jobId").value(completedJob.job().getId().toString()))
-                .andExpect(jsonPath("$.reviewerId").value(completedJob.owner().getId().toString()))
-                .andExpect(jsonPath("$.revieweeId").value(completedJob.worker().getId().toString()))
+                .andExpect(jsonPath("$.reviewer.id").value(completedJob.owner().getId().toString()))
                 .andExpect(jsonPath("$.context").value("WORKER"))
                 .andExpect(jsonPath("$.stars").value(5))
                 .andExpect(jsonPath("$.comment").value("Careful and reliable work."));
@@ -89,10 +100,119 @@ class RatingControllerIntegrationTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(ratingJson(4, "Clear instructions.")))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.reviewerId").value(completedJob.worker().getId().toString()))
-                .andExpect(jsonPath("$.revieweeId").value(completedJob.owner().getId().toString()))
+                .andExpect(jsonPath("$.reviewer.id").value(completedJob.worker().getId().toString()))
                 .andExpect(jsonPath("$.context").value("JOB_OWNER"))
                 .andExpect(jsonPath("$.stars").value(4));
+    }
+
+    @Test
+    void eligibilityIdentifiesOtherParticipantAndExistingRating() throws Exception {
+        CompletedJob completedJob = saveCompletedJob("rating-eligibility");
+
+        mockMvc.perform(get("/jobs/{jobId}/ratings/me", completedJob.job().getId())
+                .cookie(accessTokenCookie(completedJob.owner())))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.eligible").value(true))
+                .andExpect(jsonPath("$.alreadyRated").value(false))
+                .andExpect(jsonPath("$.reviewee.id").value(completedJob.worker().getId().toString()))
+                .andExpect(jsonPath("$.context").value("WORKER"));
+
+        createRating(completedJob.job(), completedJob.owner(), 5)
+                .andExpect(status().isCreated());
+
+        mockMvc.perform(get("/jobs/{jobId}/ratings/me", completedJob.job().getId())
+                .cookie(accessTokenCookie(completedJob.owner())))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.eligible").value(true))
+                .andExpect(jsonPath("$.alreadyRated").value(true));
+    }
+
+    @Test
+    void eligibilityIsFalseForOpenJobAndUnrelatedUser() throws Exception {
+        User owner = saveUser("ineligible-owner");
+        User unrelatedUser = saveUser("ineligible-user");
+        Job openJob = saveJob(owner, "Ineligible open job", JobStatus.OPEN);
+
+        mockMvc.perform(get("/jobs/{jobId}/ratings/me", openJob.getId())
+                .cookie(accessTokenCookie(owner)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.eligible").value(false))
+                .andExpect(jsonPath("$.alreadyRated").value(false))
+                .andExpect(jsonPath("$.reviewee").value(nullValue()))
+                .andExpect(jsonPath("$.context").value(nullValue()));
+
+        CompletedJob completedJob = saveCompletedJob("ineligible-unrelated");
+        mockMvc.perform(get("/jobs/{jobId}/ratings/me", completedJob.job().getId())
+                .cookie(accessTokenCookie(unrelatedUser)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.eligible").value(false))
+                .andExpect(jsonPath("$.alreadyRated").value(false));
+    }
+
+    @Test
+    void receivedRatingsAreFilteredByContextAndExposeOnlyPublicReviewerData() throws Exception {
+        CompletedJob completedJob = saveCompletedJob("received-ratings");
+        createRating(completedJob.job(), completedJob.owner(), 5)
+                .andExpect(status().isCreated());
+        createRating(completedJob.job(), completedJob.worker(), 4)
+                .andExpect(status().isCreated());
+
+        mockMvc.perform(get("/users/{userId}/ratings", completedJob.worker().getId())
+                .param("context", "WORKER")
+                .cookie(accessTokenCookie(completedJob.owner())))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(1)))
+                .andExpect(jsonPath("$[0].context").value("WORKER"))
+                .andExpect(jsonPath("$[0].reviewer.id").value(completedJob.owner().getId().toString()))
+                .andExpect(jsonPath("$[0].reviewer.firstName").value(completedJob.owner().getFirstName()))
+                .andExpect(jsonPath("$[0].reviewer.email").doesNotExist())
+                .andExpect(jsonPath("$[0].reviewer.phoneNumber").doesNotExist())
+                .andExpect(jsonPath("$[0].reviewer.role").doesNotExist())
+                .andExpect(jsonPath("$[0].jobId").value(completedJob.job().getId().toString()))
+                .andExpect(jsonPath("$[0].jobTitle").value(completedJob.job().getTitle()));
+
+        mockMvc.perform(get("/users/{userId}/ratings", completedJob.worker().getId())
+                .param("context", "JOB_OWNER")
+                .cookie(accessTokenCookie(completedJob.owner())))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(0)));
+    }
+
+    @Test
+    void receivedRatingsRequireAuthenticationAndExistingUser() throws Exception {
+        User viewer = saveUser("ratings-list-viewer");
+
+        mockMvc.perform(get("/users/{userId}/ratings", viewer.getId())
+                .param("context", "WORKER"))
+                .andExpect(status().isUnauthorized());
+
+        mockMvc.perform(get("/users/{userId}/ratings", UUID.randomUUID())
+                .param("context", "WORKER")
+                .cookie(accessTokenCookie(viewer)))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void receivedRatingsAreOrderedWithNewestFirst() throws Exception {
+        User worker = saveUser("ordered-ratings-worker");
+        User firstOwner = saveUser("ordered-ratings-first-owner");
+        User secondOwner = saveUser("ordered-ratings-second-owner");
+        Job firstJob = saveCompletedJob(firstOwner, worker, "First ordered rating job");
+        Job secondJob = saveCompletedJob(secondOwner, worker, "Second ordered rating job");
+        Rating firstRating = saveRating(firstJob, firstOwner, worker, 4);
+        Rating secondRating = saveRating(secondJob, secondOwner, worker, 5);
+
+        setCreatedAt(firstRating, LocalDateTime.of(2026, 1, 1, 10, 0));
+        setCreatedAt(secondRating, LocalDateTime.of(2026, 1, 2, 10, 0));
+        entityManager.clear();
+
+        mockMvc.perform(get("/users/{userId}/ratings", worker.getId())
+                .param("context", "WORKER")
+                .cookie(accessTokenCookie(firstOwner)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(jsonPath("$[0].id").value(secondRating.getId().toString()))
+                .andExpect(jsonPath("$[1].id").value(firstRating.getId().toString()));
     }
 
     @Test
@@ -212,10 +332,36 @@ class RatingControllerIntegrationTest {
     private CompletedJob saveCompletedJob(String prefix) {
         User owner = saveUser(prefix + "-owner");
         User worker = saveUser(prefix + "-worker");
-        Job job = saveJob(owner, "Completed job " + prefix, JobStatus.OPEN);
+        Job job = saveCompletedJob(owner, worker, "Completed job " + prefix);
+        return new CompletedJob(owner, worker, job);
+    }
+
+    private Job saveCompletedJob(User owner,
+                                 User worker,
+                                 String title) {
+        Job job = saveJob(owner, title, JobStatus.OPEN);
         Application application = saveApplication(worker, job, ApplicationStatus.ACTIVE);
         completeJob(job, application);
-        return new CompletedJob(owner, worker, job);
+        return job;
+    }
+
+    private Rating saveRating(Job job,
+                              User reviewer,
+                              User reviewee,
+                              int stars) {
+        Rating rating = new Rating();
+        rating.setJob(job);
+        rating.setReviewer(reviewer);
+        rating.setReviewee(reviewee);
+        rating.setContext(RatingContext.WORKER);
+        rating.setStars(stars);
+        return ratingRepository.saveAndFlush(rating);
+    }
+
+    private void setCreatedAt(Rating rating,
+                              LocalDateTime createdAt) {
+        jdbcTemplate.update("UPDATE ratings SET created_at = ? WHERE id = ?",
+                Timestamp.valueOf(createdAt), rating.getId());
     }
 
     private void completeJob(Job job,

@@ -27,6 +27,7 @@ import edu.bbte.daygig.backend.model.User;
 import edu.bbte.daygig.backend.model.UserAvatar;
 import edu.bbte.daygig.backend.security.JwtPrincipal;
 import edu.bbte.daygig.backend.service.avatar.UserAvatarService;
+import edu.bbte.daygig.backend.service.user.UserProfileService;
 import edu.bbte.daygig.backend.service.user.UserService;
 
 @RestController
@@ -37,6 +38,7 @@ public class UserController {
     private final UserService userService;
     private final UserAvatarService userAvatarService;
     private final UserMapper userMapper;
+    private final UserProfileService userProfileService;
 
     @GetMapping("/me")
     public UserOutDto getCurrentUser(@AuthenticationPrincipal JwtPrincipal principal) {
@@ -68,7 +70,7 @@ public class UserController {
 
     @GetMapping("/{id}/profile")
     public UserProfileOutDto getProfile(@PathVariable UUID id) {
-        return userMapper.toProfileDto(userService.getById(id), userAvatarService.getAvatarUrl(id));
+        return userProfileService.getProfile(id);
     }
 
     @GetMapping("/{id}/avatar")
