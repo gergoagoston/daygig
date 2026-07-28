@@ -9,7 +9,9 @@ import JobDetailsPage from './pages/JobDetailsPage';
 import JobsPage from './pages/JobsPage';
 import MyApplicationsPage from './pages/MyApplicationsPage';
 import MyJobsPage from './pages/MyJobsPage';
+import ProfileSettingsPage from './pages/ProfileSettingsPage';
 import TermsAndConditionsPage from './pages/TermsAndConditionsPage';
+import UserProfilePage from './pages/UserProfilePage';
 import LoginPage from './pages/auth/LoginPage';
 import RegisterPage from './pages/auth/RegisterPage';
 
@@ -21,8 +23,8 @@ function App() {
 
   return (
     <div className="min-h-svh bg-page">
+      <Navbar onCreateJob={() => setIsCreateJobOpen(true)} />
       <div key={`${location.pathname}-${currentLanguage}`} className="view-transition">
-        <Navbar onCreateJob={() => setIsCreateJobOpen(true)} />
         <Routes location={location}>
           <Route path="/" element={<Navigate to="/jobs" replace />} />
           <Route path="/login" element={<LoginPage />} />
@@ -33,7 +35,8 @@ function App() {
           <Route element={<ProtectedRoute />}>
             <Route path="/my-jobs" element={<MyJobsPage />} />
             <Route path="/my-applications" element={<MyApplicationsPage />} />
-            {/* Bármilyen új védett oldalt ide tehetsz a jövőben */}
+            <Route path="/profile" element={<ProfileSettingsPage />} />
+            <Route path="/users/:id" element={<UserProfilePage />} />
           </Route>
         </Routes>
       </div>

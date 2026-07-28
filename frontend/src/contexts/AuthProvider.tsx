@@ -1,10 +1,11 @@
 import type { ReactNode } from 'react';
 import { useEffect, useState } from 'react';
 
-import { getCurrentUser, logoutUser } from '../api/authApi';
+import { logoutUser } from '../api/authApi';
+import { getCurrentUser } from '../api/usersApi';
 import type { UserOutDto } from '../dtos/user';
 import { subscribeToUnauthorized } from '../utils/authEvents';
-import AuthContext from './AuthContext';
+import AuthContext, { type CurrentUserUpdate } from './AuthContext';
 
 type AuthProviderProps = {
   children: ReactNode;
@@ -18,6 +19,16 @@ function AuthProvider({ children }: AuthProviderProps) {
     setUser(nextUser);
   };
 
+  const updateUser = (update: CurrentUserUpdate) => {
+    setUser((currentUser) => {
+      if (!currentUser) {
+        return null;
+      }
+
+      return typeof update === 'function' ? update(currentUser) : update;
+    });
+  };
+
   const logout = async () => {
     try {
       await logoutUser();
@@ -29,8 +40,8 @@ function AuthProvider({ children }: AuthProviderProps) {
   useEffect(() => {
     async function initAuth() {
       try {
-        const response = await getCurrentUser();
-        setUser(response.data);
+        const currentUser = await getCurrentUser();
+        setUser(currentUser);
       } catch {
         setUser(null);
       } finally {
@@ -52,6 +63,7 @@ function AuthProvider({ children }: AuthProviderProps) {
     isAuthenticated: Boolean(user),
     isInitializing,
     login,
+    updateUser,
     logout,
   };
 

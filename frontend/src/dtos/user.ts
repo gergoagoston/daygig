@@ -11,3 +11,16 @@ export type UserOutDto = {
   avatarUrl: string | null;
   createdAt: string;
 };
+
+export type UserProfileOutDto = {
+  id: string;
+  firstName: string;
+  lastName: string;
+  bio: string | null;
+  avatarUrl: string | null;
+  createdAt: string;
+};
+
+export type BioUpdateInDto = {
+  bio: string | null;
+};

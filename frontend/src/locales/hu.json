@@ -52,7 +52,56 @@
     "login": "Bejelentkezés",
     "register": "Regisztráció",
     "logout": "Kijelentkezés",
+    "profile": "Profilbeállítások",
     "language": "Nyelv"
+  },
+  "profile": {
+    "settings": {
+      "private_details": "Az email címed és a telefonszámod privát, a publikus profilodon nem jelennek meg."
+    },
+    "fields": {
+      "email": "Email",
+      "phone": "Telefonszám",
+      "not_provided": "Nincs megadva"
+    },
+    "avatar": {
+      "upload": "Avatar feltöltése",
+      "replace": "Avatar cseréje",
+      "uploading": "Feltöltés...",
+      "delete": "Avatar törlése",
+      "deleting": "Törlés...",
+      "delete_confirm": "Biztosan törölni szeretnéd az avatarodat?",
+      "help": "JPEG vagy PNG, legfeljebb 2 MB. A nagy képeket automatikusan átméretezzük.",
+      "errors": {
+        "size": "Az avatar mérete legfeljebb 2 MB lehet.",
+        "generic": "Nem sikerült frissíteni az avatarodat. Próbáld újra."
+      }
+    },
+    "bio": {
+      "label": "Bemutatkozás",
+      "placeholder": "Írj magadról néhány mondatot...",
+      "help": "Ezt a szöveget más bejelentkezett felhasználók is láthatják.",
+      "limit": "Legfeljebb 1000 karakter",
+      "save": "Bemutatkozás mentése",
+      "saving": "Mentés...",
+      "saved": "Bemutatkozás elmentve.",
+      "empty": "Ez a felhasználó még nem írt bemutatkozást.",
+      "errors": {
+        "too_long": "A bemutatkozás legfeljebb 1000 karakter lehet.",
+        "generic": "Nem sikerült elmenteni a bemutatkozást. Próbáld újra."
+      }
+    },
+    "reviews": {
+      "title": "Vélemények",
+      "empty": "Még nincsenek vélemények."
+    },
+    "public": {
+      "loading": "Profil betöltése...",
+      "member_since": "DayGig-tag ettől: {{date}}",
+      "errors": {
+        "load_failed": "Nem sikerült betölteni ezt a profilt."
+      }
+    }
   },
   "legal": {
     "terms": {
@@ -290,6 +339,7 @@
       "hourly_rate": "Óradíj",
       "location": "Helyszín",
       "owner": "Hirdető",
+      "owner_you": "Te",
       "published_on": "Közzétéve",
       "map": {
         "approximate_location": "Hozzávetőleges helyszín",

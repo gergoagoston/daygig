@@ -52,7 +52,56 @@
     "login": "Autentificare",
     "register": "Inregistrare",
     "logout": "Deconectare",
+    "profile": "Setari profil",
     "language": "Limba"
+  },
+  "profile": {
+    "settings": {
+      "private_details": "Adresa de email si numarul de telefon sunt private si nu apar pe profilul public."
+    },
+    "fields": {
+      "email": "Email",
+      "phone": "Numar de telefon",
+      "not_provided": "Nespecificat"
+    },
+    "avatar": {
+      "upload": "Incarca avatar",
+      "replace": "Schimba avatarul",
+      "uploading": "Se incarca...",
+      "delete": "Sterge avatarul",
+      "deleting": "Se sterge...",
+      "delete_confirm": "Sigur vrei sa stergi avatarul?",
+      "help": "JPEG sau PNG, maximum 2 MB. Imaginile mari sunt redimensionate automat.",
+      "errors": {
+        "size": "Imaginea avatarului nu poate depasi 2 MB.",
+        "generic": "Avatarul nu a putut fi actualizat. Incearca din nou."
+      }
+    },
+    "bio": {
+      "label": "Despre mine",
+      "placeholder": "Spune-le celorlalti utilizatori cate ceva despre tine...",
+      "help": "Acest text este vizibil pentru ceilalti utilizatori autentificati.",
+      "limit": "Maximum 1000 de caractere",
+      "save": "Salveaza descrierea",
+      "saving": "Se salveaza...",
+      "saved": "Descriere salvata.",
+      "empty": "Acest utilizator nu a adaugat inca o descriere.",
+      "errors": {
+        "too_long": "Descrierea nu poate depasi 1000 de caractere.",
+        "generic": "Descrierea nu a putut fi salvata. Incearca din nou."
+      }
+    },
+    "reviews": {
+      "title": "Recenzii",
+      "empty": "Nu exista recenzii inca."
+    },
+    "public": {
+      "loading": "Se incarca profilul...",
+      "member_since": "Membru DayGig din {{date}}",
+      "errors": {
+        "load_failed": "Acest profil nu a putut fi incarcat."
+      }
+    }
   },
   "legal": {
     "terms": {
@@ -290,6 +339,7 @@
       "hourly_rate": "Tarif orar",
       "location": "Locatie",
       "owner": "Publicat de",
+      "owner_you": "Tu",
       "published_on": "Publicat la",
       "map": {
         "approximate_location": "Locatie aproximativa",

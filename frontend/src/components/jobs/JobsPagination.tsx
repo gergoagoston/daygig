@@ -25,7 +25,7 @@ function JobsPagination({
 
   return (
     <nav
-      className="flex flex-col gap-4 border-t border-border pt-5 sm:flex-row sm:items-center sm:justify-between"
+      className="flex flex-col gap-4 pt-5 sm:flex-row sm:items-center sm:justify-between"
       aria-label={t('jobs.pagination.label')}
     >
       <label

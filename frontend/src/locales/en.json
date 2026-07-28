@@ -52,7 +52,56 @@
     "login": "Login",
     "register": "Register",
     "logout": "Logout",
+    "profile": "Profile settings",
     "language": "Language"
+  },
+  "profile": {
+    "settings": {
+      "private_details": "Your email address and phone number are private and are not shown on your public profile."
+    },
+    "fields": {
+      "email": "Email",
+      "phone": "Phone number",
+      "not_provided": "Not provided"
+    },
+    "avatar": {
+      "upload": "Upload avatar",
+      "replace": "Replace avatar",
+      "uploading": "Uploading...",
+      "delete": "Remove avatar",
+      "deleting": "Removing...",
+      "delete_confirm": "Are you sure you want to remove your avatar?",
+      "help": "JPEG or PNG, up to 2 MB. Large images are resized automatically.",
+      "errors": {
+        "size": "The avatar image cannot exceed 2 MB.",
+        "generic": "Could not update your avatar. Please try again."
+      }
+    },
+    "bio": {
+      "label": "About",
+      "placeholder": "Tell other users a little about yourself...",
+      "help": "This text is visible to other signed-in users.",
+      "limit": "Maximum 1000 characters",
+      "save": "Save bio",
+      "saving": "Saving...",
+      "saved": "Bio saved.",
+      "empty": "This user has not added a bio yet.",
+      "errors": {
+        "too_long": "Bio cannot exceed 1000 characters.",
+        "generic": "Could not save your bio. Please try again."
+      }
+    },
+    "reviews": {
+      "title": "Reviews",
+      "empty": "No reviews yet."
+    },
+    "public": {
+      "loading": "Loading profile...",
+      "member_since": "DayGig member since {{date}}",
+      "errors": {
+        "load_failed": "Could not load this profile."
+      }
+    }
   },
   "legal": {
     "terms": {
@@ -290,6 +339,7 @@
       "hourly_rate": "Hourly rate",
       "location": "Location",
       "owner": "Posted by",
+      "owner_you": "You",
       "published_on": "Published on",
       "map": {
         "approximate_location": "Approximate location",

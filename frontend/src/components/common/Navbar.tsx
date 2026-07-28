@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 
 import useAuth from '../../hooks/useAuth';
 import '../../styles/Navbar.css';
+import UserAvatar from '../profile/UserAvatar';
 
 const languages = [
   { code: 'hu', label: 'HU' },
@@ -27,7 +28,7 @@ function Navbar({ onCreateJob }: NavbarProps) {
   };
 
   return (
-    <header className="grid min-h-18 grid-cols-[1fr_auto] gap-3 border-b border-border bg-surface px-5 py-4 md:grid-cols-[1fr_auto_1fr] md:items-center md:px-8">
+    <header className="sticky top-0 z-50 grid min-h-18 grid-cols-[1fr_auto] gap-3 border-b border-border bg-surface px-5 py-4 shadow-sm md:grid-cols-[1fr_auto_1fr] md:items-center md:px-8">
       <nav
         className="order-3 col-span-2 flex flex-wrap items-center justify-center gap-2 md:order-1 md:col-span-1 md:justify-self-start"
         aria-label={t('navigation.main')}
@@ -61,9 +62,24 @@ function Navbar({ onCreateJob }: NavbarProps) {
       <div className="order-2 flex flex-wrap items-center justify-end gap-3 md:order-3 md:justify-self-end">
         {isInitializing ? null : isAuthenticated ? (
           <div className="flex min-w-0 flex-wrap items-center justify-end gap-2">
-            <span className="max-w-28 overflow-hidden text-ellipsis whitespace-nowrap font-bold text-heading sm:max-w-45">
-              {accountLabel}
-            </span>
+            {user ? (
+              <NavLink
+                className="flex min-w-0 items-center gap-2 rounded-full !no-underline"
+                to="/profile"
+                aria-label={t('navigation.profile')}
+                title={t('navigation.profile')}
+              >
+                <UserAvatar
+                  avatarUrl={user.avatarUrl}
+                  firstName={user.firstName}
+                  lastName={user.lastName}
+                  size="small"
+                />
+                <span className="hidden max-w-28 overflow-hidden text-ellipsis whitespace-nowrap font-bold text-heading sm:block sm:max-w-45">
+                  {accountLabel}
+                </span>
+              </NavLink>
+            ) : null}
             <button className="navbar-gomb" type="button" onClick={handleLogout}>
               {t('navigation.logout')}
             </button>

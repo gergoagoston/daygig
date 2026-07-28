@@ -138,7 +138,7 @@ function JobSearchPanel({ isSearching, onSearch }: JobSearchPanelProps) {
   }
 
   return (
-    <section className="border-b border-border pb-6" aria-label={t('jobs.search.title')}>
+    <section className="pb-6" aria-label={t('jobs.search.title')}>
       <form className="grid gap-4" noValidate onSubmit={handleSubmit(onSearch)}>
         <div className="grid items-end gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-[minmax(240px,2fr)_minmax(180px,1fr)_minmax(170px,1fr)_minmax(170px,1fr)_minmax(190px,1.15fr)]">
           <Input
@@ -201,7 +201,7 @@ function JobSearchPanel({ isSearching, onSearch }: JobSearchPanelProps) {
           </Select>
         </div>
 
-        <div className="border-t border-border pt-4">
+        <div className="pt-4">
           <div className="flex flex-col gap-4 xl:flex-row xl:items-end">
             <div className="flex min-w-0 flex-1 flex-wrap items-end gap-3 xl:flex-nowrap">
               <div className="min-w-40" aria-live="polite">

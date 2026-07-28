@@ -1,14 +1,16 @@
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 
 import type { JobDetails } from '../../types/job';
 import { formatDate } from '../../utils/formatDate';
 
 type JobDetailsInfoProps = {
+  isOwnJob: boolean;
   job: JobDetails;
   language: string;
 };
 
-function JobDetailsInfo({ job, language }: JobDetailsInfoProps) {
+function JobDetailsInfo({ isOwnJob, job, language }: JobDetailsInfoProps) {
   const { t } = useTranslation();
 
   return (
@@ -16,7 +18,13 @@ function JobDetailsInfo({ job, language }: JobDetailsInfoProps) {
       <div>
         <dt className="text-sm font-bold text-heading">{t('jobs.details.owner')}</dt>
         <dd className="mt-1 text-body">
-          {job.owner.firstName} {job.owner.lastName}
+          {isOwnJob ? (
+            t('jobs.details.owner_you')
+          ) : (
+            <Link className="no-underline!" to={`/users/${job.owner.id}`}>
+              {job.owner.firstName} {job.owner.lastName}
+            </Link>
+          )}
         </dd>
       </div>
       <div>

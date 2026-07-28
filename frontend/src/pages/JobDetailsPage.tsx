@@ -94,7 +94,7 @@ function JobDetailsPage() {
 
               <aside className="border-t border-border bg-page px-6 py-7 sm:px-8 lg:border-l lg:border-t-0">
                 <div className="flex flex-col gap-6 lg:sticky lg:top-24">
-                  <JobDetailsInfo job={job} language={language} />
+                  <JobDetailsInfo isOwnJob={isOwnJob} job={job} language={language} />
 
                   <div>
                     <JobApplyPanel
