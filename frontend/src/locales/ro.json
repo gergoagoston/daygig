@@ -91,16 +91,52 @@
         "generic": "Descrierea nu a putut fi salvata. Incearca din nou."
       }
     },
-    "reviews": {
-      "title": "Recenzii",
-      "empty": "Nu exista recenzii inca."
-    },
     "public": {
       "loading": "Se incarca profilul...",
       "member_since": "Membru DayGig din {{date}}",
       "errors": {
         "load_failed": "Acest profil nu a putut fi incarcat."
       }
+    }
+  },
+  "ratings": {
+    "context": {
+      "WORKER": "Ca lucrator",
+      "JOB_OWNER": "Ca proprietar al jobului"
+    },
+    "job": {
+      "action": "Lasa o recenzie",
+      "submitted": "Recenzie trimisa"
+    },
+    "form": {
+      "title": "Evalueaza {{name}}",
+      "stars": "Evaluare",
+      "star_value": "{{count}} din 5 stele",
+      "comment": "Comentariu (optional)",
+      "comment_placeholder": "Scrie pe scurt despre experienta ta...",
+      "characters": "{{count}}/500 caractere",
+      "cancel": "Anuleaza",
+      "submit": "Trimite recenzia",
+      "submitting": "Se trimite..."
+    },
+    "summary": {
+      "title": "Evaluari",
+      "no_rating": "Nicio evaluare inca",
+      "review_count": "{{count}} recenzii",
+      "completed_jobs": "{{count}} joburi finalizate"
+    },
+    "reviews": {
+      "title": "Recenzii",
+      "loading": "Se incarca recenziile...",
+      "empty": "Nu exista recenzii inca."
+    },
+    "review": {
+      "stars": "{{count}} din 5 stele"
+    },
+    "errors": {
+      "eligibility_failed": "Nu am putut verifica daca poti lasa o recenzie.",
+      "submit_failed": "Recenzia nu a putut fi trimisa. Incearca din nou.",
+      "load_failed": "Aceste recenzii nu au putut fi incarcate."
     }
   },
   "legal": {

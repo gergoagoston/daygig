@@ -91,16 +91,52 @@
         "generic": "Nem sikerült elmenteni a bemutatkozást. Próbáld újra."
       }
     },
-    "reviews": {
-      "title": "Vélemények",
-      "empty": "Még nincsenek vélemények."
-    },
     "public": {
       "loading": "Profil betöltése...",
       "member_since": "DayGig-tag ettől: {{date}}",
       "errors": {
         "load_failed": "Nem sikerült betölteni ezt a profilt."
       }
+    }
+  },
+  "ratings": {
+    "context": {
+      "WORKER": "Munkavégzőként",
+      "JOB_OWNER": "Munkakiadóként"
+    },
+    "job": {
+      "action": "Értékelés írása",
+      "submitted": "Az értékelést elküldted"
+    },
+    "form": {
+      "title": "{{name}} értékelése",
+      "stars": "Csillagok",
+      "star_value": "{{count}} csillag az 5-ből",
+      "comment": "Megjegyzés (opcionális)",
+      "comment_placeholder": "Írj röviden a tapasztalatodról...",
+      "characters": "{{count}}/500 karakter",
+      "cancel": "Mégse",
+      "submit": "Értékelés elküldése",
+      "submitting": "Küldés..."
+    },
+    "summary": {
+      "title": "Értékelések",
+      "no_rating": "Még nincs értékelés",
+      "review_count": "{{count}} értékelés",
+      "completed_jobs": "{{count}} befejezett munka"
+    },
+    "reviews": {
+      "title": "Vélemények",
+      "loading": "Vélemények betöltése...",
+      "empty": "Még nincsenek vélemények."
+    },
+    "review": {
+      "stars": "{{count}} csillag az 5-ből"
+    },
+    "errors": {
+      "eligibility_failed": "Nem sikerült ellenőrizni, hogy írhatsz-e értékelést.",
+      "submit_failed": "Nem sikerült elküldeni az értékelést. Próbáld újra.",
+      "load_failed": "Nem sikerült betölteni ezeket a véleményeket."
     }
   },
   "legal": {

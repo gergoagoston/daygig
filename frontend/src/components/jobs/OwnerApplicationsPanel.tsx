@@ -67,6 +67,7 @@ function OwnerApplicationsPanel({
                 isCompleting={isCompleting && completingApplicationId === application.id}
                 isJobOpen={isJobOpen}
                 isRejecting={isUpdating && updatingApplicationId === application.id}
+                jobId={jobId}
                 onComplete={handleComplete}
                 onReject={(applicationId) => updateStatus(applicationId, 'REJECTED')}
               />

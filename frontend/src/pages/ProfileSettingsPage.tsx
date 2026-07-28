@@ -1,12 +1,13 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
 
-import { updateCurrentUserBio } from '../api/usersApi';
+import { getUserProfile, updateCurrentUserBio } from '../api/usersApi';
 import AvatarEditor from '../components/profile/AvatarEditor';
-import ReviewsPlaceholder from '../components/profile/ReviewsPlaceholder';
+import ProfileRatingSummary from '../components/ratings/ProfileRatingSummary';
+import ProfileReviews from '../components/ratings/ProfileReviews';
 import Button from '../components/ui/Button';
 import Textarea from '../components/ui/Textarea';
 import useAuth from '../hooks/useAuth';
@@ -46,6 +47,11 @@ function ProfileSettingsPage() {
       reset({ bio: updatedUser.bio ?? '' });
     },
   });
+  const profileQuery = useQuery({
+    queryKey: ['user-profile', user?.id],
+    queryFn: () => getUserProfile(user?.id ?? ''),
+    enabled: Boolean(user?.id),
+  });
 
   if (!user) {
     return null;
@@ -77,6 +83,15 @@ function ProfileSettingsPage() {
               </dl>
 
               <p className="mt-5 text-sm text-body">{t('profile.settings.private_details')}</p>
+
+              {profileQuery.data ? (
+                <ProfileRatingSummary
+                  completedJobsAsOwner={profileQuery.data.completedJobsAsOwner}
+                  completedJobsAsWorker={profileQuery.data.completedJobsAsWorker}
+                  jobOwnerRating={profileQuery.data.jobOwnerRating}
+                  workerRating={profileQuery.data.workerRating}
+                />
+              ) : null}
             </div>
           </section>
 
@@ -126,7 +141,7 @@ function ProfileSettingsPage() {
             </form>
           </section>
 
-          <ReviewsPlaceholder />
+          <ProfileReviews userId={user.id} />
         </div>
       </div>
     </main>

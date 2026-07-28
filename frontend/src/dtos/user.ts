@@ -1,3 +1,5 @@
+import type { RatingSummary } from '../types/rating';
+
 export type UserRole = 'ROLE_USER' | 'ROLE_ADMIN';
 
 export type UserOutDto = {
@@ -19,6 +21,10 @@ export type UserProfileOutDto = {
   bio: string | null;
   avatarUrl: string | null;
   createdAt: string;
+  workerRating: RatingSummary;
+  jobOwnerRating: RatingSummary;
+  completedJobsAsWorker: number;
+  completedJobsAsOwner: number;
 };
 
 export type BioUpdateInDto = {

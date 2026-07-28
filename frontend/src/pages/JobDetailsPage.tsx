@@ -8,6 +8,7 @@ import JobDetailsHeader from '../components/jobs/JobDetailsHeader';
 import JobDetailsHighlights from '../components/jobs/JobDetailsHighlights';
 import JobDetailsInfo from '../components/jobs/JobDetailsInfo';
 import ApproximateLocationMap from '../components/map/ApproximateLocationMap';
+import JobRatingPanel from '../components/ratings/JobRatingPanel';
 import ErrorState from '../components/ui/ErrorState';
 import LoadingState from '../components/ui/LoadingState';
 import useApplyToJob from '../hooks/useApplyToJob';
@@ -112,6 +113,17 @@ function JobDetailsPage() {
                       onApply={handleApply}
                     />
                   </div>
+
+                  <JobRatingPanel
+                    enabled={
+                      hasJobId &&
+                      isAuthenticated &&
+                      !isInitializing &&
+                      !isOwnJob &&
+                      job.status === 'COMPLETED'
+                    }
+                    jobId={job.id}
+                  />
                 </div>
               </aside>
             </div>

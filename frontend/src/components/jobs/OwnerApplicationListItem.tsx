@@ -2,6 +2,8 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
 import type { OwnerApplication } from '../../types/application';
+import UserAvatar from '../profile/UserAvatar';
+import JobRatingPanel from '../ratings/JobRatingPanel';
 
 type OwnerApplicationListItemProps = {
   application: OwnerApplication;
@@ -9,6 +11,7 @@ type OwnerApplicationListItemProps = {
   isCompleting: boolean;
   isJobOpen: boolean;
   isRejecting: boolean;
+  jobId: string;
   onComplete: (applicationId: string) => void;
   onReject: (applicationId: string) => void;
 };
@@ -27,6 +30,7 @@ function OwnerApplicationListItem({
   isCompleting,
   isJobOpen,
   isRejecting,
+  jobId,
   onComplete,
   onReject,
 }: OwnerApplicationListItemProps) {
@@ -38,17 +42,25 @@ function OwnerApplicationListItem({
   return (
     <li className="px-3 py-2.5">
       <div className="grid gap-2">
-        <div className="min-w-0">
-          <p className="truncate text-sm font-bold">
-            <Link className="no-underline!" to={`/users/${application.applicant.id}`}>
-              {getApplicantName(application)}
-            </Link>
-          </p>
-          <p className="text-xs font-semibold text-body">
-            {isCompletedWorker
-              ? t('posted_jobs.applications.completed_worker')
-              : t(`application.status.${application.status}`)}
-          </p>
+        <div className="flex min-w-0 items-center gap-3">
+          <UserAvatar
+            avatarUrl={`/api/users/${application.applicant.id}/avatar`}
+            firstName={application.applicant.firstName}
+            lastName={application.applicant.lastName}
+            size="small"
+          />
+          <div className="min-w-0">
+            <p className="truncate text-sm font-bold">
+              <Link className="no-underline!" to={`/users/${application.applicant.id}`}>
+                {getApplicantName(application)}
+              </Link>
+            </p>
+            <p className="text-xs font-semibold text-body">
+              {isCompletedWorker
+                ? t('posted_jobs.applications.completed_worker')
+                : t(`application.status.${application.status}`)}
+            </p>
+          </div>
         </div>
 
         {canManage ? (
@@ -75,6 +87,8 @@ function OwnerApplicationListItem({
             </button>
           </div>
         ) : null}
+
+        {isCompletedWorker ? <JobRatingPanel compact enabled jobId={jobId} /> : null}
       </div>
     </li>
   );

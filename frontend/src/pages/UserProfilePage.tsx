@@ -3,8 +3,9 @@ import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 
 import { getUserProfile } from '../api/usersApi';
-import ReviewsPlaceholder from '../components/profile/ReviewsPlaceholder';
 import UserAvatar from '../components/profile/UserAvatar';
+import ProfileRatingSummary from '../components/ratings/ProfileRatingSummary';
+import ProfileReviews from '../components/ratings/ProfileReviews';
 import ErrorState from '../components/ui/ErrorState';
 import LoadingState from '../components/ui/LoadingState';
 import { formatDate } from '../utils/formatDate';
@@ -55,6 +56,13 @@ function UserProfilePage() {
               </div>
             </header>
 
+            <ProfileRatingSummary
+              completedJobsAsOwner={profile.completedJobsAsOwner}
+              completedJobsAsWorker={profile.completedJobsAsWorker}
+              jobOwnerRating={profile.jobOwnerRating}
+              workerRating={profile.workerRating}
+            />
+
             <section className="py-7">
               <h2 className="text-xl font-bold text-heading">{t('profile.bio.label')}</h2>
               <p className="mt-3 max-w-3xl whitespace-pre-line leading-relaxed text-body">
@@ -62,7 +70,7 @@ function UserProfilePage() {
               </p>
             </section>
 
-            <ReviewsPlaceholder />
+            <ProfileReviews userId={profile.id} />
           </>
         ) : null}
       </div>

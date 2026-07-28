@@ -91,16 +91,52 @@
         "generic": "Could not save your bio. Please try again."
       }
     },
-    "reviews": {
-      "title": "Reviews",
-      "empty": "No reviews yet."
-    },
     "public": {
       "loading": "Loading profile...",
       "member_since": "DayGig member since {{date}}",
       "errors": {
         "load_failed": "Could not load this profile."
       }
+    }
+  },
+  "ratings": {
+    "context": {
+      "WORKER": "As a worker",
+      "JOB_OWNER": "As a job owner"
+    },
+    "job": {
+      "action": "Leave a review",
+      "submitted": "Review submitted"
+    },
+    "form": {
+      "title": "Review {{name}}",
+      "stars": "Rating",
+      "star_value": "{{count}} out of 5 stars",
+      "comment": "Comment (optional)",
+      "comment_placeholder": "Share a short note about your experience...",
+      "characters": "{{count}}/500 characters",
+      "cancel": "Cancel",
+      "submit": "Submit review",
+      "submitting": "Submitting..."
+    },
+    "summary": {
+      "title": "Ratings",
+      "no_rating": "No rating yet",
+      "review_count": "{{count}} reviews",
+      "completed_jobs": "{{count}} completed jobs"
+    },
+    "reviews": {
+      "title": "Reviews",
+      "loading": "Loading reviews...",
+      "empty": "No reviews yet."
+    },
+    "review": {
+      "stars": "{{count}} out of 5 stars"
+    },
+    "errors": {
+      "eligibility_failed": "Could not check whether you can leave a review.",
+      "submit_failed": "Could not submit your review. Please try again.",
+      "load_failed": "Could not load these reviews."
     }
   },
   "legal": {
