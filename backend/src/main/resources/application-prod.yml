@@ -30,3 +30,9 @@ logging:
     "[edu.bbte.daygig.backend]": INFO
     "[org.hibernate.SQL]": WARN
     "[org.hibernate.orm.jdbc.bind]": WARN
+
+springdoc:
+  api-docs:
+    enabled: false
+  swagger-ui:
+    enabled: false
