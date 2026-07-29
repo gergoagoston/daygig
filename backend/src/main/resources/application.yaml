@@ -13,6 +13,7 @@ spring:
       max-file-size: 2MB
       max-request-size: 3MB
 server:
+  port: ${PORT:8080}
   servlet:
     context-path: /api
 app:
