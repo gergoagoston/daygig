@@ -61,9 +61,17 @@
   cursor: default;
 }
 
-input,
+input:not([type='range']),
 textarea {
   cursor: text;
+}
+
+input[type='range'] {
+  cursor: grab;
+}
+
+input[type='range']:active {
+  cursor: grabbing;
 }
 
 a,

@@ -29,6 +29,7 @@
       "submit_button": "Fiók létrehozása",
       "submitting": "Fiók létrehozása...",
       "login_prompt": "Már van fiókod?",
+      "terms_consent": "Elolvastam és elfogadom a <termsLink>Felhasználási feltételeket</termsLink>, és tudomásul veszem, hogy a DayGig csak kapcsolatot teremt a felhasználók között.",
       "errors": {
         "first_name_required": "A keresztnév megadása kötelező.",
         "last_name_required": "A vezetéknév megadása kötelező.",
@@ -39,6 +40,7 @@
         "password_min_length": "A jelszónak legalább 8 karakter hosszúnak kell lennie.",
         "confirm_password_required": "Erősítsd meg a jelszavad.",
         "passwords_do_not_match": "A jelszavak nem egyeznek.",
+        "terms_required": "A regisztrációhoz el kell fogadnod a Felhasználási feltételeket.",
         "generic": "A regisztráció sikertelen. Próbáld újra."
       }
     }
@@ -50,7 +52,137 @@
     "login": "Bejelentkezés",
     "register": "Regisztráció",
     "logout": "Kijelentkezés",
+    "profile": "Profilbeállítások",
     "language": "Nyelv"
+  },
+  "profile": {
+    "settings": {
+      "private_details": "Az email címed és a telefonszámod privát, a publikus profilodon nem jelennek meg."
+    },
+    "fields": {
+      "email": "Email",
+      "phone": "Telefonszám",
+      "not_provided": "Nincs megadva"
+    },
+    "avatar": {
+      "upload": "Avatar feltöltése",
+      "replace": "Avatar cseréje",
+      "uploading": "Feltöltés...",
+      "delete": "Avatar törlése",
+      "deleting": "Törlés...",
+      "delete_confirm": "Biztosan törölni szeretnéd az avatarodat?",
+      "help": "JPEG vagy PNG, legfeljebb 2 MB. A nagy képeket automatikusan átméretezzük.",
+      "errors": {
+        "size": "Az avatar mérete legfeljebb 2 MB lehet.",
+        "generic": "Nem sikerült frissíteni az avatarodat. Próbáld újra."
+      }
+    },
+    "bio": {
+      "label": "Bemutatkozás",
+      "placeholder": "Írj magadról néhány mondatot...",
+      "help": "Ezt a szöveget más bejelentkezett felhasználók is láthatják.",
+      "limit": "Legfeljebb 1000 karakter",
+      "save": "Bemutatkozás mentése",
+      "saving": "Mentés...",
+      "saved": "Bemutatkozás elmentve.",
+      "empty": "Ez a felhasználó még nem írt bemutatkozást.",
+      "errors": {
+        "too_long": "A bemutatkozás legfeljebb 1000 karakter lehet.",
+        "generic": "Nem sikerült elmenteni a bemutatkozást. Próbáld újra."
+      }
+    },
+    "public": {
+      "loading": "Profil betöltése...",
+      "member_since": "DayGig-tag ettől: {{date}}",
+      "errors": {
+        "load_failed": "Nem sikerült betölteni ezt a profilt."
+      }
+    }
+  },
+  "ratings": {
+    "context": {
+      "WORKER": "Munkavégzőként",
+      "JOB_OWNER": "Munkakiadóként"
+    },
+    "job": {
+      "action": "Értékelés írása",
+      "submitted": "Az értékelést elküldted"
+    },
+    "form": {
+      "title": "{{name}} értékelése",
+      "stars": "Csillagok",
+      "star_value": "{{count}} csillag az 5-ből",
+      "comment": "Megjegyzés (opcionális)",
+      "comment_placeholder": "Írj röviden a tapasztalatodról...",
+      "characters": "{{count}}/500 karakter",
+      "cancel": "Mégse",
+      "submit": "Értékelés elküldése",
+      "submitting": "Küldés..."
+    },
+    "summary": {
+      "title": "Értékelések",
+      "no_rating": "Még nincs értékelés",
+      "review_count": "{{count}} értékelés",
+      "completed_jobs": "{{count}} befejezett munka"
+    },
+    "reviews": {
+      "title": "Vélemények",
+      "loading": "Vélemények betöltése...",
+      "empty": "Még nincsenek vélemények."
+    },
+    "review": {
+      "stars": "{{count}} csillag az 5-ből"
+    },
+    "errors": {
+      "eligibility_failed": "Nem sikerült ellenőrizni, hogy írhatsz-e értékelést.",
+      "submit_failed": "Nem sikerült elküldeni az értékelést. Próbáld újra.",
+      "load_failed": "Nem sikerült betölteni ezeket a véleményeket."
+    }
+  },
+  "legal": {
+    "terms": {
+      "title": "Felhasználási feltételek",
+      "subtitle": "Kérjük, olvasd el ezeket a feltételeket a DayGig fiók létrehozása előtt. Leírják a DayGig szerepét és a felhasználók felelősségét.",
+      "back_to_register": "Vissza a regisztrációhoz",
+      "sections": {
+        "platform_role": {
+          "title": "A DayGig szerepe",
+          "body": "A DayGig egy online platform, amely segít alkalmi munkák, segítségkérések és szolgáltatási lehetőségek közzétételében, illetve lehetőséget ad arra, hogy más felhasználók kapcsolatba lépjenek vagy jelentkezzenek ezekre."
+        },
+        "not_a_party": {
+          "title": "A DayGig nem szerződő fél",
+          "body": "A DayGig nem munkáltató, nem munkaerő-közvetítő ügynökség, nem fizetési szolgáltató, nem közvetítő döntőbíró, és nem szerződő fél a felhasználók között létrejövő megállapodásokban. A DayGig csak a kapcsolatfelvételt segítő eszközöket biztosítja."
+        },
+        "user_responsibility": {
+          "title": "A döntéseidért te felelsz",
+          "body": "A felhasználók saját felelősségükre döntik el, kivel veszik fel a kapcsolatot, milyen munkát vállalnak el, milyen ajánlatot tesznek, hol és mikor találkoznak, illetve milyen feltételekben állapodnak meg."
+        },
+        "offline_incidents": {
+          "title": "Offline interakciók és incidensek",
+          "body": "A DayGig nem vállal felelősséget személyes biztonsági problémákért, nem biztonságos viselkedésért, balesetekért, sérülésekért, károkért, veszteségekért, zaklatásért vagy bármilyen más incidensért, amely az alkalmazáson kívül vagy a felhasználók közötti offline interakciók során történik."
+        },
+        "agreements_and_payments": {
+          "title": "Megállapodások és fizetések",
+          "body": "A felhasználók felelősek azért, hogy világosan egyeztessék a munka részleteit, az időpontot, a helyszínt, a díjazást, a fizetés módját és minden más fontos feltételt. A DayGig nem felel fizetési vitákért, elmaradt fizetésért, lemondott megállapodásokért, minőségi vitákért vagy a felhasználók közötti megállapodásokért."
+        },
+        "verification": {
+          "title": "Felhasználói információk",
+          "body": "A DayGig nem ellenőrzi teljes körűen minden felhasználó személyazonosságát, megbízhatóságát, képzettségét, engedélyeit vagy az általuk megadott információk pontosságát. A felhasználóknak saját megítélésük alapján kell dönteniük találkozás vagy munkavégzés előtt."
+        },
+        "conduct": {
+          "title": "Elvárt magatartás",
+          "body": "A felhasználók kötelesek a DayGiget jogszerűen, tisztességesen, mások biztonságát, jogait és méltóságát tiszteletben tartva használni. Félrevezető, sértő, jogellenes, veszélyes vagy zaklató tartalom és magatartás nem megengedett."
+        },
+        "moderation": {
+          "title": "Moderáció",
+          "body": "A DayGig eltávolíthat olyan tartalmakat, munkahirdetéseket, jelentkezéseket vagy fiókokat, amelyek sértik az alkalmazás szabályait, más felhasználóknak kárt okoznak, vagy jogszabálysértés gyanúját vetik fel."
+        },
+        "acceptance": {
+          "title": "Elfogadás regisztrációkor",
+          "body": "A regisztrációval kijelented, hogy elolvastad és elfogadod ezeket a Felhasználási feltételeket, és tudomásul veszed, hogy a DayGig kapcsolatteremtő platformként működik."
+        }
+      }
+    }
   },
   "posted_jobs": {
     "title": "Meghirdetett munkáim",
@@ -61,6 +193,29 @@
     },
     "errors": {
       "load_failed": "Nem sikerült betölteni a meghirdetett munkáidat. Próbáld újra."
+    },
+    "card": {
+      "location": "Helyszín",
+      "hourly_rate": "Óradíj"
+    },
+    "applications": {
+      "title": "Jelentkezések",
+      "count": "{{count}} beküldve",
+      "loading": "Jelentkezések betöltése...",
+      "empty": "Még nincs jelentkezés.",
+      "errors": {
+        "load_failed": "Nem sikerült betölteni a jelentkezéseket.",
+        "update_failed": "Nem sikerült frissíteni a jelentkezést. Próbáld újra.",
+        "complete_failed": "Nem sikerült lezárni a munkát. Próbáld újra."
+      },
+      "actions": {
+        "REJECTED": "Elutasítás",
+        "complete": "Befejezve",
+        "complete_confirm": "Biztosan ő végezte el a munkát? Ez lezárja a munkát, és később őt lehet értékelni.",
+        "completing": "Lezárás...",
+        "updating": "Frissítés..."
+      },
+      "completed_worker": "Ő végezte el a munkát"
     }
   },
   "applications": {
@@ -79,26 +234,96 @@
       "job_status": "Munka állapota",
       "applied": "Jelentkezve",
       "view_job": "Munka megnyitása",
-      "chat": "Chat",
-      "chat_locked": "Chat zárolva"
+      "withdraw": "Jelentkezés visszavonása",
+      "withdrawing": "Visszavonás...",
+      "withdraw_confirm": "Biztosan visszavonod a jelentkezésedet?",
+      "withdraw_failed": "Nem sikerült visszavonni a jelentkezést.",
+      "job_closed": "A munka lezárult",
+      "completed_worker": "Te végezted el"
     }
   },
   "application": {
     "status": {
-      "PENDING": "Függőben",
-      "ACCEPTED": "Elfogadva",
+      "ACTIVE": "Jelentkezve",
       "REJECTED": "Elutasítva",
-      "CANCELLED": "Visszavonva"
+      "WITHDRAWN": "Visszavonva"
     }
   },
   "jobs": {
     "loading": "Munkák betöltése...",
     "empty": {
       "title": "Még nincs nyitott munka",
-      "description": "Nézz vissza később az új DayGig lehetőségekért."
+      "description": "Nézz vissza később az új DayGig lehetőségekért.",
+      "filtered_title": "Nincs megfelelő munka",
+      "filtered_description": "Próbálj más keresési feltételeket."
     },
     "errors": {
       "load_failed": "Nem sikerült betölteni a munkákat. Próbáld újra."
+    },
+    "pagination": {
+      "label": "Munkatalálatok lapozása",
+      "page_size": "Munka oldalanként",
+      "previous": "Előző",
+      "next": "Következő",
+      "page_status": "{{current}} / {{total}}. oldal"
+    },
+    "search": {
+      "title": "Munkák keresése",
+      "results_count": "Találatok: {{count}}",
+      "fields": {
+        "query": "Keresés",
+        "query_placeholder": "Cím, leírás vagy helyszín",
+        "category": "Kategória",
+        "all_categories": "Minden kategória",
+        "sort": "Rendezés",
+        "min_hourly_rate": "Min. óradíj (RON)",
+        "max_hourly_rate": "Max. óradíj (RON)"
+      },
+      "sort": {
+        "createdAt_desc": "Legújabb elöl",
+        "createdAt_asc": "Legrégebbi elöl",
+        "hourlyRate_desc": "Legmagasabb óradíj",
+        "hourlyRate_asc": "Legalacsonyabb óradíj"
+      },
+      "actions": {
+        "search": "Keresés",
+        "searching": "Keresés...",
+        "reset": "Szűrők törlése"
+      },
+      "location": {
+        "label": "Keresési hely",
+        "status": {
+          "none": "Nincs hely kiválasztva",
+          "browser": "Jelenlegi helyzet",
+          "map": "Térképes hely"
+        },
+        "use_current": "Saját helyzetem",
+        "locating": "Helyzet meghatározása...",
+        "select_map": "Kiválasztás térképen",
+        "clear": "Hely törlése",
+        "distance": "Keresési körzet",
+        "distance_value": "{{distance}} km",
+        "modal_title": "Hely kiválasztása",
+        "map_label": "Keresés középpontja",
+        "cancel": "Mégse",
+        "confirm": "Hely használata",
+        "errors": {
+          "unavailable": "A helymeghatározás nem érhető el ebben a böngészőben.",
+          "permission_denied": "A helyhozzáférést elutasítottad. A térképen továbbra is választhatsz helyet.",
+          "position_unavailable": "A helyzeted jelenleg nem érhető el. Próbáld meg a térképes kiválasztást.",
+          "timeout": "A helymeghatározás túllépte az időkorlátot. Próbáld újra vagy használd a térképet.",
+          "generic": "Nem sikerült meghatározni a helyzetedet."
+        }
+      },
+      "errors": {
+        "query_too_long": "A keresés legfeljebb 100 karakter lehet.",
+        "category_invalid": "Válassz érvényes kategóriát.",
+        "hourly_rate_invalid": "Adj meg egy érvényes, nem negatív óradíjat.",
+        "hourly_rate_range": "A maximum óradíj nem lehet kisebb a minimumnál.",
+        "location_invalid": "Válassz érvényes keresési helyet.",
+        "distance_invalid": "A keresési körzet 5 és 200 km között lehet.",
+        "location_incomplete": "A keresési helyet és a keresési körzetet együtt kell megadni."
+      }
     },
     "card": {
       "hourly_rate": "{{rate}} {{currency}}/óra"
@@ -115,7 +340,6 @@
         "description": "Leírás",
         "category": "Kategória",
         "hourly_rate": "Óradíj",
-        "currency": "Pénznem",
         "location_name": "Helyszín neve",
         "select_placeholder": "Válassz"
       },
@@ -131,7 +355,6 @@
         "category_required": "A kategória megadása kötelező.",
         "hourly_rate_required": "Az óradíj megadása kötelező.",
         "hourly_rate_positive": "Az óradíjnak nagyobbnak kell lennie 0-nál.",
-        "currency_required": "A pénznem megadása kötelező.",
         "location_name_required": "A helyszín nevének megadása kötelező.",
         "location_required": "Válassz helyszínt a térképen.",
         "location_invalid": "A kiválasztott helyszín érvénytelen.",
@@ -140,7 +363,6 @@
           "description": "A leírás megadása kötelező.",
           "category": "A kategória megadása kötelező.",
           "hourlyRate": "Az óradíjnak nagyobbnak kell lennie 0-nál.",
-          "currency": "A pénznem megadása kötelező.",
           "locationName": "A helyszín nevének megadása kötelező.",
           "latitude": "Válassz érvényes helyszínt a térképen.",
           "longitude": "Válassz érvényes helyszínt a térképen."
@@ -153,6 +375,7 @@
       "hourly_rate": "Óradíj",
       "location": "Helyszín",
       "owner": "Hirdető",
+      "owner_you": "Te",
       "published_on": "Közzétéve",
       "map": {
         "approximate_location": "Hozzávetőleges helyszín",
@@ -165,7 +388,8 @@
         "already_applied": "Már jelentkeztél erre a munkára.",
         "duplicate": "Erre a munkára már jelentkeztél.",
         "generic_error": "Valami hiba történt. Próbáld újra később.",
-        "own_job": "Nem jelentkezhetsz a saját munkádra."
+        "own_job": "Nem jelentkezhetsz a saját munkádra.",
+        "job_closed": "Ez a munka már nem fogad jelentkezéseket."
       },
       "errors": {
         "load_failed": "Nem sikerült betölteni a munka részleteit. Próbáld újra."
@@ -173,7 +397,6 @@
     },
     "statuses": {
       "OPEN": "Nyitott",
-      "ASSIGNED": "Kiosztva",
       "COMPLETED": "Befejezve",
       "CANCELLED": "Lezárva"
     },

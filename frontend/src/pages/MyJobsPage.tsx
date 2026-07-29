@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 
 import { getMyJobs } from '../api/jobsApi';
-import JobsGrid from '../components/jobs/JobsGrid';
+import OwnerJobCard from '../components/jobs/OwnerJobCard';
 import EmptyState from '../components/ui/EmptyState';
 import ErrorState from '../components/ui/ErrorState';
 import LoadingState from '../components/ui/LoadingState';
@@ -34,7 +34,13 @@ function MyJobsPage() {
           />
         ) : null}
 
-        {!isLoading && !isError && jobs.length > 0 ? <JobsGrid jobs={jobs} /> : null}
+        {!isLoading && !isError && jobs.length > 0 ? (
+          <div className="grid grid-cols-[repeat(auto-fit,minmax(400px,600px))] justify-center gap-4">
+            {jobs.map((job) => (
+              <OwnerJobCard key={job.id} job={job} />
+            ))}
+          </div>
+        ) : null}
       </section>
     </main>
   );

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -50,6 +51,16 @@ public class ApiExceptionHandler {
         return new ResponseEntity<>(errorResponse, HttpStatus.CONFLICT);
     }
 
+    @ExceptionHandler(ForbiddenException.class)
+    public ResponseEntity<ApiErrorResponse> handleForbidden(ForbiddenException ex,
+                                                           HttpServletRequest request) {
+        log.warn("Forbidden request at {}: {}", request.getRequestURI(), ex.getMessage());
+
+        ApiErrorResponse errorResponse = buildBaseErrorResponse(HttpStatus.FORBIDDEN, "Forbidden",
+                ex.getMessage(), request.getRequestURI(), null);
+        return new ResponseEntity<>(errorResponse, HttpStatus.FORBIDDEN);
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ApiErrorResponse> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
                                                                          HttpServletRequest request) {
@@ -76,6 +87,16 @@ public class ApiExceptionHandler {
         ApiErrorResponse errorResponse = buildBaseErrorResponse(HttpStatus.BAD_REQUEST, "Malformed Request",
                 "Request body is missing or malformed", request.getRequestURI(), null);
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(MaxUploadSizeExceededException.class)
+    public ResponseEntity<ApiErrorResponse> handleMaxUploadSizeExceeded(MaxUploadSizeExceededException ex,
+                                                                        HttpServletRequest request) {
+        log.warn("Uploaded file is too large at {}", request.getRequestURI());
+
+        ApiErrorResponse errorResponse = buildBaseErrorResponse(HttpStatus.PAYLOAD_TOO_LARGE, "Payload Too Large",
+                "Avatar image cannot exceed 2 MB", request.getRequestURI(), null);
+        return new ResponseEntity<>(errorResponse, HttpStatus.PAYLOAD_TOO_LARGE);
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)

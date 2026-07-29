@@ -3,13 +3,14 @@ import { Marker, useMapEvents } from 'react-leaflet';
 
 import BaseMap from './BaseMap';
 
-type SelectedLocation = {
+export type SelectedLocation = {
   latitude: number;
   longitude: number;
 };
 
 type LocationPickerMapProps = {
   label: string;
+  labelVisuallyHidden?: boolean;
   selectedLocation: SelectedLocation | null;
   onSelectLocation: (location: SelectedLocation) => void;
 };
@@ -40,16 +41,25 @@ function MapClickHandler({ onSelectLocation }: MapClickHandlerProps) {
   return null;
 }
 
-function LocationPickerMap({ label, selectedLocation, onSelectLocation }: LocationPickerMapProps) {
+function LocationPickerMap({
+  label,
+  labelVisuallyHidden = false,
+  selectedLocation,
+  onSelectLocation,
+}: LocationPickerMapProps) {
   const center: [number, number] = selectedLocation
     ? [selectedLocation.latitude, selectedLocation.longitude]
     : DEFAULT_CENTER;
 
   return (
     <section className="overflow-hidden rounded-lg border border-border bg-page">
-      <div className="border-b border-border px-4 py-3">
-        <h2 className="text-base font-bold text-heading">{label}</h2>
-      </div>
+      {labelVisuallyHidden ? (
+        <h2 className="sr-only">{label}</h2>
+      ) : (
+        <div className="border-b border-border px-4 py-3">
+          <h2 className="text-base font-bold text-heading">{label}</h2>
+        </div>
+      )}
       <BaseMap center={center} zoom={selectedLocation ? 15 : 13}>
         <MapClickHandler onSelectLocation={onSelectLocation} />
         {selectedLocation ? <Marker icon={selectedLocationIcon} position={center} /> : null}

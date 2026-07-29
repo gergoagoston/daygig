@@ -83,6 +83,7 @@ class AuthServiceImplTest {
         assertThat(result).isSameAs(newUser);
         assertThat(result.getRole()).isEqualTo(Role.ROLE_USER);
         assertThat(result.isDeleted()).isFalse();
+        assertThat(result.getTermsAcceptedAt()).isNotNull();
         assertThat(result.getPassword()).isEqualTo(PASSWORD2);
         verify(userRepository).save(newUser);
     }

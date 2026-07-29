@@ -1,22 +1,14 @@
-import { useQuery } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
 
-import { getMyApplications } from '../api/applicationsApi';
 import ApplicationCard from '../components/applications/ApplicationCard';
 import EmptyState from '../components/ui/EmptyState';
 import ErrorState from '../components/ui/ErrorState';
 import LoadingState from '../components/ui/LoadingState';
+import useMyApplications from '../hooks/useMyApplications';
 
 function MyApplicationsPage() {
   const { t } = useTranslation();
-  const {
-    data: applications = [],
-    isError,
-    isLoading,
-  } = useQuery({
-    queryKey: ['applications', 'mine'],
-    queryFn: getMyApplications,
-  });
+  const { applications, isError, isLoading } = useMyApplications();
 
   return (
     <main className="app-page">

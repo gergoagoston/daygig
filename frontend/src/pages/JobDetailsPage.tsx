@@ -8,6 +8,7 @@ import JobDetailsHeader from '../components/jobs/JobDetailsHeader';
 import JobDetailsHighlights from '../components/jobs/JobDetailsHighlights';
 import JobDetailsInfo from '../components/jobs/JobDetailsInfo';
 import ApproximateLocationMap from '../components/map/ApproximateLocationMap';
+import JobRatingPanel from '../components/ratings/JobRatingPanel';
 import ErrorState from '../components/ui/ErrorState';
 import LoadingState from '../components/ui/LoadingState';
 import useApplyToJob from '../hooks/useApplyToJob';
@@ -30,11 +31,18 @@ function JobDetailsPage() {
     queryFn: () => getJobById(id ?? ''),
     enabled: hasJobId,
   });
-  const { apply, applyMessage, hasApplied, isApplying, isCheckingApplicationStatus } =
-    useApplyToJob({
-      jobId: currentJobId,
-      enabled: hasJobId && isAuthenticated && !isInitializing,
-    });
+  const {
+    apply,
+    applicationId,
+    applicationStatus,
+    applyMessage,
+    hasApplied,
+    isApplying,
+    isCheckingApplicationStatus,
+  } = useApplyToJob({
+    jobId: currentJobId,
+    enabled: hasJobId && isAuthenticated && !isInitializing,
+  });
   const language = i18n.resolvedLanguage ?? i18n.language;
   const isOwnJob = Boolean(job?.owner.id && user?.id && job.owner.id === user.id);
 
@@ -86,20 +94,36 @@ function JobDetailsPage() {
               </article>
 
               <aside className="border-t border-border bg-page px-6 py-7 sm:px-8 lg:border-l lg:border-t-0">
-                <div className="grid h-full gap-8 lg:sticky lg:top-24 lg:min-h-72">
-                  <JobDetailsInfo job={job} language={language} />
+                <div className="flex flex-col gap-6 lg:sticky lg:top-24">
+                  <JobDetailsInfo isOwnJob={isOwnJob} job={job} language={language} />
 
-                  <div className="self-end">
+                  <div>
                     <JobApplyPanel
                       applyMessage={applyMessage}
+                      applicationId={applicationId}
+                      applicationStatus={applicationStatus}
                       hasApplied={hasApplied}
                       isApplyDisabled={!hasJobId || isInitializing}
                       isApplying={isApplying}
                       isCheckingApplicationStatus={isCheckingApplicationStatus}
                       isOwnJob={isOwnJob}
+                      jobId={job.id}
+                      jobStatus={job.status}
+                      completedApplicationId={job.completedApplicationId}
                       onApply={handleApply}
                     />
                   </div>
+
+                  <JobRatingPanel
+                    enabled={
+                      hasJobId &&
+                      isAuthenticated &&
+                      !isInitializing &&
+                      !isOwnJob &&
+                      job.status === 'COMPLETED'
+                    }
+                    jobId={job.id}
+                  />
                 </div>
               </aside>
             </div>

@@ -18,7 +18,7 @@ function JobDetailsHeader({ category, title }: JobDetailsHeaderProps) {
         </span>
       </div>
 
-      <h1 className="!m-0 max-w-3xl !text-4xl font-bold leading-tight text-heading sm:!text-5xl">
+      <h1 className="m-0! max-w-3xl text-4xl! font-bold leading-tight text-heading sm:text-5xl!">
         {title}
       </h1>
     </div>

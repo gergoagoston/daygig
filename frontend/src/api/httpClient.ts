@@ -1,4 +1,4 @@
-import axios from 'axios'; // 1. Javítva: Import hozzáadva
+import axios from 'axios';
 import { notifyUnauthorized } from '../utils/authEvents';
 
 const httpClient = axios.create({

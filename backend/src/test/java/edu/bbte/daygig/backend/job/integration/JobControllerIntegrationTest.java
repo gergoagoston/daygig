@@ -1,6 +1,7 @@
 package edu.bbte.daygig.backend.job.integration;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.UUID;
 import jakarta.servlet.http.Cookie;
 import org.junit.jupiter.api.Test;
@@ -12,12 +13,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
+import edu.bbte.daygig.backend.model.Application;
+import edu.bbte.daygig.backend.model.enums.ApplicationStatus;
 import edu.bbte.daygig.backend.model.enums.Currency;
 import edu.bbte.daygig.backend.model.enums.JobCategory;
 import edu.bbte.daygig.backend.model.enums.JobStatus;
 import edu.bbte.daygig.backend.model.enums.Role;
 import edu.bbte.daygig.backend.model.Job;
 import edu.bbte.daygig.backend.model.User;
+import edu.bbte.daygig.backend.repository.ApplicationRepository;
 import edu.bbte.daygig.backend.repository.JobRepository;
 import edu.bbte.daygig.backend.repository.UserRepository;
 import edu.bbte.daygig.backend.security.JwtService;
@@ -26,6 +30,7 @@ import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -48,6 +53,9 @@ class JobControllerIntegrationTest {
     private JobRepository jobRepository;
 
     @Autowired
+    private ApplicationRepository applicationRepository;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Autowired
@@ -57,7 +65,6 @@ class JobControllerIntegrationTest {
     void getJobsWorksWithoutAuthenticationAndReturnsOnlyOpenJobs() throws Exception {
         User owner = saveUser("public-list-owner");
         Job openJob = saveJob(owner, "Open job", JobCategory.CLEANING, JobStatus.OPEN);
-        saveJob(owner, "Assigned job", JobCategory.MOVING, JobStatus.ASSIGNED);
         saveJob(owner, "Completed job", JobCategory.GARDENING, JobStatus.COMPLETED);
         saveJob(owner, "Cancelled job", JobCategory.DELIVERY, JobStatus.CANCELLED);
 
@@ -93,12 +100,148 @@ class JobControllerIntegrationTest {
     }
 
     @Test
+    void getJobsSearchesAllTextFieldsCaseAndAccentInsensitively() throws Exception {
+        User owner = saveUser("text-search-owner");
+        Job matchingJob = saveJob(owner, "Tavaszi TAKARÍTÁS", JobCategory.CLEANING, JobStatus.OPEN);
+        matchingJob.setDescription("Gyors ablakmosás tapasztalattal");
+        matchingJob.setLocationName("Marosvásárhely");
+        jobRepository.saveAndFlush(matchingJob);
+
+        Job partialMatch = saveJob(owner, "Takarítás", JobCategory.CLEANING, JobStatus.OPEN);
+        partialMatch.setDescription("Általános segítség");
+        partialMatch.setLocationName("Marosvásárhely");
+        jobRepository.saveAndFlush(partialMatch);
+
+        mockMvc.perform(get("/jobs")
+                .param("q", "TAKARITAS ablakmosas marosvasarhely"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.content", hasSize(1)))
+                .andExpect(jsonPath("$.content[0].id").value(matchingJob.getId().toString()))
+                .andExpect(jsonPath("$.totalElements").value(1));
+    }
+
+    @Test
+    void getJobsCombinesCategoryAndHourlyRateFilters() throws Exception {
+        User owner = saveUser("filter-owner");
+        Job matchingJob = saveJob(owner, "Matching job", JobCategory.CLEANING, JobStatus.OPEN);
+        matchingJob.setHourlyRate(new BigDecimal("60.00"));
+        jobRepository.saveAndFlush(matchingJob);
+
+        Job belowMinimum = saveJob(owner, "Cheap cleaning", JobCategory.CLEANING, JobStatus.OPEN);
+        belowMinimum.setHourlyRate(new BigDecimal("40.00"));
+        jobRepository.saveAndFlush(belowMinimum);
+
+        Job aboveMaximum = saveJob(owner, "Expensive cleaning", JobCategory.CLEANING, JobStatus.OPEN);
+        aboveMaximum.setHourlyRate(new BigDecimal("90.00"));
+        jobRepository.saveAndFlush(aboveMaximum);
+
+        Job wrongCategory = saveJob(owner, "Delivery in range", JobCategory.DELIVERY, JobStatus.OPEN);
+        wrongCategory.setHourlyRate(new BigDecimal("60.00"));
+        jobRepository.saveAndFlush(wrongCategory);
+
+        Job completedJob = saveJob(owner, "Completed cleaning", JobCategory.CLEANING, JobStatus.COMPLETED);
+        completedJob.setHourlyRate(new BigDecimal("60.00"));
+        jobRepository.saveAndFlush(completedJob);
+
+        mockMvc.perform(get("/jobs")
+                .param("category", "CLEANING")
+                .param("minHourlyRate", "50")
+                .param("maxHourlyRate", "80"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.content", hasSize(1)))
+                .andExpect(jsonPath("$.content[0].id").value(matchingJob.getId().toString()))
+                .andExpect(jsonPath("$.totalElements").value(1));
+    }
+
+    @Test
+    void getJobsKeepsPaginationBackendDrivenWithFilters() throws Exception {
+        User owner = saveUser("filtered-pagination-owner");
+        saveJob(owner, "First cleaning", JobCategory.CLEANING, JobStatus.OPEN);
+        saveJob(owner, "Second cleaning", JobCategory.CLEANING, JobStatus.OPEN);
+        saveJob(owner, "Third cleaning", JobCategory.CLEANING, JobStatus.OPEN);
+        saveJob(owner, "Moving job", JobCategory.MOVING, JobStatus.OPEN);
+
+        mockMvc.perform(get("/jobs")
+                .param("category", "CLEANING")
+                .param("page", "1")
+                .param("size", "2"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.content", hasSize(1)))
+                .andExpect(jsonPath("$.page").value(1))
+                .andExpect(jsonPath("$.size").value(2))
+                .andExpect(jsonPath("$.totalElements").value(3))
+                .andExpect(jsonPath("$.totalPages").value(2))
+                .andExpect(jsonPath("$.first").value(false))
+                .andExpect(jsonPath("$.last").value(true));
+    }
+
+    @Test
+    void getJobsRejectsInvalidHourlyRateRange() throws Exception {
+        mockMvc.perform(get("/jobs")
+                .param("minHourlyRate", "80")
+                .param("maxHourlyRate", "50"))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.error").value("Validation Failed"));
+    }
+
+    @Test
+    void getJobsRejectsIncompleteOrInvalidDistanceFilter() throws Exception {
+        mockMvc.perform(get("/jobs")
+                .param("latitude", "46.77"))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.error").value("Validation Failed"));
+
+        mockMvc.perform(get("/jobs")
+                .param("maxDistanceKm", "50"))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.error").value("Validation Failed"));
+
+        mockMvc.perform(get("/jobs")
+                .param("latitude", "46.77")
+                .param("longitude", "23.59"))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.error").value("Validation Failed"));
+
+        mockMvc.perform(get("/jobs")
+                .param("latitude", "46.77")
+                .param("longitude", "23.59")
+                .param("maxDistanceKm", "201"))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.error").value("Validation Failed"));
+    }
+
+    @Test
+    void getJobsRejectsDistanceSort() throws Exception {
+        mockMvc.perform(get("/jobs")
+                .param("sort", "distance,asc"))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.message").value("Unsupported job sort property: distance"));
+    }
+
+    @Test
+    void getJobsSortsByHourlyRate() throws Exception {
+        User owner = saveUser("hourly-sort-owner");
+        Job lowerRateJob = saveJob(owner, "Lower rate job", JobCategory.CLEANING, JobStatus.OPEN);
+        lowerRateJob.setHourlyRate(new BigDecimal("40.00"));
+        jobRepository.saveAndFlush(lowerRateJob);
+        Job higherRateJob = saveJob(owner, "Higher rate job", JobCategory.CLEANING, JobStatus.OPEN);
+        higherRateJob.setHourlyRate(new BigDecimal("80.00"));
+        jobRepository.saveAndFlush(higherRateJob);
+
+        mockMvc.perform(get("/jobs")
+                .param("sort", "hourlyRate,desc"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.content[0].id").value(higherRateJob.getId().toString()))
+                .andExpect(jsonPath("$.content[1].id").value(lowerRateJob.getId().toString()));
+    }
+
+    @Test
     void getMineReturnsOnlyCurrentUsersJobs() throws Exception {
         User owner = saveUser("mine-owner");
         User otherOwner = saveUser("mine-other-owner");
         Job firstOwnJob = saveJob(owner, "Own open job", JobCategory.CLEANING, JobStatus.OPEN);
         Job secondOwnJob = saveJob(owner, "Own completed job", JobCategory.GARDENING, JobStatus.COMPLETED);
-        saveJob(otherOwner, "Other owner job", JobCategory.MOVING, JobStatus.ASSIGNED);
+        saveJob(otherOwner, "Other owner job", JobCategory.MOVING, JobStatus.OPEN);
 
         mockMvc.perform(get("/jobs/mine")
                 .cookie(accessTokenCookie(owner)))
@@ -135,7 +278,7 @@ class JobControllerIntegrationTest {
                 .andExpect(jsonPath("$.category").value("DELIVERY"))
                 .andExpect(jsonPath("$.status").value("OPEN"))
                 .andExpect(jsonPath("$.hourlyRate").value(60.0))
-                .andExpect(jsonPath("$.currency").value("EUR"))
+                .andExpect(jsonPath("$.currency").value("RON"))
                 .andExpect(jsonPath("$.locationName").value("Oradea"))
                 .andReturn()
                 .getResponse()
@@ -146,6 +289,7 @@ class JobControllerIntegrationTest {
 
         assertThat(createdJob.getOwner().getId()).isEqualTo(owner.getId());
         assertThat(createdJob.getStatus()).isEqualTo(JobStatus.OPEN);
+        assertThat(createdJob.getCurrency()).isEqualTo(Currency.RON);
         assertThat(createdJob.getLatitude()).isEqualByComparingTo(new BigDecimal("47.046500"));
         assertThat(createdJob.getLongitude()).isEqualByComparingTo(new BigDecimal("21.918900"));
     }
@@ -171,7 +315,6 @@ class JobControllerIntegrationTest {
                           "description": "",
                           "category": null,
                           "hourlyRate": -5,
-                          "currency": null,
                           "locationName": "",
                           "latitude": 95,
                           "longitude": -190
@@ -183,7 +326,6 @@ class JobControllerIntegrationTest {
                 .andExpect(jsonPath("$.details.description").exists())
                 .andExpect(jsonPath("$.details.category").exists())
                 .andExpect(jsonPath("$.details.hourlyRate").exists())
-                .andExpect(jsonPath("$.details.currency").exists())
                 .andExpect(jsonPath("$.details.locationName").exists())
                 .andExpect(jsonPath("$.details.latitude").exists())
                 .andExpect(jsonPath("$.details.longitude").exists());
@@ -192,7 +334,7 @@ class JobControllerIntegrationTest {
     @Test
     void getJobDetailsWorksWithoutAuthentication() throws Exception {
         User owner = saveUser("details-owner");
-        Job job = saveJob(owner, "Details job", JobCategory.EVENT_HELP, JobStatus.ASSIGNED);
+        Job job = saveJob(owner, "Details job", JobCategory.EVENT_HELP, JobStatus.OPEN);
 
         mockMvc.perform(get("/jobs/{id}", job.getId()))
                 .andExpect(status().isOk())
@@ -200,7 +342,7 @@ class JobControllerIntegrationTest {
                 .andExpect(jsonPath("$.title").value(job.getTitle()))
                 .andExpect(jsonPath("$.description").value(job.getDescription()))
                 .andExpect(jsonPath("$.category").value("EVENT_HELP"))
-                .andExpect(jsonPath("$.status").value("ASSIGNED"))
+                .andExpect(jsonPath("$.status").value("OPEN"))
                 .andExpect(jsonPath("$.hourlyRate").value(45.0))
                 .andExpect(jsonPath("$.currency").value("RON"))
                 .andExpect(jsonPath("$.locationName").value("Cluj-Napoca"))
@@ -221,6 +363,125 @@ class JobControllerIntegrationTest {
                 .andExpect(jsonPath("$.error").value("Resource Not Found"));
     }
 
+    @Test
+    void ownerCanCompleteJobWithActiveApplication() throws Exception {
+        User owner = saveUser("complete-owner");
+        User applicant = saveUser("complete-applicant");
+        User otherApplicant = saveUser("complete-other-applicant");
+        Job job = saveJob(owner, "Completable job", JobCategory.CLEANING, JobStatus.OPEN);
+        Application completedApplication = saveApplication(applicant, job, ApplicationStatus.ACTIVE);
+        Application otherApplication = saveApplication(otherApplicant, job, ApplicationStatus.ACTIVE);
+
+        mockMvc.perform(put("/jobs/{jobId}/completion", job.getId())
+                .cookie(accessTokenCookie(owner))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(completionJson(completedApplication.getId())))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.status").value("COMPLETED"))
+                .andExpect(jsonPath("$.completedApplicationId")
+                        .value(completedApplication.getId().toString()))
+                .andExpect(jsonPath("$.completedAt").exists());
+
+        Job completedJob = jobRepository.findById(job.getId()).orElseThrow();
+        assertThat(completedJob.getCompletedApplication().getId()).isEqualTo(completedApplication.getId());
+        assertThat(completedJob.getCompletedAt()).isNotNull();
+        assertThat(completedJob.getStatus()).isEqualTo(JobStatus.COMPLETED);
+        assertThat(applicationRepository.findById(completedApplication.getId()).orElseThrow().getStatus())
+                .isEqualTo(ApplicationStatus.ACTIVE);
+        assertThat(applicationRepository.findById(otherApplication.getId()).orElseThrow().getStatus())
+                .isEqualTo(ApplicationStatus.ACTIVE);
+    }
+
+    @Test
+    void completingJobWithSameApplicationIsIdempotent() throws Exception {
+        User owner = saveUser("idempotent-owner");
+        User applicant = saveUser("idempotent-applicant");
+        Job job = saveJob(owner, "Idempotent job", JobCategory.CLEANING, JobStatus.OPEN);
+        Application application = saveApplication(applicant, job, ApplicationStatus.ACTIVE);
+
+        mockMvc.perform(put("/jobs/{jobId}/completion", job.getId())
+                .cookie(accessTokenCookie(owner))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(completionJson(application.getId())))
+                .andExpect(status().isOk());
+
+        mockMvc.perform(put("/jobs/{jobId}/completion", job.getId())
+                .cookie(accessTokenCookie(owner))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(completionJson(application.getId())))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.completedApplicationId").value(application.getId().toString()));
+    }
+
+    @Test
+    void completionRejectsApplicationFromAnotherJob() throws Exception {
+        User owner = saveUser("wrong-job-owner");
+        User applicant = saveUser("wrong-job-applicant");
+        Job job = saveJob(owner, "Target job", JobCategory.CLEANING, JobStatus.OPEN);
+        Job otherJob = saveJob(owner, "Other job", JobCategory.MOVING, JobStatus.OPEN);
+        Application application = saveApplication(applicant, otherJob, ApplicationStatus.ACTIVE);
+
+        mockMvc.perform(put("/jobs/{jobId}/completion", job.getId())
+                .cookie(accessTokenCookie(owner))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(completionJson(application.getId())))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.message").value("Application does not belong to this job"));
+    }
+
+    @Test
+    void completionRejectsInactiveApplication() throws Exception {
+        User owner = saveUser("inactive-completion-owner");
+        User applicant = saveUser("inactive-completion-applicant");
+        Job job = saveJob(owner, "Inactive completion job", JobCategory.CLEANING, JobStatus.OPEN);
+        Application application = saveApplication(applicant, job, ApplicationStatus.REJECTED);
+
+        mockMvc.perform(put("/jobs/{jobId}/completion", job.getId())
+                .cookie(accessTokenCookie(owner))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(completionJson(application.getId())))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.message").value("Only active applications can complete a job"));
+    }
+
+    @Test
+    void completionRejectsNonOwner() throws Exception {
+        User owner = saveUser("forbidden-completion-owner");
+        User applicant = saveUser("forbidden-completion-applicant");
+        User otherUser = saveUser("forbidden-completion-other");
+        Job job = saveJob(owner, "Forbidden completion job", JobCategory.CLEANING, JobStatus.OPEN);
+        Application application = saveApplication(applicant, job, ApplicationStatus.ACTIVE);
+
+        mockMvc.perform(put("/jobs/{jobId}/completion", job.getId())
+                .cookie(accessTokenCookie(otherUser))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(completionJson(application.getId())))
+                .andExpect(status().isForbidden());
+    }
+
+    @Test
+    void secondDifferentCompletionReturnsConflict() throws Exception {
+        User owner = saveUser("conflict-completion-owner");
+        User firstApplicant = saveUser("conflict-completion-first");
+        User secondApplicant = saveUser("conflict-completion-second");
+        Job job = saveJob(owner, "Conflict completion job", JobCategory.CLEANING, JobStatus.OPEN);
+        Application firstApplication = saveApplication(firstApplicant, job, ApplicationStatus.ACTIVE);
+        Application secondApplication = saveApplication(secondApplicant, job, ApplicationStatus.ACTIVE);
+
+        mockMvc.perform(put("/jobs/{jobId}/completion", job.getId())
+                .cookie(accessTokenCookie(owner))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(completionJson(firstApplication.getId())))
+                .andExpect(status().isOk());
+
+        mockMvc.perform(put("/jobs/{jobId}/completion", job.getId())
+                .cookie(accessTokenCookie(owner))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(completionJson(secondApplication.getId())))
+                .andExpect(status().isConflict())
+                .andExpect(jsonPath("$.error").value("Resource Conflict"));
+    }
+
     private Cookie accessTokenCookie(User user) {
         return new Cookie(ACCESS_TOKEN_COOKIE_NAME, jwtService.generateToken(user));
     }
@@ -232,12 +493,19 @@ class JobControllerIntegrationTest {
                   "description": "Created job description",
                   "category": "DELIVERY",
                   "hourlyRate": 60.00,
-                  "currency": "EUR",
                   "locationName": "Oradea",
                   "latitude": 47.046500,
                   "longitude": 21.918900
                 }
                 """;
+    }
+
+    private String completionJson(UUID applicationId) {
+        return """
+                {
+                  "applicationId": "%s"
+                }
+                """.formatted(applicationId);
     }
 
     private User saveUser(String emailPrefix) {
@@ -249,6 +517,7 @@ class JobControllerIntegrationTest {
         user.setLastName("Owner");
         user.setPhoneNumber("0712345678");
         user.setDeleted(false);
+        user.setTermsAcceptedAt(LocalDateTime.now());
 
         return userRepository.saveAndFlush(user);
     }
@@ -270,5 +539,15 @@ class JobControllerIntegrationTest {
         job.setOwner(owner);
 
         return jobRepository.saveAndFlush(job);
+    }
+
+    private Application saveApplication(User applicant,
+                                        Job job,
+                                        ApplicationStatus status) {
+        Application application = new Application();
+        application.setApplicant(applicant);
+        application.setJob(job);
+        application.setStatus(status);
+        return applicationRepository.saveAndFlush(application);
     }
 }

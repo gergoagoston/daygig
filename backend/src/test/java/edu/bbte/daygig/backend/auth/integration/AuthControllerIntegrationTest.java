@@ -10,6 +10,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+import edu.bbte.daygig.backend.model.User;
+import edu.bbte.daygig.backend.repository.UserRepository;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -29,6 +32,9 @@ class AuthControllerIntegrationTest {
     @Autowired
     private MockMvc mockMvc;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @Test
     void registerCreatesUserWithoutAuthenticating() throws Exception {
         TestUser user = testUser("register-success", "Register", "Success");
@@ -37,6 +43,10 @@ class AuthControllerIntegrationTest {
                 .andExpect(status().isCreated())
                 .andExpect(header().doesNotExist(HttpHeaders.SET_COOKIE))
                 .andExpect(content().string(""));
+
+        User savedUser = userRepository.findByEmail(user.email());
+        assertThat(savedUser).isNotNull();
+        assertThat(savedUser.getTermsAcceptedAt()).isNotNull();
     }
 
     @Test
@@ -99,7 +109,7 @@ class AuthControllerIntegrationTest {
                 .getResponse()
                 .getCookie("accessToken");
 
-        mockMvc.perform(get("/auth/me")
+        mockMvc.perform(get("/users/me")
                 .cookie(accessTokenCookie))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.email").value(user.email()))
@@ -112,7 +122,7 @@ class AuthControllerIntegrationTest {
 
     @Test
     void meRejectsRequestWithoutTokenCookie() throws Exception {
-        mockMvc.perform(get("/auth/me"))
+        mockMvc.perform(get("/users/me"))
                 .andExpect(status().isUnauthorized())
                 .andExpect(jsonPath("$.error").value("Unauthorized: Missing or invalid token"));
     }
@@ -136,6 +146,51 @@ class AuthControllerIntegrationTest {
                 .andExpect(jsonPath("$.details.password").value("Password must be at least 8 characters long"))
                 .andExpect(jsonPath("$.details.firstName").value("First name is required"))
                 .andExpect(jsonPath("$.details.lastName").value("Last name is required"));
+    }
+
+    @Test
+    void registerRejectsMissingTermsAcceptance() throws Exception {
+        TestUser user = testUser("missing-terms", "Missing", "Terms");
+
+        mockMvc.perform(post("/auth/register")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("""
+                    {
+                      "email": "%s",
+                      "password": "%s",
+                      "firstName": "%s",
+                      "lastName": "%s",
+                      "phoneNumber": "%s"
+                    }
+                    """.formatted(user.email(), user.password(), user.firstName(), user.lastName(),
+                        user.phoneNumber())))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.error").value("Validation Failed"))
+                .andExpect(jsonPath("$.details.termsAccepted")
+                        .value("Terms and Conditions consent is required"));
+    }
+
+    @Test
+    void registerRejectsDeclinedTermsAcceptance() throws Exception {
+        TestUser user = testUser("declined-terms", "Declined", "Terms");
+
+        mockMvc.perform(post("/auth/register")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("""
+                    {
+                      "email": "%s",
+                      "password": "%s",
+                      "firstName": "%s",
+                      "lastName": "%s",
+                      "phoneNumber": "%s",
+                      "termsAccepted": false
+                    }
+                    """.formatted(user.email(), user.password(), user.firstName(), user.lastName(),
+                        user.phoneNumber())))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.error").value("Validation Failed"))
+                .andExpect(jsonPath("$.details.termsAccepted")
+                        .value("Terms and Conditions must be accepted"));
     }
 
     private TestUser testUser(String emailPrefix,
@@ -164,7 +219,8 @@ class AuthControllerIntegrationTest {
               "password": "%s",
               "firstName": "%s",
               "lastName": "%s",
-              "phoneNumber": "%s"
+              "phoneNumber": "%s",
+              "termsAccepted": true
             }
             """.formatted(user.email(), user.password(), user.firstName(), user.lastName(), user.phoneNumber());
     }

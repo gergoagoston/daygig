@@ -1,7 +1,9 @@
 package edu.bbte.daygig.backend.dto.user;
 
+import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
@@ -23,4 +25,8 @@ public class UserRegisterInDto {
     private String lastName;
 
     private String phoneNumber;
+
+    @NotNull(message = "Terms and Conditions consent is required")
+    @AssertTrue(message = "Terms and Conditions must be accepted")
+    private Boolean termsAccepted;
 }

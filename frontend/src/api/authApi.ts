@@ -7,13 +7,9 @@ export function loginUser(payload: LoginUserDto) {
 }
 
 export function registerUser(payload: RegisterUserDto) {
-  return httpClient.post<UserOutDto>('/auth/register', payload);
+  return httpClient.post<void>('/auth/register', payload);
 }
 
 export function logoutUser() {
   return httpClient.post<void>('/auth/logout');
-}
-
-export function getCurrentUser() {
-  return httpClient.get<UserOutDto>('/auth/me');
 }

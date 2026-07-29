@@ -14,9 +14,9 @@ export const jobCategories = [
 
 export type JobCategory = (typeof jobCategories)[number];
 
-export type JobStatus = 'OPEN' | 'ASSIGNED' | 'COMPLETED' | 'CANCELLED';
+export type JobStatus = 'OPEN' | 'COMPLETED' | 'CANCELLED';
 
-export type Currency = 'RON' | 'EUR';
+export type Currency = 'RON';
 
 export type Job = {
   id: string;
@@ -28,6 +28,8 @@ export type Job = {
   currency: Currency;
   locationName: string;
   createdAt: string;
+  completedApplicationId: string | null;
+  completedAt: string | null;
 };
 
 export type JobCreatePayload = {
@@ -35,7 +37,6 @@ export type JobCreatePayload = {
   description: string;
   category: JobCategory;
   hourlyRate: number;
-  currency: Currency;
   locationName: string;
   latitude: number;
   longitude: number;
@@ -53,4 +54,11 @@ export type JobsQueryParams = {
   page?: number;
   size?: number;
   sort?: string | string[];
+  q?: string;
+  category?: JobCategory;
+  minHourlyRate?: number;
+  maxHourlyRate?: number;
+  latitude?: number;
+  longitude?: number;
+  maxDistanceKm?: number;
 };

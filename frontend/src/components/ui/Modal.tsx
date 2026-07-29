@@ -1,4 +1,5 @@
 import { useEffect, type ReactNode } from 'react';
+import { createPortal } from 'react-dom';
 
 type ModalProps = {
   children: ReactNode;
@@ -28,8 +29,8 @@ function Modal({ children, isOpen, onClose, title, titleId }: ModalProps) {
     return null;
   }
 
-  return (
-    <div className="fixed inset-0 z-50 grid bg-heading/45 p-4 sm:place-items-center">
+  return createPortal(
+    <div className="fixed inset-0 grid bg-heading/45 p-4 sm:place-items-center">
       <div className="absolute inset-0" role="presentation" onClick={onClose} aria-hidden="true" />
       <section
         className="relative max-h-[calc(100svh-32px)] w-full max-w-3xl overflow-y-auto rounded-lg border border-border bg-surface p-4 shadow-panel sm:p-6"
@@ -45,7 +46,8 @@ function Modal({ children, isOpen, onClose, title, titleId }: ModalProps) {
 
         {children}
       </section>
-    </div>
+    </div>,
+    document.body
   );
 }
 

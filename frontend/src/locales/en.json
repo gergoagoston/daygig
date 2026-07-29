@@ -29,6 +29,7 @@
       "submit_button": "Create account",
       "submitting": "Creating account...",
       "login_prompt": "Already have an account?",
+      "terms_consent": "I have read and accept the <termsLink>Terms and Conditions</termsLink>, and I understand that DayGig only connects users.",
       "errors": {
         "first_name_required": "First name is required.",
         "last_name_required": "Last name is required.",
@@ -39,6 +40,7 @@
         "password_min_length": "Password must be at least 8 characters long.",
         "confirm_password_required": "Please confirm your password.",
         "passwords_do_not_match": "Passwords do not match.",
+        "terms_required": "You must accept the Terms and Conditions to register.",
         "generic": "Registration failed. Please try again."
       }
     }
@@ -50,7 +52,137 @@
     "login": "Login",
     "register": "Register",
     "logout": "Logout",
+    "profile": "Profile settings",
     "language": "Language"
+  },
+  "profile": {
+    "settings": {
+      "private_details": "Your email address and phone number are private and are not shown on your public profile."
+    },
+    "fields": {
+      "email": "Email",
+      "phone": "Phone number",
+      "not_provided": "Not provided"
+    },
+    "avatar": {
+      "upload": "Upload avatar",
+      "replace": "Replace avatar",
+      "uploading": "Uploading...",
+      "delete": "Remove avatar",
+      "deleting": "Removing...",
+      "delete_confirm": "Are you sure you want to remove your avatar?",
+      "help": "JPEG or PNG, up to 2 MB. Large images are resized automatically.",
+      "errors": {
+        "size": "The avatar image cannot exceed 2 MB.",
+        "generic": "Could not update your avatar. Please try again."
+      }
+    },
+    "bio": {
+      "label": "About",
+      "placeholder": "Tell other users a little about yourself...",
+      "help": "This text is visible to other signed-in users.",
+      "limit": "Maximum 1000 characters",
+      "save": "Save bio",
+      "saving": "Saving...",
+      "saved": "Bio saved.",
+      "empty": "This user has not added a bio yet.",
+      "errors": {
+        "too_long": "Bio cannot exceed 1000 characters.",
+        "generic": "Could not save your bio. Please try again."
+      }
+    },
+    "public": {
+      "loading": "Loading profile...",
+      "member_since": "DayGig member since {{date}}",
+      "errors": {
+        "load_failed": "Could not load this profile."
+      }
+    }
+  },
+  "ratings": {
+    "context": {
+      "WORKER": "As a worker",
+      "JOB_OWNER": "As a job owner"
+    },
+    "job": {
+      "action": "Leave a review",
+      "submitted": "Review submitted"
+    },
+    "form": {
+      "title": "Review {{name}}",
+      "stars": "Rating",
+      "star_value": "{{count}} out of 5 stars",
+      "comment": "Comment (optional)",
+      "comment_placeholder": "Share a short note about your experience...",
+      "characters": "{{count}}/500 characters",
+      "cancel": "Cancel",
+      "submit": "Submit review",
+      "submitting": "Submitting..."
+    },
+    "summary": {
+      "title": "Ratings",
+      "no_rating": "No rating yet",
+      "review_count": "{{count}} reviews",
+      "completed_jobs": "{{count}} completed jobs"
+    },
+    "reviews": {
+      "title": "Reviews",
+      "loading": "Loading reviews...",
+      "empty": "No reviews yet."
+    },
+    "review": {
+      "stars": "{{count}} out of 5 stars"
+    },
+    "errors": {
+      "eligibility_failed": "Could not check whether you can leave a review.",
+      "submit_failed": "Could not submit your review. Please try again.",
+      "load_failed": "Could not load these reviews."
+    }
+  },
+  "legal": {
+    "terms": {
+      "title": "Terms and Conditions",
+      "subtitle": "Please read these terms before creating a DayGig account. They explain DayGig's role and your responsibilities when connecting with other users.",
+      "back_to_register": "Back to registration",
+      "sections": {
+        "platform_role": {
+          "title": "DayGig's role",
+          "body": "DayGig is an online platform that helps users publish occasional work opportunities, requests for help, and service offers, and allows other users to contact or apply to them."
+        },
+        "not_a_party": {
+          "title": "DayGig is not a party to user agreements",
+          "body": "DayGig is not an employer, staffing agency, payment provider, mediator, or contracting party in agreements made between users. DayGig only provides tools that help users connect."
+        },
+        "user_responsibility": {
+          "title": "Your decisions are your responsibility",
+          "body": "Users decide for themselves who they contact, which work they accept, which offers they make, where and when they meet, and which conditions they agree to."
+        },
+        "offline_incidents": {
+          "title": "Offline interactions and incidents",
+          "body": "DayGig is not responsible for personal safety issues, unsafe behavior, accidents, injuries, damages, losses, harassment, or other incidents that happen outside the application or during offline interactions between users."
+        },
+        "agreements_and_payments": {
+          "title": "Agreements and payments",
+          "body": "Users are responsible for clearly agreeing on the work details, time, location, compensation, payment method, and any other important conditions. DayGig is not responsible for payment disputes, unpaid work, cancelled arrangements, quality disputes, or agreements made between users."
+        },
+        "verification": {
+          "title": "User information",
+          "body": "DayGig does not fully verify every user's identity, reliability, qualifications, permits, or the accuracy of information they provide. Users should use their own judgment before meeting or working with someone."
+        },
+        "conduct": {
+          "title": "Expected conduct",
+          "body": "Users must use DayGig legally, honestly, and with respect for the safety, rights, and dignity of others. Misleading, abusive, unlawful, dangerous, or harassing content and behavior are not allowed."
+        },
+        "moderation": {
+          "title": "Moderation",
+          "body": "DayGig may remove content, job posts, applications, or accounts that violate application rules, harm other users, or appear to violate applicable law."
+        },
+        "acceptance": {
+          "title": "Acceptance during registration",
+          "body": "By registering, you confirm that you have read and accepted these Terms and Conditions and understand that DayGig operates as a connection platform."
+        }
+      }
+    }
   },
   "posted_jobs": {
     "title": "Posted Jobs",
@@ -61,6 +193,29 @@
     },
     "errors": {
       "load_failed": "Could not load your posted jobs. Please try again."
+    },
+    "card": {
+      "location": "Location",
+      "hourly_rate": "Hourly rate"
+    },
+    "applications": {
+      "title": "Applications",
+      "count": "{{count}} submitted",
+      "loading": "Loading applications...",
+      "empty": "No applications yet.",
+      "errors": {
+        "load_failed": "Could not load applications.",
+        "update_failed": "Could not update the application. Please try again.",
+        "complete_failed": "Could not complete the job. Please try again."
+      },
+      "actions": {
+        "REJECTED": "Reject",
+        "complete": "Completed",
+        "complete_confirm": "Are you sure this applicant completed the job? This closes the job and allows rating them later.",
+        "completing": "Completing...",
+        "updating": "Updating..."
+      },
+      "completed_worker": "Completed this job"
     }
   },
   "applications": {
@@ -79,26 +234,96 @@
       "job_status": "Job status",
       "applied": "Applied",
       "view_job": "View job",
-      "chat": "Chat",
-      "chat_locked": "Chat locked"
+      "withdraw": "Withdraw application",
+      "withdrawing": "Withdrawing...",
+      "withdraw_confirm": "Are you sure you want to withdraw your application?",
+      "withdraw_failed": "Could not withdraw the application.",
+      "job_closed": "Job closed",
+      "completed_worker": "You completed this job"
     }
   },
   "application": {
     "status": {
-      "PENDING": "Pending",
-      "ACCEPTED": "Accepted",
+      "ACTIVE": "Applied",
       "REJECTED": "Rejected",
-      "CANCELLED": "Cancelled"
+      "WITHDRAWN": "Withdrawn"
     }
   },
   "jobs": {
     "loading": "Loading jobs...",
     "empty": {
       "title": "No open jobs yet",
-      "description": "Check back later for new DayGig opportunities."
+      "description": "Check back later for new DayGig opportunities.",
+      "filtered_title": "No matching jobs",
+      "filtered_description": "Try different search criteria."
     },
     "errors": {
       "load_failed": "Could not load jobs. Please try again."
+    },
+    "pagination": {
+      "label": "Job results pagination",
+      "page_size": "Jobs per page",
+      "previous": "Previous",
+      "next": "Next",
+      "page_status": "Page {{current}} of {{total}}"
+    },
+    "search": {
+      "title": "Find jobs",
+      "results_count": "Results: {{count}}",
+      "fields": {
+        "query": "Search",
+        "query_placeholder": "Title, description, or location",
+        "category": "Category",
+        "all_categories": "All categories",
+        "sort": "Sort",
+        "min_hourly_rate": "Min. hourly rate (RON)",
+        "max_hourly_rate": "Max. hourly rate (RON)"
+      },
+      "sort": {
+        "createdAt_desc": "Newest first",
+        "createdAt_asc": "Oldest first",
+        "hourlyRate_desc": "Highest hourly rate",
+        "hourlyRate_asc": "Lowest hourly rate"
+      },
+      "actions": {
+        "search": "Search",
+        "searching": "Searching...",
+        "reset": "Clear filters"
+      },
+      "location": {
+        "label": "Search location",
+        "status": {
+          "none": "No location selected",
+          "browser": "Current location",
+          "map": "Selected on map"
+        },
+        "use_current": "Use my location",
+        "locating": "Locating...",
+        "select_map": "Select on map",
+        "clear": "Clear location",
+        "distance": "Search radius",
+        "distance_value": "{{distance}} km",
+        "modal_title": "Choose location",
+        "map_label": "Search origin",
+        "cancel": "Cancel",
+        "confirm": "Use location",
+        "errors": {
+          "unavailable": "Geolocation is not available in this browser.",
+          "permission_denied": "Location access was denied. You can select a location on the map.",
+          "position_unavailable": "Your location is currently unavailable. Try the map instead.",
+          "timeout": "Location detection timed out. Please try again or use the map.",
+          "generic": "Could not determine your location."
+        }
+      },
+      "errors": {
+        "query_too_long": "Search must be 100 characters or fewer.",
+        "category_invalid": "Select a valid category.",
+        "hourly_rate_invalid": "Enter a valid non-negative hourly rate.",
+        "hourly_rate_range": "Maximum hourly rate cannot be lower than minimum.",
+        "location_invalid": "Select a valid search location.",
+        "distance_invalid": "Search radius must be between 5 and 200 km.",
+        "location_incomplete": "A location and search radius must be provided together."
+      }
     },
     "card": {
       "hourly_rate": "{{rate}} {{currency}}/hour"
@@ -115,7 +340,6 @@
         "description": "Description",
         "category": "Category",
         "hourly_rate": "Hourly rate",
-        "currency": "Currency",
         "location_name": "Location name",
         "select_placeholder": "Select"
       },
@@ -131,7 +355,6 @@
         "category_required": "Category is required.",
         "hourly_rate_required": "Hourly rate is required.",
         "hourly_rate_positive": "Hourly rate must be greater than 0.",
-        "currency_required": "Currency is required.",
         "location_name_required": "Location name is required.",
         "location_required": "Select a location on the map.",
         "location_invalid": "Selected location is invalid.",
@@ -140,7 +363,6 @@
           "description": "Description is required.",
           "category": "Category is required.",
           "hourlyRate": "Hourly rate must be greater than 0.",
-          "currency": "Currency is required.",
           "locationName": "Location name is required.",
           "latitude": "Select a valid location on the map.",
           "longitude": "Select a valid location on the map."
@@ -153,6 +375,7 @@
       "hourly_rate": "Hourly rate",
       "location": "Location",
       "owner": "Posted by",
+      "owner_you": "You",
       "published_on": "Published on",
       "map": {
         "approximate_location": "Approximate location",
@@ -165,7 +388,8 @@
         "already_applied": "You have applied to this job.",
         "duplicate": "You have already applied for this job.",
         "generic_error": "Something went wrong. Please try again later.",
-        "own_job": "You cannot apply to your own job."
+        "own_job": "You cannot apply to your own job.",
+        "job_closed": "This job is no longer accepting applications."
       },
       "errors": {
         "load_failed": "Could not load job details. Please try again."
@@ -173,7 +397,6 @@
     },
     "statuses": {
       "OPEN": "Open",
-      "ASSIGNED": "Assigned",
       "COMPLETED": "Completed",
       "CANCELLED": "Cancelled"
     },

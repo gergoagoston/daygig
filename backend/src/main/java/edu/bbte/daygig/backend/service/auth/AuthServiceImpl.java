@@ -1,5 +1,6 @@
 package edu.bbte.daygig.backend.service.auth;
 
+import java.time.LocalDateTime;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,6 +40,7 @@ public class AuthServiceImpl implements AuthService {
 
         user.setRole(Role.ROLE_USER);
         user.setDeleted(false);
+        user.setTermsAcceptedAt(LocalDateTime.now());
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }

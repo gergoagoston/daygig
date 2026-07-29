@@ -29,6 +29,7 @@
       "submit_button": "Creeaza contul",
       "submitting": "Se creeaza contul...",
       "login_prompt": "Ai deja un cont?",
+      "terms_consent": "Am citit si accept <termsLink>Termenii si conditiile</termsLink> si inteleg ca DayGig doar conecteaza utilizatorii.",
       "errors": {
         "first_name_required": "Prenumele este obligatoriu.",
         "last_name_required": "Numele este obligatoriu.",
@@ -39,6 +40,7 @@
         "password_min_length": "Parola trebuie sa aiba cel putin 8 caractere.",
         "confirm_password_required": "Confirma parola.",
         "passwords_do_not_match": "Parolele nu se potrivesc.",
+        "terms_required": "Trebuie sa accepti Termenii si conditiile pentru a te inregistra.",
         "generic": "Inregistrarea a esuat. Incearca din nou."
       }
     }
@@ -50,7 +52,137 @@
     "login": "Autentificare",
     "register": "Inregistrare",
     "logout": "Deconectare",
+    "profile": "Setari profil",
     "language": "Limba"
+  },
+  "profile": {
+    "settings": {
+      "private_details": "Adresa de email si numarul de telefon sunt private si nu apar pe profilul public."
+    },
+    "fields": {
+      "email": "Email",
+      "phone": "Numar de telefon",
+      "not_provided": "Nespecificat"
+    },
+    "avatar": {
+      "upload": "Incarca avatar",
+      "replace": "Schimba avatarul",
+      "uploading": "Se incarca...",
+      "delete": "Sterge avatarul",
+      "deleting": "Se sterge...",
+      "delete_confirm": "Sigur vrei sa stergi avatarul?",
+      "help": "JPEG sau PNG, maximum 2 MB. Imaginile mari sunt redimensionate automat.",
+      "errors": {
+        "size": "Imaginea avatarului nu poate depasi 2 MB.",
+        "generic": "Avatarul nu a putut fi actualizat. Incearca din nou."
+      }
+    },
+    "bio": {
+      "label": "Despre mine",
+      "placeholder": "Spune-le celorlalti utilizatori cate ceva despre tine...",
+      "help": "Acest text este vizibil pentru ceilalti utilizatori autentificati.",
+      "limit": "Maximum 1000 de caractere",
+      "save": "Salveaza descrierea",
+      "saving": "Se salveaza...",
+      "saved": "Descriere salvata.",
+      "empty": "Acest utilizator nu a adaugat inca o descriere.",
+      "errors": {
+        "too_long": "Descrierea nu poate depasi 1000 de caractere.",
+        "generic": "Descrierea nu a putut fi salvata. Incearca din nou."
+      }
+    },
+    "public": {
+      "loading": "Se incarca profilul...",
+      "member_since": "Membru DayGig din {{date}}",
+      "errors": {
+        "load_failed": "Acest profil nu a putut fi incarcat."
+      }
+    }
+  },
+  "ratings": {
+    "context": {
+      "WORKER": "Ca lucrator",
+      "JOB_OWNER": "Ca proprietar al jobului"
+    },
+    "job": {
+      "action": "Lasa o recenzie",
+      "submitted": "Recenzie trimisa"
+    },
+    "form": {
+      "title": "Evalueaza {{name}}",
+      "stars": "Evaluare",
+      "star_value": "{{count}} din 5 stele",
+      "comment": "Comentariu (optional)",
+      "comment_placeholder": "Scrie pe scurt despre experienta ta...",
+      "characters": "{{count}}/500 caractere",
+      "cancel": "Anuleaza",
+      "submit": "Trimite recenzia",
+      "submitting": "Se trimite..."
+    },
+    "summary": {
+      "title": "Evaluari",
+      "no_rating": "Nicio evaluare inca",
+      "review_count": "{{count}} recenzii",
+      "completed_jobs": "{{count}} joburi finalizate"
+    },
+    "reviews": {
+      "title": "Recenzii",
+      "loading": "Se incarca recenziile...",
+      "empty": "Nu exista recenzii inca."
+    },
+    "review": {
+      "stars": "{{count}} din 5 stele"
+    },
+    "errors": {
+      "eligibility_failed": "Nu am putut verifica daca poti lasa o recenzie.",
+      "submit_failed": "Recenzia nu a putut fi trimisa. Incearca din nou.",
+      "load_failed": "Aceste recenzii nu au putut fi incarcate."
+    }
+  },
+  "legal": {
+    "terms": {
+      "title": "Termeni si conditii",
+      "subtitle": "Te rugam sa citesti acesti termeni inainte de a crea un cont DayGig. Ei explica rolul DayGig si responsabilitatile tale cand interactionezi cu alti utilizatori.",
+      "back_to_register": "Inapoi la inregistrare",
+      "sections": {
+        "platform_role": {
+          "title": "Rolul DayGig",
+          "body": "DayGig este o platforma online care ajuta utilizatorii sa publice oportunitati de lucru ocazional, cereri de ajutor si oferte de servicii, si permite altor utilizatori sa ii contacteze sau sa aplice."
+        },
+        "not_a_party": {
+          "title": "DayGig nu este parte in acordurile dintre utilizatori",
+          "body": "DayGig nu este angajator, agentie de recrutare, furnizor de plati, mediator sau parte contractanta in acordurile facute intre utilizatori. DayGig ofera doar instrumente care ajuta utilizatorii sa se conecteze."
+        },
+        "user_responsibility": {
+          "title": "Deciziile tale sunt responsabilitatea ta",
+          "body": "Utilizatorii decid pe propria raspundere pe cine contacteaza, ce lucru accepta, ce oferta fac, unde si cand se intalnesc si ce conditii accepta."
+        },
+        "offline_incidents": {
+          "title": "Interactiuni si incidente offline",
+          "body": "DayGig nu este responsabil pentru probleme de siguranta personala, comportament nesigur, accidente, raniri, daune, pierderi, hartuire sau alte incidente care se intampla in afara aplicatiei sau in timpul interactiunilor offline dintre utilizatori."
+        },
+        "agreements_and_payments": {
+          "title": "Acorduri si plati",
+          "body": "Utilizatorii sunt responsabili sa stabileasca clar detaliile lucrului, ora, locatia, compensatia, metoda de plata si orice alte conditii importante. DayGig nu este responsabil pentru dispute de plata, munca neplatita, intelegeri anulate, dispute privind calitatea sau acorduri facute intre utilizatori."
+        },
+        "verification": {
+          "title": "Informatii despre utilizatori",
+          "body": "DayGig nu verifica integral identitatea, increderea, calificarile, permisele sau exactitatea informatiilor furnizate de fiecare utilizator. Utilizatorii trebuie sa isi foloseasca propria judecata inainte de a se intalni sau de a lucra cu cineva."
+        },
+        "conduct": {
+          "title": "Comportament asteptat",
+          "body": "Utilizatorii trebuie sa foloseasca DayGig legal, onest si cu respect pentru siguranta, drepturile si demnitatea celorlalti. Continutul si comportamentul inselator, abuziv, ilegal, periculos sau de hartuire nu sunt permise."
+        },
+        "moderation": {
+          "title": "Moderare",
+          "body": "DayGig poate elimina continut, anunturi de job, aplicatii sau conturi care incalca regulile aplicatiei, afecteaza alti utilizatori sau par sa incalce legea aplicabila."
+        },
+        "acceptance": {
+          "title": "Acceptare la inregistrare",
+          "body": "Prin inregistrare, confirmi ca ai citit si acceptat acesti Termeni si conditii si intelegi ca DayGig functioneaza ca o platforma de conectare."
+        }
+      }
+    }
   },
   "posted_jobs": {
     "title": "Joburile publicate",
@@ -61,6 +193,29 @@
     },
     "errors": {
       "load_failed": "Nu am putut incarca joburile tale publicate. Incearca din nou."
+    },
+    "card": {
+      "location": "Locatie",
+      "hourly_rate": "Tarif orar"
+    },
+    "applications": {
+      "title": "Aplicatii",
+      "count": "{{count}} trimise",
+      "loading": "Se incarca aplicatiile...",
+      "empty": "Nu exista aplicatii inca.",
+      "errors": {
+        "load_failed": "Nu am putut incarca aplicatiile.",
+        "update_failed": "Nu am putut actualiza aplicatia. Incearca din nou.",
+        "complete_failed": "Nu am putut finaliza jobul. Incearca din nou."
+      },
+      "actions": {
+        "REJECTED": "Respinge",
+        "complete": "Finalizat",
+        "complete_confirm": "Sigur acest candidat a finalizat jobul? Jobul va fi inchis si candidatul va putea fi evaluat ulterior.",
+        "completing": "Se finalizeaza...",
+        "updating": "Se actualizeaza..."
+      },
+      "completed_worker": "A finalizat acest job"
     }
   },
   "applications": {
@@ -79,26 +234,96 @@
       "job_status": "Status job",
       "applied": "Aplicat la",
       "view_job": "Vezi jobul",
-      "chat": "Chat",
-      "chat_locked": "Chat blocat"
+      "withdraw": "Retrage aplicatia",
+      "withdrawing": "Se retrage...",
+      "withdraw_confirm": "Sigur vrei sa retragi aplicatia?",
+      "withdraw_failed": "Nu am putut retrage aplicatia.",
+      "job_closed": "Job inchis",
+      "completed_worker": "Ai finalizat acest job"
     }
   },
   "application": {
     "status": {
-      "PENDING": "In asteptare",
-      "ACCEPTED": "Acceptata",
+      "ACTIVE": "Aplicat",
       "REJECTED": "Respinsa",
-      "CANCELLED": "Anulata"
+      "WITHDRAWN": "Retrasa"
     }
   },
   "jobs": {
     "loading": "Se incarca joburile...",
     "empty": {
       "title": "Nu exista joburi deschise",
-      "description": "Revino mai tarziu pentru oportunitati DayGig noi."
+      "description": "Revino mai tarziu pentru oportunitati DayGig noi.",
+      "filtered_title": "Nu exista joburi potrivite",
+      "filtered_description": "Incearca alte criterii de cautare."
     },
     "errors": {
       "load_failed": "Nu am putut incarca joburile. Incearca din nou."
+    },
+    "pagination": {
+      "label": "Paginarea rezultatelor",
+      "page_size": "Joburi pe pagina",
+      "previous": "Inapoi",
+      "next": "Inainte",
+      "page_status": "Pagina {{current}} din {{total}}"
+    },
+    "search": {
+      "title": "Cauta joburi",
+      "results_count": "Rezultate: {{count}}",
+      "fields": {
+        "query": "Cautare",
+        "query_placeholder": "Titlu, descriere sau locatie",
+        "category": "Categorie",
+        "all_categories": "Toate categoriile",
+        "sort": "Sortare",
+        "min_hourly_rate": "Tarif min. (RON)",
+        "max_hourly_rate": "Tarif max. (RON)"
+      },
+      "sort": {
+        "createdAt_desc": "Cele mai noi",
+        "createdAt_asc": "Cele mai vechi",
+        "hourlyRate_desc": "Tariful cel mai mare",
+        "hourlyRate_asc": "Tariful cel mai mic"
+      },
+      "actions": {
+        "search": "Cauta",
+        "searching": "Se cauta...",
+        "reset": "Sterge filtrele"
+      },
+      "location": {
+        "label": "Locatia cautarii",
+        "status": {
+          "none": "Nicio locatie selectata",
+          "browser": "Locatia curenta",
+          "map": "Selectata pe harta"
+        },
+        "use_current": "Foloseste locatia mea",
+        "locating": "Se determina locatia...",
+        "select_map": "Selecteaza pe harta",
+        "clear": "Sterge locatia",
+        "distance": "Raza cautarii",
+        "distance_value": "{{distance}} km",
+        "modal_title": "Alege locatia",
+        "map_label": "Punctul de pornire al cautarii",
+        "cancel": "Anuleaza",
+        "confirm": "Foloseste locatia",
+        "errors": {
+          "unavailable": "Geolocatia nu este disponibila in acest browser.",
+          "permission_denied": "Accesul la locatie a fost refuzat. Poti selecta o locatie pe harta.",
+          "position_unavailable": "Locatia ta nu este disponibila momentan. Incearca selectarea pe harta.",
+          "timeout": "Determinarea locatiei a expirat. Incearca din nou sau foloseste harta.",
+          "generic": "Locatia ta nu a putut fi determinata."
+        }
+      },
+      "errors": {
+        "query_too_long": "Cautarea poate avea cel mult 100 de caractere.",
+        "category_invalid": "Selecteaza o categorie valida.",
+        "hourly_rate_invalid": "Introdu un tarif orar valid si nenegativ.",
+        "hourly_rate_range": "Tariful maxim nu poate fi mai mic decat cel minim.",
+        "location_invalid": "Selecteaza o locatie valida pentru cautare.",
+        "distance_invalid": "Raza cautarii trebuie sa fie intre 5 si 200 km.",
+        "location_incomplete": "Locatia si raza cautarii trebuie furnizate impreuna."
+      }
     },
     "card": {
       "hourly_rate": "{{rate}} {{currency}}/ora"
@@ -115,7 +340,6 @@
         "description": "Descriere",
         "category": "Categorie",
         "hourly_rate": "Tarif orar",
-        "currency": "Moneda",
         "location_name": "Numele locatiei",
         "select_placeholder": "Selecteaza"
       },
@@ -131,7 +355,6 @@
         "category_required": "Categoria este obligatorie.",
         "hourly_rate_required": "Tariful orar este obligatoriu.",
         "hourly_rate_positive": "Tariful orar trebuie sa fie mai mare decat 0.",
-        "currency_required": "Moneda este obligatorie.",
         "location_name_required": "Numele locatiei este obligatoriu.",
         "location_required": "Selecteaza o locatie pe harta.",
         "location_invalid": "Locatia selectata este invalida.",
@@ -140,7 +363,6 @@
           "description": "Descrierea este obligatorie.",
           "category": "Categoria este obligatorie.",
           "hourlyRate": "Tariful orar trebuie sa fie mai mare decat 0.",
-          "currency": "Moneda este obligatorie.",
           "locationName": "Numele locatiei este obligatoriu.",
           "latitude": "Selecteaza o locatie valida pe harta.",
           "longitude": "Selecteaza o locatie valida pe harta."
@@ -153,6 +375,7 @@
       "hourly_rate": "Tarif orar",
       "location": "Locatie",
       "owner": "Publicat de",
+      "owner_you": "Tu",
       "published_on": "Publicat la",
       "map": {
         "approximate_location": "Locatie aproximativa",
@@ -165,7 +388,8 @@
         "already_applied": "Ai aplicat pentru acest job.",
         "duplicate": "Ai aplicat deja pentru acest job.",
         "generic_error": "A aparut o eroare. Incearca din nou mai tarziu.",
-        "own_job": "Nu poti aplica la propriul job."
+        "own_job": "Nu poti aplica la propriul job.",
+        "job_closed": "Acest job nu mai accepta aplicatii."
       },
       "errors": {
         "load_failed": "Nu am putut incarca detaliile jobului. Incearca din nou."
@@ -173,7 +397,6 @@
     },
     "statuses": {
       "OPEN": "Deschis",
-      "ASSIGNED": "Atribuit",
       "COMPLETED": "Finalizat",
       "CANCELLED": "Inchis"
     },

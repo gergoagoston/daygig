@@ -9,17 +9,21 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import lombok.RequiredArgsConstructor;
 import edu.bbte.daygig.backend.dto.common.PageOutDto;
+import edu.bbte.daygig.backend.dto.job.JobCompletionInDto;
 import edu.bbte.daygig.backend.dto.job.JobCreateInDto;
 import edu.bbte.daygig.backend.dto.job.JobDetailedOutDto;
 import edu.bbte.daygig.backend.dto.job.JobOutDto;
+import edu.bbte.daygig.backend.dto.job.JobSearchInDto;
 import edu.bbte.daygig.backend.mappers.JobMapper;
 import edu.bbte.daygig.backend.security.JwtPrincipal;
 import edu.bbte.daygig.backend.service.job.JobService;
@@ -35,11 +39,13 @@ public class JobController {
     private final JobMapper jobMapper;
 
     @GetMapping
-    public PageOutDto<JobOutDto> getOpenJobs(@PageableDefault(size = DEFAULT_PAGE_SIZE,
-                                                              sort = "createdAt",
-                                                              direction = Sort.Direction.DESC) Pageable pageable) {
+    public PageOutDto<JobOutDto> getOpenJobs(
+            @Valid @ModelAttribute JobSearchInDto search,
+            @PageableDefault(size = DEFAULT_PAGE_SIZE,
+                             sort = "createdAt",
+                             direction = Sort.Direction.DESC) Pageable pageable) {
         return PageOutDto.from(jobService
-                .getOpenJobs(pageable)
+                .getOpenJobs(search, pageable)
                 .map(jobMapper::toListDto));
     }
 
@@ -62,6 +68,14 @@ public class JobController {
     @GetMapping("/{id}")
     public JobDetailedOutDto getById(@PathVariable UUID id) {
         return jobMapper.toDetailsDto(jobService.getById(id));
+    }
+
+    @PutMapping("/{id}/completion")
+    public JobDetailedOutDto complete(@PathVariable UUID id,
+                                      @Valid @RequestBody JobCompletionInDto completionInDto,
+                                      @AuthenticationPrincipal JwtPrincipal principal) {
+        return jobMapper.toDetailsDto(jobService.complete(id, completionInDto.applicationId(),
+                currentUserId(principal)));
     }
 
     private UUID currentUserId(JwtPrincipal principal) {
