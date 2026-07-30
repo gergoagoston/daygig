@@ -53,7 +53,8 @@
     "register": "Register",
     "logout": "Logout",
     "profile": "Profile settings",
-    "language": "Language"
+    "language": "Language",
+    "menu": "Menu"
   },
   "profile": {
     "settings": {
@@ -288,7 +289,9 @@
       "actions": {
         "search": "Search",
         "searching": "Searching...",
-        "reset": "Clear filters"
+        "reset": "Clear filters",
+        "filters": "Filters",
+        "filters_active": "Filters ({{count}})"
       },
       "location": {
         "label": "Search location",

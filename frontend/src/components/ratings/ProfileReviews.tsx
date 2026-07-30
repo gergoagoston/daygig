@@ -17,7 +17,7 @@ function ReviewItem({ language, rating }: ReviewItemProps) {
   const reviewerName = `${rating.reviewer.firstName} ${rating.reviewer.lastName}`.trim();
 
   return (
-    <article className="rounded-lg border border-border bg-surface p-4 shadow-panel">
+    <article className="flex h-full flex-col rounded-lg border border-border bg-surface p-4 shadow-panel">
       <div className="flex items-start gap-3">
         <UserAvatar
           avatarUrl={rating.reviewer.avatarUrl}
@@ -45,7 +45,7 @@ function ReviewItem({ language, rating }: ReviewItemProps) {
         <p className="mt-3 whitespace-pre-line leading-relaxed text-heading">{rating.comment}</p>
       ) : null}
 
-      <div className="mt-4 flex flex-wrap items-center justify-between gap-2 text-sm text-body">
+      <div className="mt-auto flex flex-wrap items-center justify-between gap-2 pt-4 text-sm text-body">
         <Link className="wrap-break-word no-underline!" to={`/jobs/${rating.jobId}`}>
           {rating.jobTitle}
         </Link>
@@ -67,7 +67,7 @@ function ReviewColumn({ context, isError, isLoading, language, ratings }: Review
   const { t } = useTranslation();
 
   return (
-    <section aria-labelledby={`reviews-${context.toLowerCase()}`}>
+    <section className="flex h-full flex-col" aria-labelledby={`reviews-${context.toLowerCase()}`}>
       <h3 id={`reviews-${context.toLowerCase()}`} className="text-lg font-bold text-heading">
         {t(`ratings.context.${context}`)}
       </h3>
@@ -83,7 +83,7 @@ function ReviewColumn({ context, isError, isLoading, language, ratings }: Review
       ) : null}
 
       {ratings && ratings.length > 0 ? (
-        <div className="mt-4 grid gap-4">
+        <div className="mt-4 grid flex-1 auto-rows-fr gap-4">
           {ratings.map((rating) => (
             <ReviewItem key={rating.id} language={language} rating={rating} />
           ))}
@@ -112,7 +112,7 @@ function ProfileReviews({ userId }: ProfileReviewsProps) {
       <h2 id="profile-reviews-title" className="text-xl font-bold text-heading">
         {t('ratings.reviews.title')}
       </h2>
-      <div className="mt-5 grid items-start gap-8 md:grid-cols-2">
+      <div className="mt-5 grid gap-8 md:grid-cols-2">
         <ReviewColumn
           context="WORKER"
           isError={workerRatingsQuery.isError}

@@ -53,7 +53,8 @@
     "register": "Inregistrare",
     "logout": "Deconectare",
     "profile": "Setari profil",
-    "language": "Limba"
+    "language": "Limba",
+    "menu": "Meniu"
   },
   "profile": {
     "settings": {
@@ -288,7 +289,9 @@
       "actions": {
         "search": "Cauta",
         "searching": "Se cauta...",
-        "reset": "Sterge filtrele"
+        "reset": "Sterge filtrele",
+        "filters": "Filtre",
+        "filters_active": "Filtre ({{count}})"
       },
       "location": {
         "label": "Locatia cautarii",

@@ -53,7 +53,8 @@
     "register": "Regisztráció",
     "logout": "Kijelentkezés",
     "profile": "Profilbeállítások",
-    "language": "Nyelv"
+    "language": "Nyelv",
+    "menu": "Menü"
   },
   "profile": {
     "settings": {
@@ -210,7 +211,7 @@
       },
       "actions": {
         "REJECTED": "Elutasítás",
-        "complete": "Befejezve",
+        "complete": "Munka elvégezve",
         "complete_confirm": "Biztosan ő végezte el a munkát? Ez lezárja a munkát, és később őt lehet értékelni.",
         "completing": "Lezárás...",
         "updating": "Frissítés..."
@@ -288,7 +289,9 @@
       "actions": {
         "search": "Keresés",
         "searching": "Keresés...",
-        "reset": "Szűrők törlése"
+        "reset": "Szűrők törlése",
+        "filters": "Szűrők",
+        "filters_active": "Szűrők ({{count}})"
       },
       "location": {
         "label": "Keresési hely",
