@@ -12,5 +12,20 @@ services:
     volumes:
       - daygig-data:/var/lib/postgresql/data
 
+  daygig-rabbitmq:
+    image: rabbitmq:4-management
+    container_name: daygig-rabbitmq
+    restart: unless-stopped
+    environment:
+      RABBITMQ_DEFAULT_USER: daygig
+      RABBITMQ_DEFAULT_PASS: daygig
+      RABBITMQ_DEFAULT_VHOST: /daygig
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - daygig-rabbitmq-data:/var/lib/rabbitmq
+
 volumes:
   daygig-data:
+  daygig-rabbitmq-data:
