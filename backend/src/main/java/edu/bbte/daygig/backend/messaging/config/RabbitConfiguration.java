@@ -5,6 +5,8 @@ import org.springframework.amqp.core.Declarables;
 import org.springframework.amqp.core.DirectExchange;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.QueueBuilder;
+import org.springframework.amqp.support.converter.JacksonJsonMessageConverter;
+import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,6 +19,11 @@ import org.springframework.context.annotation.Configuration;
         matchIfMissing = true
 )
 public class RabbitConfiguration {
+
+    @Bean
+    public MessageConverter rabbitMessageConverter() {
+        return new JacksonJsonMessageConverter();
+    }
 
     @Bean
     public Declarables rabbitDeclarables() {
