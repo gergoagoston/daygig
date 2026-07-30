@@ -19,6 +19,9 @@ server:
 app:
   messaging:
     enabled: ${MESSAGING_ENABLED:true}
+  notifications:
+    retention-days: ${NOTIFICATION_RETENTION_DAYS:30}
+    cleanup-cron: ${NOTIFICATION_CLEANUP_CRON:0 0 3 * * *}
   jwt:
     secret: ${JWT_SECRET:ez-egy-nagyon-hosszu-es-biztonsagos-titkos-kulcs-ami-tobb-mint-32-karakter}
     expirationMinutes: ${JWT_EXPIRATION_MINUTES:720}
