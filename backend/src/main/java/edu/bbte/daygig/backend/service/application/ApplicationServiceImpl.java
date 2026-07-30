@@ -2,6 +2,7 @@ package edu.bbte.daygig.backend.service.application;
 
 import java.util.List;
 import java.util.UUID;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +10,9 @@ import edu.bbte.daygig.backend.exception.DuplicateResourceException;
 import edu.bbte.daygig.backend.exception.ForbiddenException;
 import edu.bbte.daygig.backend.exception.ResourceNotFoundException;
 import edu.bbte.daygig.backend.exception.ServiceException;
+import edu.bbte.daygig.backend.messaging.config.RabbitNames;
+import edu.bbte.daygig.backend.messaging.event.DomainEventEnvelope;
+import edu.bbte.daygig.backend.messaging.event.JobActivityEventPayload;
 import edu.bbte.daygig.backend.model.Application;
 import edu.bbte.daygig.backend.model.enums.ApplicationStatus;
 import edu.bbte.daygig.backend.model.enums.JobStatus;
@@ -25,6 +29,7 @@ public class ApplicationServiceImpl implements ApplicationService {
     private final ApplicationRepository applicationRepository;
     private final JobService jobService;
     private final UserService userService;
+    private final ApplicationEventPublisher eventPublisher;
 
     @Override
     @Transactional
@@ -40,7 +45,13 @@ public class ApplicationServiceImpl implements ApplicationService {
         application.setJob(job);
         application.setStatus(ApplicationStatus.ACTIVE);
 
-        return applicationRepository.saveAndFlush(application);
+        Application savedApplication = applicationRepository.saveAndFlush(application);
+        publishEvent(
+                RabbitNames.APPLICATION_CREATED,
+                job.getOwner().getId(),
+                savedApplication
+        );
+        return savedApplication;
     }
 
     @Override
@@ -72,7 +83,9 @@ public class ApplicationServiceImpl implements ApplicationService {
         ensureJobIsOpen(application.getJob());
         applyStatusTransition(application, status, actorId);
 
-        return applicationRepository.saveAndFlush(application);
+        Application savedApplication = applicationRepository.saveAndFlush(application);
+        publishStatusEvent(savedApplication);
+        return savedApplication;
     }
 
     private void validateNewApplication(Job job,
@@ -152,6 +165,36 @@ public class ApplicationServiceImpl implements ApplicationService {
         if (application.getStatus() != ApplicationStatus.ACTIVE) {
             throw new ServiceException("Only active applications can be updated");
         }
+    }
+
+    private void publishStatusEvent(Application application) {
+        if (application.getStatus() == ApplicationStatus.REJECTED) {
+            publishEvent(
+                    RabbitNames.APPLICATION_REJECTED,
+                    application.getApplicant().getId(),
+                    application
+            );
+            return;
+        }
+
+        publishEvent(
+                RabbitNames.APPLICATION_WITHDRAWN,
+                application.getJob().getOwner().getId(),
+                application
+        );
+    }
+
+    private void publishEvent(String eventType,
+                              UUID recipientUserId,
+                              Application application) {
+        eventPublisher.publishEvent(DomainEventEnvelope.create(
+                eventType,
+                recipientUserId,
+                new JobActivityEventPayload(
+                        application.getJob().getId(),
+                        application.getId()
+                )
+        ));
     }
 
     private ServiceException unsupportedStatus() {
