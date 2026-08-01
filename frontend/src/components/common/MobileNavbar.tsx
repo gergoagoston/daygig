@@ -3,14 +3,16 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import useAuth from '../../hooks/useAuth';
+import NotificationMenu, { type NotificationMenuProps } from '../notifications/NotificationMenu';
 import UserAvatar from '../profile/UserAvatar';
 import NavbarLanguageSelect from './NavbarLanguageSelect';
 
 type MobileNavbarProps = {
   onCreateJob: () => void;
+  notificationMenuProps: NotificationMenuProps;
 };
 
-function MobileNavbar({ onCreateJob }: MobileNavbarProps) {
+function MobileNavbar({ onCreateJob, notificationMenuProps }: MobileNavbarProps) {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { isAuthenticated, isInitializing, logout, user } = useAuth();
@@ -47,6 +49,9 @@ function MobileNavbar({ onCreateJob }: MobileNavbarProps) {
       </NavLink>
 
       <div className="flex items-center justify-end gap-2">
+        {!isInitializing && isAuthenticated ? (
+          <NotificationMenu {...notificationMenuProps} />
+        ) : null}
         {!isInitializing && isAuthenticated && user ? (
           <NavLink
             className="rounded-full !no-underline"

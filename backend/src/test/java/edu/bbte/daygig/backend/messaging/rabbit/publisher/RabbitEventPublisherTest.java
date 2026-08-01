@@ -1,4 +1,4 @@
-package edu.bbte.daygig.backend.messaging.publisher;
+package edu.bbte.daygig.backend.messaging.rabbit.publisher;
 
 import java.util.Map;
 import java.util.UUID;
@@ -9,8 +9,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.Mock;
 import org.springframework.amqp.AmqpConnectException;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import edu.bbte.daygig.backend.messaging.config.RabbitNames;
-import edu.bbte.daygig.backend.messaging.event.DomainEventEnvelope;
+import edu.bbte.daygig.backend.messaging.rabbit.config.RabbitNames;
+import edu.bbte.daygig.backend.messaging.rabbit.event.DomainEventEnvelope;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;

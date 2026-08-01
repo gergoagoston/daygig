@@ -1,4 +1,4 @@
-package edu.bbte.daygig.backend.messaging.event;
+package edu.bbte.daygig.backend.messaging.rabbit.event;
 
 import java.util.Map;
 import java.util.UUID;

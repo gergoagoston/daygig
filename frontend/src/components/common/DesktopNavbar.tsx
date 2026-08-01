@@ -2,14 +2,16 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 import useAuth from '../../hooks/useAuth';
+import NotificationMenu, { type NotificationMenuProps } from '../notifications/NotificationMenu';
 import UserAvatar from '../profile/UserAvatar';
 import NavbarLanguageSelect from './NavbarLanguageSelect';
 
 type DesktopNavbarProps = {
   onCreateJob: () => void;
+  notificationMenuProps: NotificationMenuProps;
 };
 
-function DesktopNavbar({ onCreateJob }: DesktopNavbarProps) {
+function DesktopNavbar({ onCreateJob, notificationMenuProps }: DesktopNavbarProps) {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { isAuthenticated, isInitializing, logout, user } = useAuth();
@@ -52,6 +54,7 @@ function DesktopNavbar({ onCreateJob }: DesktopNavbarProps) {
       <div className="flex flex-wrap items-center justify-end gap-3 justify-self-end">
         {isInitializing ? null : isAuthenticated ? (
           <div className="flex min-w-0 flex-wrap items-center justify-end gap-2">
+            <NotificationMenu {...notificationMenuProps} />
             {user ? (
               <NavLink
                 className="flex min-w-0 items-center gap-2 rounded-full !no-underline"

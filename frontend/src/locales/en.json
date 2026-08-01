@@ -56,6 +56,23 @@
     "language": "Language",
     "menu": "Menu"
   },
+  "notifications": {
+    "title": "Notifications",
+    "open": "Open notifications",
+    "loading": "Loading notifications...",
+    "empty": "No unread notifications.",
+    "mark_all_read": "Mark all as read",
+    "types": {
+      "application": {
+        "created": "You received a new application.",
+        "rejected": "Your application was rejected.",
+        "withdrawn": "An application was withdrawn."
+      },
+      "job": {
+        "completed": "A job was marked as completed."
+      }
+    }
+  },
   "profile": {
     "settings": {
       "private_details": "Your email address and phone number are private and are not shown on your public profile."

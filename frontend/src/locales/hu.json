@@ -56,6 +56,23 @@
     "language": "Nyelv",
     "menu": "Menü"
   },
+  "notifications": {
+    "title": "Értesítések",
+    "open": "Értesítések megnyitása",
+    "loading": "Értesítések betöltése...",
+    "empty": "Nincs olvasatlan értesítés.",
+    "mark_all_read": "Összes olvasottnak jelölése",
+    "types": {
+      "application": {
+        "created": "Új jelentkezés érkezett.",
+        "rejected": "Elutasították a jelentkezésedet.",
+        "withdrawn": "Visszavontak egy jelentkezést."
+      },
+      "job": {
+        "completed": "Egy munkát befejezettnek jelöltek."
+      }
+    }
+  },
   "profile": {
     "settings": {
       "private_details": "Az email címed és a telefonszámod privát, a publikus profilodon nem jelennek meg."

@@ -1,4 +1,4 @@
-package edu.bbte.daygig.backend.messaging.config;
+package edu.bbte.daygig.backend.messaging.rabbit.config;
 
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.Declarables;

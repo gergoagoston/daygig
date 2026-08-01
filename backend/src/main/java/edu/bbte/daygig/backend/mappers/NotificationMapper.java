@@ -2,8 +2,8 @@ package edu.bbte.daygig.backend.mappers;
 
 import org.springframework.stereotype.Component;
 import edu.bbte.daygig.backend.dto.notification.NotificationOutDto;
-import edu.bbte.daygig.backend.messaging.event.DomainEventEnvelope;
-import edu.bbte.daygig.backend.messaging.event.JobActivityEventPayload;
+import edu.bbte.daygig.backend.messaging.rabbit.event.DomainEventEnvelope;
+import edu.bbte.daygig.backend.messaging.rabbit.event.JobActivityEventPayload;
 import edu.bbte.daygig.backend.model.Notification;
 import edu.bbte.daygig.backend.model.User;
 

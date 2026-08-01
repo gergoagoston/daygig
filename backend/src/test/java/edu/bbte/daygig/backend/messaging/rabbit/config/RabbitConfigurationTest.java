@@ -1,4 +1,4 @@
-package edu.bbte.daygig.backend.messaging.config;
+package edu.bbte.daygig.backend.messaging.rabbit.config;
 
 import java.util.Collection;
 import org.junit.jupiter.api.BeforeEach;

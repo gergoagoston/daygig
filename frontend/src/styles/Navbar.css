@@ -114,3 +114,29 @@
   outline: 3px solid var(--color-primary-soft);
   outline-offset: 3px;
 }
+
+.notification-button {
+  @apply relative inline-flex h-10 w-10 items-center justify-center rounded-lg border border-border bg-surface text-primary transition-colors;
+}
+
+.notification-button svg {
+  width: 1.35rem;
+  height: 1.35rem;
+}
+
+.notification-button:hover {
+  @apply border-primary bg-primary-soft;
+}
+
+.notification-button:focus-visible {
+  outline: 3px solid var(--color-primary-soft);
+  outline-offset: 3px;
+}
+
+.notification-badge {
+  @apply absolute -right-1 -top-1 inline-flex min-h-5 min-w-5 items-center justify-center rounded-full bg-primary px-1 text-xs font-extrabold text-white;
+}
+
+.notification-menu {
+  @apply absolute right-0 top-[calc(100%+0.5rem)] z-60 max-h-96 w-[min(22rem,calc(100vw-2rem))] overflow-y-auto rounded-xl border border-border bg-surface shadow-lg;
+}

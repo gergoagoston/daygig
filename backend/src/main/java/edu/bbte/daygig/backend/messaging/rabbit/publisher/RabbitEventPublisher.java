@@ -1,4 +1,4 @@
-package edu.bbte.daygig.backend.messaging.publisher;
+package edu.bbte.daygig.backend.messaging.rabbit.publisher;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,8 +8,8 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.event.TransactionalEventListener;
 import org.springframework.transaction.event.TransactionPhase;
-import edu.bbte.daygig.backend.messaging.config.RabbitNames;
-import edu.bbte.daygig.backend.messaging.event.DomainEventEnvelope;
+import edu.bbte.daygig.backend.messaging.rabbit.config.RabbitNames;
+import edu.bbte.daygig.backend.messaging.rabbit.event.DomainEventEnvelope;
 
 @Component
 @ConditionalOnProperty(

@@ -1,4 +1,4 @@
-package edu.bbte.daygig.backend.messaging.config;
+package edu.bbte.daygig.backend.messaging.rabbit.config;
 
 public final class RabbitNames {
 

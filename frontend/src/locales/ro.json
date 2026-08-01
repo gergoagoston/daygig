@@ -56,6 +56,23 @@
     "language": "Limba",
     "menu": "Meniu"
   },
+  "notifications": {
+    "title": "Notificări",
+    "open": "Deschide notificările",
+    "loading": "Se încarcă notificările...",
+    "empty": "Nu există notificări necitite.",
+    "mark_all_read": "Marchează toate ca citite",
+    "types": {
+      "application": {
+        "created": "Ai primit o cerere nouă.",
+        "rejected": "Cererea ta a fost respinsă.",
+        "withdrawn": "O cerere a fost retrasă."
+      },
+      "job": {
+        "completed": "O lucrare a fost marcată ca finalizată."
+      }
+    }
+  },
   "profile": {
     "settings": {
       "private_details": "Adresa de email si numarul de telefon sunt private si nu apar pe profilul public."
