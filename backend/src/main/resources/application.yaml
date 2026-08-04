@@ -12,6 +12,18 @@ spring:
     multipart:
       max-file-size: 2MB
       max-request-size: 3MB
+  mail:
+    host: ${MAIL_HOST:smtp.gmail.com}
+    port: ${MAIL_PORT:587}
+    username: ${MAIL_USERNAME:}
+    password: ${MAIL_PASSWORD:}
+    properties:
+      "[mail.smtp.auth]": true
+      "[mail.smtp.starttls.enable]": true
+      "[mail.smtp.starttls.required]": true
+      "[mail.smtp.connectiontimeout]": 5000
+      "[mail.smtp.timeout]": 5000
+      "[mail.smtp.writetimeout]": 5000
 server:
   port: ${PORT:8080}
   servlet:
@@ -22,6 +34,10 @@ app:
   notifications:
     retention-days: ${NOTIFICATION_RETENTION_DAYS:30}
     cleanup-cron: ${NOTIFICATION_CLEANUP_CRON:0 0 3 * * *}
+  mail:
+    enabled: ${MAIL_ENABLED:false}
+    from: ${MAIL_FROM:${MAIL_USERNAME:}}
+    frontend-url: ${FRONTEND_URL:http://localhost:5173}
   websocket:
     allowed-origin-patterns: ${WEBSOCKET_ALLOWED_ORIGIN_PATTERNS:http://localhost:5173}
   jwt:

@@ -24,11 +24,7 @@ spring:
     init:
       mode: never
   rabbitmq:
-    host: ${RABBITMQ_HOST}
-    port: ${RABBITMQ_PORT:5672}
-    username: ${RABBITMQ_USERNAME}
-    password: ${RABBITMQ_PASSWORD}
-    virtual-host: ${RABBITMQ_VHOST:/daygig}
+    addresses: ${RABBITMQ_URL}
 
 logging:
   level:
