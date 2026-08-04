@@ -1,0 +1,113 @@
+package edu.bbte.daygig.backend.service.conversation;
+
+import java.time.Instant;
+import java.util.List;
+import java.util.UUID;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import lombok.RequiredArgsConstructor;
+import edu.bbte.daygig.backend.exception.DuplicateResourceException;
+import edu.bbte.daygig.backend.exception.ForbiddenException;
+import edu.bbte.daygig.backend.exception.ResourceNotFoundException;
+import edu.bbte.daygig.backend.exception.ServiceException;
+import edu.bbte.daygig.backend.model.Application;
+import edu.bbte.daygig.backend.model.Conversation;
+import edu.bbte.daygig.backend.model.enums.ApplicationStatus;
+import edu.bbte.daygig.backend.model.Message;
+import edu.bbte.daygig.backend.repository.ApplicationRepository;
+import edu.bbte.daygig.backend.repository.ConversationRepository;
+import edu.bbte.daygig.backend.repository.MessageRepository;
+
+@Service
+@RequiredArgsConstructor
+public class ConversationServiceImpl implements ConversationService {
+
+    private final ApplicationRepository applicationRepository;
+    private final ConversationRepository conversationRepository;
+    private final MessageRepository messageRepository;
+
+    @Override
+    @Transactional
+    public Conversation create(UUID applicationId,
+                               UUID ownerId,
+                               String firstMessageContent) {
+        Application application = applicationRepository
+                .findById(applicationId)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Application not found with id: " + applicationId
+                ));
+
+        ensureOwner(application, ownerId);
+        ensureActive(application);
+        ensureConversationDoesNotExist(applicationId);
+
+        Instant now = Instant.now();
+        String content = firstMessageContent.trim();
+
+        Conversation conversation = new Conversation();
+        conversation.setApplication(application);
+        conversation.setLastMessage(content);
+        conversation.setLastMessageAt(now);
+        Conversation savedConversation = conversationRepository.saveAndFlush(conversation);
+
+        Message firstMessage = new Message();
+        firstMessage.setConversation(savedConversation);
+        firstMessage.setSender(application.getJob().getOwner());
+        firstMessage.setContent(content);
+        messageRepository.saveAndFlush(firstMessage);
+
+        return savedConversation;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Conversation> getAll(UUID userId) {
+        return conversationRepository.findAllForUser(userId);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Message> getMessages(UUID conversationId,
+                                     UUID userId) {
+        Conversation conversation = conversationRepository
+                .findById(conversationId)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Conversation not found with id: " + conversationId
+                ));
+        ensureParticipant(conversation, userId);
+
+        return messageRepository.findAllByConversationIdOrderByCreatedAtAsc(conversationId);
+    }
+
+    private void ensureOwner(Application application,
+                             UUID userId) {
+        if (!application.getJob().getOwner().getId().equals(userId)) {
+            throw new ForbiddenException("Only the job owner can start a conversation");
+        }
+    }
+
+    private void ensureActive(Application application) {
+        if (application.getStatus() != ApplicationStatus.ACTIVE) {
+            throw new ServiceException("A conversation can only be started for an active application");
+        }
+    }
+
+    private void ensureParticipant(Conversation conversation,
+                                   UUID userId) {
+        Application application = conversation.getApplication();
+        boolean isApplicant = application.getApplicant().getId().equals(userId);
+        boolean isOwner = application.getJob().getOwner().getId().equals(userId);
+
+        if (!isApplicant && !isOwner) {
+            throw new ResourceNotFoundException(
+                    "Conversation not found with id: " + conversation.getId()
+            );
+        }
+    }
+
+    private void ensureConversationDoesNotExist(UUID applicationId) {
+        if (conversationRepository.existsByApplicationId(applicationId)) {
+            throw new DuplicateResourceException("A conversation already exists for this application");
+        }
+    }
+}
