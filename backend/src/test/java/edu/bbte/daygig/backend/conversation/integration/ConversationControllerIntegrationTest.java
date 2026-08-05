@@ -13,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
+import edu.bbte.daygig.backend.exception.ResourceNotFoundException;
 import edu.bbte.daygig.backend.model.Application;
 import edu.bbte.daygig.backend.model.Conversation;
 import edu.bbte.daygig.backend.model.enums.ApplicationStatus;
@@ -28,7 +29,10 @@ import edu.bbte.daygig.backend.repository.JobRepository;
 import edu.bbte.daygig.backend.repository.MessageRepository;
 import edu.bbte.daygig.backend.repository.UserRepository;
 import edu.bbte.daygig.backend.security.JwtService;
+import edu.bbte.daygig.backend.service.conversation.ConversationService;
+import edu.bbte.daygig.backend.service.conversation.MessageSendResult;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -67,6 +71,9 @@ class ConversationControllerIntegrationTest {
 
     @Autowired
     private JwtService jwtService;
+
+    @Autowired
+    private ConversationService conversationService;
 
     @Test
     void ownerCreatesConversationWithFirstMessage() throws Exception {
@@ -151,6 +158,47 @@ class ConversationControllerIntegrationTest {
         mockMvc.perform(get("/conversations/{conversationId}/messages", conversation.getId())
                 .cookie(accessTokenCookie(otherUser)))
                 .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void participantSendsAnotherMessage() {
+        User owner = saveUser("message-owner");
+        User applicant = saveUser("message-applicant");
+        Application application = saveApplication(applicant, saveJob(owner), ApplicationStatus.ACTIVE);
+        Conversation conversation = conversationService.create(application.getId(), owner.getId(), "First");
+
+        MessageSendResult result = conversationService.sendMessage(
+                conversation.getId(),
+                applicant.getId(),
+                "  Reply  "
+        );
+
+        assertThat(result.senderUserId()).isEqualTo(applicant.getId());
+        assertThat(result.recipientUserId()).isEqualTo(owner.getId());
+        assertThat(result.message().getContent()).isEqualTo("Reply");
+        assertThat(messageRepository.count()).isEqualTo(2);
+        assertThat(conversationRepository.findById(conversation.getId()))
+                .get()
+                .satisfies(updatedConversation ->
+                        assertThat(updatedConversation.getLastMessage()).isEqualTo("Reply")
+                );
+    }
+
+    @Test
+    void userOutsideConversationCannotSendMessage() {
+        User owner = saveUser("outside-owner");
+        User applicant = saveUser("outside-applicant");
+        User otherUser = saveUser("outside-user");
+        Application application = saveApplication(applicant, saveJob(owner), ApplicationStatus.ACTIVE);
+        Conversation conversation = conversationService.create(application.getId(), owner.getId(), "First");
+
+        assertThatThrownBy(() -> conversationService.sendMessage(
+                conversation.getId(),
+                otherUser.getId(),
+                "Not allowed"
+        )).isInstanceOf(ResourceNotFoundException.class);
+
+        assertThat(messageRepository.count()).isOne();
     }
 
     private Cookie accessTokenCookie(User user) {

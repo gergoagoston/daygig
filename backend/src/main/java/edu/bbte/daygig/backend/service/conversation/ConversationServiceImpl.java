@@ -14,6 +14,7 @@ import edu.bbte.daygig.backend.model.Application;
 import edu.bbte.daygig.backend.model.Conversation;
 import edu.bbte.daygig.backend.model.enums.ApplicationStatus;
 import edu.bbte.daygig.backend.model.Message;
+import edu.bbte.daygig.backend.model.User;
 import edu.bbte.daygig.backend.repository.ApplicationRepository;
 import edu.bbte.daygig.backend.repository.ConversationRepository;
 import edu.bbte.daygig.backend.repository.MessageRepository;
@@ -79,6 +80,51 @@ public class ConversationServiceImpl implements ConversationService {
         return messageRepository.findAllByConversationIdOrderByCreatedAtAsc(conversationId);
     }
 
+    @Override
+    @Transactional
+    public MessageSendResult sendMessage(UUID conversationId,
+                                         UUID senderId,
+                                         String messageContent) {
+        Conversation conversation = conversationRepository
+                .findById(conversationId)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Conversation not found with id: " + conversationId
+                ));
+
+        Application application = conversation.getApplication();
+        User owner = application.getJob().getOwner();
+        User applicant = application.getApplicant();
+
+        User sender;
+        User recipient;
+        if (owner.getId().equals(senderId)) {
+            sender = owner;
+            recipient = applicant;
+        } else if (applicant.getId().equals(senderId)) {
+            sender = applicant;
+            recipient = owner;
+        } else {
+            throw new ResourceNotFoundException(
+                    "Conversation not found with id: " + conversationId
+            );
+        }
+
+        String content = normalizeMessageContent(messageContent);
+        Instant now = Instant.now();
+
+        Message message = new Message();
+        message.setConversation(conversation);
+        message.setSender(sender);
+        message.setContent(content);
+
+        conversation.setLastMessage(content);
+        conversation.setLastMessageAt(now);
+        conversationRepository.save(conversation);
+
+        Message savedMessage = messageRepository.saveAndFlush(message);
+        return new MessageSendResult(savedMessage, sender.getId(), recipient.getId());
+    }
+
     private void ensureOwner(Application application,
                              UUID userId) {
         if (!application.getJob().getOwner().getId().equals(userId)) {
@@ -109,5 +155,17 @@ public class ConversationServiceImpl implements ConversationService {
         if (conversationRepository.existsByApplicationId(applicationId)) {
             throw new DuplicateResourceException("A conversation already exists for this application");
         }
+    }
+
+    private String normalizeMessageContent(String messageContent) {
+        if (messageContent == null || messageContent.isBlank()) {
+            throw new ServiceException("Message content must not be blank");
+        }
+
+        String content = messageContent.trim();
+        if (content.length() > 200) {
+            throw new ServiceException("Message content must not exceed 200 characters");
+        }
+        return content;
     }
 }

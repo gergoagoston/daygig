@@ -15,4 +15,8 @@ public interface ConversationService {
 
     List<Message> getMessages(UUID conversationId,
                               UUID userId);
+
+    MessageSendResult sendMessage(UUID conversationId,
+                                  UUID senderId,
+                                  String content);
 }
