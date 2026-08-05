@@ -25,7 +25,7 @@ public class NotificationWebSocketPublisher {
         try {
             messagingTemplate.convertAndSendToUser(
                     event.recipientUserId().toString(),
-                    "/queue/notifications",
+                    "/exchange/amq.direct/notifications",
                     event.notification()
             );
         } catch (MessagingException exception) {

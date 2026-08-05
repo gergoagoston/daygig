@@ -41,7 +41,7 @@ function useNotifications(enabled: boolean) {
       heartbeatIncoming: 10000,
       heartbeatOutgoing: 10000,
       onConnect: () => {
-        client.subscribe('/user/queue/notifications', (message) => {
+        client.subscribe('/user/exchange/amq.direct/notifications', (message) => {
           const notification = JSON.parse(message.body) as Notification;
           queryClient.setQueryData<NotificationSummary>(notificationsQueryKey, (current) => {
             if (current?.notifications.some((item) => item.id === notification.id)) {

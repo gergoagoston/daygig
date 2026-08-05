@@ -40,6 +40,13 @@ app:
     frontend-url: ${FRONTEND_URL:http://localhost:5173}
   websocket:
     allowed-origin-patterns: ${WEBSOCKET_ALLOWED_ORIGIN_PATTERNS:http://localhost:5173}
+    relay:
+      enabled: ${STOMP_RELAY_ENABLED:false}
+      host: ${STOMP_RELAY_HOST:localhost}
+      port: ${STOMP_RELAY_PORT:61613}
+      username: ${STOMP_RELAY_USERNAME:guest}
+      password: ${STOMP_RELAY_PASSWORD:guest}
+      virtual-host: ${STOMP_RELAY_VHOST:/}
   jwt:
     secret: ${JWT_SECRET:ez-egy-nagyon-hosszu-es-biztonsagos-titkos-kulcs-ami-tobb-mint-32-karakter}
     expirationMinutes: ${JWT_EXPIRATION_MINUTES:720}

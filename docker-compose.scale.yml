@@ -1,0 +1,106 @@
+name: daygig-scale
+
+x-backend-environment: &backend-environment
+  SPRING_PROFILES_ACTIVE: dev
+  PORT: 8080
+  SPRING_DATASOURCE_URL: jdbc:postgresql://daygig-db:5432/daygig
+  SPRING_DATASOURCE_USERNAME: postgres
+  SPRING_DATASOURCE_PASSWORD: postgres
+  SPRING_RABBITMQ_HOST: daygig-rabbitmq
+  SPRING_RABBITMQ_PORT: 5672
+  SPRING_RABBITMQ_USERNAME: daygig
+  SPRING_RABBITMQ_PASSWORD: daygig
+  SPRING_RABBITMQ_VIRTUAL_HOST: /daygig
+  STOMP_RELAY_ENABLED: "true"
+  STOMP_RELAY_HOST: daygig-rabbitmq
+  STOMP_RELAY_PORT: 61613
+  STOMP_RELAY_USERNAME: daygig
+  STOMP_RELAY_PASSWORD: daygig
+  STOMP_RELAY_VHOST: /daygig
+  WEBSOCKET_ALLOWED_ORIGIN_PATTERNS: http://localhost:8090
+  JWT_SECRET: ${SCALE_JWT_SECRET:-daygig-scale-local-jwt-secret-that-is-longer-than-thirty-two-characters}
+  MESSAGING_ENABLED: "true"
+  MAIL_ENABLED: "false"
+  AUTH_COOKIE_SECURE: "false"
+  SPRING_JPA_SHOW_SQL: "false"
+  LOGGING_LEVEL_EDU_BBTE_DAYGIG_BACKEND: INFO
+  LOGGING_LEVEL_ORG_HIBERNATE_SQL: WARN
+  LOGGING_LEVEL_ORG_HIBERNATE_ORM_JDBC_BIND: WARN
+
+services:
+  daygig-db:
+    image: postgis/postgis:17-3.5
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: daygig
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - daygig-scale-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d daygig"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  daygig-rabbitmq:
+    image: rabbitmq:4-management
+    restart: unless-stopped
+    environment:
+      RABBITMQ_DEFAULT_USER: daygig
+      RABBITMQ_DEFAULT_PASS: daygig
+      RABBITMQ_DEFAULT_VHOST: /daygig
+    ports:
+      - "15673:15672"
+    volumes:
+      - daygig-scale-rabbitmq-data:/var/lib/rabbitmq
+      - ./rabbitmq/enabled_plugins:/etc/rabbitmq/enabled_plugins:ro
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  backend-a:
+    image: daygig-backend:scale
+    build:
+      context: ./backend
+    restart: unless-stopped
+    environment:
+      <<: *backend-environment
+      SPRING_APPLICATION_NAME: backend-a
+    depends_on:
+      daygig-db:
+        condition: service_healthy
+      daygig-rabbitmq:
+        condition: service_healthy
+
+  backend-b:
+    image: daygig-backend:scale
+    build:
+      context: ./backend
+    restart: unless-stopped
+    environment:
+      <<: *backend-environment
+      SPRING_APPLICATION_NAME: backend-b
+    depends_on:
+      daygig-db:
+        condition: service_healthy
+      daygig-rabbitmq:
+        condition: service_healthy
+
+  nginx:
+    image: daygig-frontend-nginx:scale
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.scale
+    restart: unless-stopped
+    ports:
+      - "8090:8080"
+    depends_on:
+      - backend-a
+      - backend-b
+
+volumes:
+  daygig-scale-data:
+  daygig-scale-rabbitmq-data:
