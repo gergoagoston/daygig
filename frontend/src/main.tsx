@@ -6,6 +6,7 @@ import 'leaflet/dist/leaflet.css';
 import './index.css';
 import App from './App.tsx';
 import AuthProvider from './contexts/AuthProvider.tsx';
+import WebSocketProvider from './contexts/WebSocketProvider.tsx';
 import './i18n';
 
 const queryClient = new QueryClient();
@@ -15,7 +16,9 @@ createRoot(document.getElementById('root')!).render(
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <AuthProvider>
-          <App />
+          <WebSocketProvider>
+            <App />
+          </WebSocketProvider>
         </AuthProvider>
       </BrowserRouter>
     </QueryClientProvider>

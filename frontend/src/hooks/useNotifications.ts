@@ -1,4 +1,3 @@
-import { Client } from '@stomp/stompjs';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useEffect } from 'react';
 
@@ -8,21 +7,13 @@ import {
   markNotificationAsRead,
 } from '../api/notificationsApi';
 import type { Notification, NotificationSummary } from '../types/notification';
+import useWebSocket from './useWebSocket';
 
 export const notificationsQueryKey = ['notifications'] as const;
 
-function websocketUrl(): string {
-  const configuredUrl = import.meta.env.VITE_WEBSOCKET_URL;
-  if (configuredUrl) {
-    return configuredUrl;
-  }
-
-  const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-  return `${protocol}//${window.location.host}/api/ws`;
-}
-
 function useNotifications(enabled: boolean) {
   const queryClient = useQueryClient();
+  const { client, isConnected } = useWebSocket();
   const notificationsQuery = useQuery({
     queryKey: notificationsQueryKey,
     queryFn: getNotifications,
@@ -35,33 +26,26 @@ function useNotifications(enabled: boolean) {
       return;
     }
 
-    const client = new Client({
-      brokerURL: websocketUrl(),
-      reconnectDelay: 5000,
-      heartbeatIncoming: 10000,
-      heartbeatOutgoing: 10000,
-      onConnect: () => {
-        client.subscribe('/user/exchange/amq.direct/notifications', (message) => {
-          const notification = JSON.parse(message.body) as Notification;
-          queryClient.setQueryData<NotificationSummary>(notificationsQueryKey, (current) => {
-            if (current?.notifications.some((item) => item.id === notification.id)) {
-              return current;
-            }
+    if (!client || !isConnected) {
+      return;
+    }
 
-            return {
-              unreadCount: (current?.unreadCount ?? 0) + 1,
-              notifications: [notification, ...(current?.notifications ?? [])].slice(0, 10),
-            };
-          });
-        });
-      },
+    const subscription = client.subscribe('/user/exchange/amq.direct/notifications', (message) => {
+      const notification = JSON.parse(message.body) as Notification;
+      queryClient.setQueryData<NotificationSummary>(notificationsQueryKey, (current) => {
+        if (current?.notifications.some((item) => item.id === notification.id)) {
+          return current;
+        }
+
+        return {
+          unreadCount: (current?.unreadCount ?? 0) + 1,
+          notifications: [notification, ...(current?.notifications ?? [])].slice(0, 10),
+        };
+      });
     });
 
-    client.activate();
-    return () => {
-      void client.deactivate();
-    };
-  }, [enabled, queryClient]);
+    return () => subscription.unsubscribe();
+  }, [client, enabled, isConnected, queryClient]);
 
   const markAsReadMutation = useMutation({
     mutationFn: markNotificationAsRead,
