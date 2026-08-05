@@ -56,6 +56,21 @@
     "language": "Language",
     "menu": "Menu"
   },
+  "conversations": {
+    "title": "Messages",
+    "loading": "Loading conversations...",
+    "messages_loading": "Loading messages...",
+    "select": "Select a conversation to view its messages.",
+    "back": "Back",
+    "empty": {
+      "title": "No conversations yet"
+    },
+    "errors": {
+      "load_failed": "Could not load conversations. Please try again.",
+      "messages_load_failed": "Could not load messages. Please try again.",
+      "not_found": "This conversation is not available."
+    }
+  },
   "notifications": {
     "title": "Notifications",
     "open": "Open notifications",

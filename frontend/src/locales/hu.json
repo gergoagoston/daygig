@@ -56,6 +56,21 @@
     "language": "Nyelv",
     "menu": "Menü"
   },
+  "conversations": {
+    "title": "Üzenetek",
+    "loading": "Beszélgetések betöltése...",
+    "messages_loading": "Üzenetek betöltése...",
+    "select": "Válassz egy beszélgetést az üzenetek megtekintéséhez.",
+    "back": "Vissza",
+    "empty": {
+      "title": "Még nincsenek beszélgetéseid"
+    },
+    "errors": {
+      "load_failed": "Nem sikerült betölteni a beszélgetéseket. Próbáld újra.",
+      "messages_load_failed": "Nem sikerült betölteni az üzeneteket. Próbáld újra.",
+      "not_found": "Ez a beszélgetés nem érhető el."
+    }
+  },
   "notifications": {
     "title": "Értesítések",
     "open": "Értesítések megnyitása",

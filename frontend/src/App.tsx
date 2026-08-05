@@ -5,6 +5,7 @@ import { useState } from 'react';
 import Navbar from './components/common/Navbar';
 import ProtectedRoute from './components/common/ProtectedRoute';
 import JobCreateModal from './components/jobs/JobCreateModal';
+import ConversationsPage from './pages/ConversationsPage';
 import JobDetailsPage from './pages/JobDetailsPage';
 import JobsPage from './pages/JobsPage';
 import MyApplicationsPage from './pages/MyApplicationsPage';
@@ -33,6 +34,8 @@ function App() {
           <Route path="/jobs" element={<JobsPage />} />
           <Route path="/jobs/:id" element={<JobDetailsPage />} />
           <Route element={<ProtectedRoute />}>
+            <Route path="/conversations" element={<ConversationsPage />} />
+            <Route path="/conversations/:conversationId" element={<ConversationsPage />} />
             <Route path="/my-jobs" element={<MyJobsPage />} />
             <Route path="/my-applications" element={<MyApplicationsPage />} />
             <Route path="/profile" element={<ProfileSettingsPage />} />

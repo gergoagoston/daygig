@@ -56,6 +56,21 @@
     "language": "Limba",
     "menu": "Meniu"
   },
+  "conversations": {
+    "title": "Mesaje",
+    "loading": "Se incarca conversatiile...",
+    "messages_loading": "Se incarca mesajele...",
+    "select": "Selecteaza o conversatie pentru a vedea mesajele.",
+    "back": "Inapoi",
+    "empty": {
+      "title": "Nu ai conversatii inca"
+    },
+    "errors": {
+      "load_failed": "Nu am putut incarca conversatiile. Incearca din nou.",
+      "messages_load_failed": "Nu am putut incarca mesajele. Incearca din nou.",
+      "not_found": "Aceasta conversatie nu este disponibila."
+    }
+  },
   "notifications": {
     "title": "Notificări",
     "open": "Deschide notificările",
