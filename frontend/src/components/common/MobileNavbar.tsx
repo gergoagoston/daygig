@@ -104,6 +104,13 @@ function MobileNavbar({ onCreateJob, notificationMenuProps }: MobileNavbarProps)
               >
                 {t('navigation.my_applications')}
               </NavLink>
+              <NavLink
+                className="navbar-gomb w-full justify-start"
+                to="/conversations"
+                onClick={closeMenu}
+              >
+                {t('navigation.messages')}
+              </NavLink>
               <button
                 className="navbar-gomb w-full justify-start"
                 type="button"

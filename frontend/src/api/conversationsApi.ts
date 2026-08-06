@@ -10,3 +10,14 @@ export async function getConversationMessages(conversationId: string): Promise<C
   const response = await httpClient.get<ChatMessage[]>(`/conversations/${conversationId}/messages`);
   return response.data;
 }
+
+export async function createConversation(
+  applicationId: string,
+  content: string
+): Promise<Conversation> {
+  const response = await httpClient.post<Conversation>(
+    `/applications/${applicationId}/conversation`,
+    { content }
+  );
+  return response.data;
+}

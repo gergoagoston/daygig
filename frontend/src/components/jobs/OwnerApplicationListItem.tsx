@@ -8,12 +8,14 @@ import JobRatingPanel from '../ratings/JobRatingPanel';
 type OwnerApplicationListItemProps = {
   application: OwnerApplication;
   completedApplicationId: string | null;
+  conversationId?: string;
   isCompleting: boolean;
   isJobOpen: boolean;
   isRejecting: boolean;
   jobId: string;
   onComplete: (applicationId: string) => void;
   onReject: (applicationId: string) => void;
+  onStartConversation: (applicationId: string) => void;
 };
 
 const actionButtonClass =
@@ -27,12 +29,14 @@ function getApplicantName(application: OwnerApplication) {
 function OwnerApplicationListItem({
   application,
   completedApplicationId,
+  conversationId,
   isCompleting,
   isJobOpen,
   isRejecting,
   jobId,
   onComplete,
   onReject,
+  onStartConversation,
 }: OwnerApplicationListItemProps) {
   const { t } = useTranslation();
   const isCompletedWorker = completedApplicationId === application.id;
@@ -86,6 +90,24 @@ function OwnerApplicationListItem({
                 : t('posted_jobs.applications.actions.REJECTED')}
             </button>
           </div>
+        ) : null}
+
+        {conversationId ? (
+          <Link
+            className={`${actionButtonClass} w-fit border-primary bg-primary-soft text-primary no-underline!`}
+            to={`/conversations/${conversationId}`}
+          >
+            {t('conversations.actions.open')}
+          </Link>
+        ) : application.status === 'ACTIVE' ? (
+          <button
+            className={`${actionButtonClass} w-fit border-primary bg-primary-soft text-primary`}
+            type="button"
+            disabled={isBusy}
+            onClick={() => onStartConversation(application.id)}
+          >
+            {t('conversations.actions.start')}
+          </button>
         ) : null}
 
         {isCompletedWorker ? <JobRatingPanel compact enabled jobId={jobId} /> : null}

@@ -49,6 +49,7 @@
     "main": "Fő navigáció",
     "my_jobs": "Meghirdetett munkáim",
     "my_applications": "Jelentkezéseim",
+    "messages": "Üzenetek",
     "login": "Bejelentkezés",
     "register": "Regisztráció",
     "logout": "Kijelentkezés",
@@ -62,6 +63,26 @@
     "messages_loading": "Üzenetek betöltése...",
     "select": "Válassz egy beszélgetést az üzenetek megtekintéséhez.",
     "back": "Vissza",
+    "actions": {
+      "start": "Beszélgetés indítása",
+      "open": "Beszélgetés megnyitása"
+    },
+    "start": {
+      "title": "Beszélgetés indítása",
+      "message_label": "Első üzenet",
+      "message_placeholder": "Írd meg az első üzenetet...",
+      "submit": "Beszélgetés indítása",
+      "submitting": "Indítás...",
+      "cancel": "Mégse",
+      "error": "Nem sikerült elindítani a beszélgetést. Próbáld újra."
+    },
+    "composer": {
+      "label": "Üzenet",
+      "placeholder": "Írj egy üzenetet...",
+      "send": "Küldés",
+      "connecting": "Kapcsolódás...",
+      "character_count": "{{count}}/200"
+    },
     "empty": {
       "title": "Még nincsenek beszélgetéseid"
     },

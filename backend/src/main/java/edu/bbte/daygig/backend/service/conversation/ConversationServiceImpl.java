@@ -10,6 +10,7 @@ import edu.bbte.daygig.backend.exception.DuplicateResourceException;
 import edu.bbte.daygig.backend.exception.ForbiddenException;
 import edu.bbte.daygig.backend.exception.ResourceNotFoundException;
 import edu.bbte.daygig.backend.exception.ServiceException;
+import edu.bbte.daygig.backend.mappers.ConversationMapper;
 import edu.bbte.daygig.backend.model.Application;
 import edu.bbte.daygig.backend.model.Conversation;
 import edu.bbte.daygig.backend.model.enums.ApplicationStatus;
@@ -26,6 +27,7 @@ public class ConversationServiceImpl implements ConversationService {
     private final ApplicationRepository applicationRepository;
     private final ConversationRepository conversationRepository;
     private final MessageRepository messageRepository;
+    private final ConversationMapper conversationMapper;
 
     @Override
     @Transactional
@@ -122,7 +124,11 @@ public class ConversationServiceImpl implements ConversationService {
         conversationRepository.save(conversation);
 
         Message savedMessage = messageRepository.saveAndFlush(message);
-        return new MessageSendResult(savedMessage, sender.getId(), recipient.getId());
+        return new MessageSendResult(
+                conversationMapper.toDto(savedMessage),
+                sender.getId(),
+                recipient.getId()
+        );
     }
 
     private void ensureOwner(Application application,

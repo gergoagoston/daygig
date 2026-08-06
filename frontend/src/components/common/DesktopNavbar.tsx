@@ -33,6 +33,9 @@ function DesktopNavbar({ onCreateJob, notificationMenuProps }: DesktopNavbarProp
             <NavLink className="navbar-gomb" to="/my-applications">
               {t('navigation.my_applications')}
             </NavLink>
+            <NavLink className="navbar-gomb" to="/conversations">
+              {t('navigation.messages')}
+            </NavLink>
             <button
               className="navbar-create-gomb"
               type="button"

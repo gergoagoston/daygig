@@ -49,6 +49,7 @@
     "main": "Navigare principala",
     "my_jobs": "Joburile publicate",
     "my_applications": "Aplicatiile mele",
+    "messages": "Mesaje",
     "login": "Autentificare",
     "register": "Inregistrare",
     "logout": "Deconectare",
@@ -62,6 +63,26 @@
     "messages_loading": "Se incarca mesajele...",
     "select": "Selecteaza o conversatie pentru a vedea mesajele.",
     "back": "Inapoi",
+    "actions": {
+      "start": "Porneste conversatia",
+      "open": "Deschide conversatia"
+    },
+    "start": {
+      "title": "Porneste conversatia",
+      "message_label": "Primul mesaj",
+      "message_placeholder": "Scrie primul mesaj...",
+      "submit": "Porneste conversatia",
+      "submitting": "Se porneste...",
+      "cancel": "Anuleaza",
+      "error": "Nu am putut porni conversatia. Incearca din nou."
+    },
+    "composer": {
+      "label": "Mesaj",
+      "placeholder": "Scrie un mesaj...",
+      "send": "Trimite",
+      "connecting": "Se conecteaza...",
+      "character_count": "{{count}}/200"
+    },
     "empty": {
       "title": "Nu ai conversatii inca"
     },

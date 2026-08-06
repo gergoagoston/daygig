@@ -1,6 +1,11 @@
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
-import { getConversationMessages, getConversations } from '../api/conversationsApi';
+import {
+  createConversation,
+  getConversationMessages,
+  getConversations,
+} from '../api/conversationsApi';
+import type { Conversation } from '../types/conversation';
 
 export const conversationsQueryKey = ['conversations'] as const;
 
@@ -33,4 +38,21 @@ export function useConversationMessages(conversationId: string | undefined) {
     isError: messagesQuery.isError,
     isLoading: messagesQuery.isLoading,
   };
+}
+
+export function useCreateConversation() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ applicationId, content }: { applicationId: string; content: string }) =>
+      createConversation(applicationId, content),
+    onSuccess: (conversation) => {
+      queryClient.setQueryData<Conversation[]>(conversationsQueryKey, (current) => {
+        if (current?.some((item) => item.id === conversation.id)) {
+          return current;
+        }
+        return [conversation, ...(current ?? [])];
+      });
+    },
+  });
 }

@@ -10,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import lombok.RequiredArgsConstructor;
 import edu.bbte.daygig.backend.dto.conversation.MessageCreateInDto;
 import edu.bbte.daygig.backend.dto.conversation.MessageOutDto;
-import edu.bbte.daygig.backend.mappers.ConversationMapper;
 import edu.bbte.daygig.backend.messaging.websocket.publisher.ChatMessageWebSocketPublisher;
 import edu.bbte.daygig.backend.service.conversation.ConversationService;
 import edu.bbte.daygig.backend.service.conversation.MessageSendResult;
@@ -20,7 +19,6 @@ import edu.bbte.daygig.backend.service.conversation.MessageSendResult;
 public class ChatMessageController {
 
     private final ConversationService conversationService;
-    private final ConversationMapper conversationMapper;
     private final ChatMessageWebSocketPublisher webSocketPublisher;
 
     @MessageMapping("/conversations/{conversationId}/messages")
@@ -33,7 +31,7 @@ public class ChatMessageController {
                 senderId,
                 input.content()
         );
-        MessageOutDto message = conversationMapper.toDto(result.message());
+        MessageOutDto message = result.message();
 
         webSocketPublisher.publish(result.senderUserId(), message);
         webSocketPublisher.publish(result.recipientUserId(), message);

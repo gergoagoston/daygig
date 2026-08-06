@@ -1,10 +1,10 @@
 package edu.bbte.daygig.backend.service.conversation;
 
 import java.util.UUID;
-import edu.bbte.daygig.backend.model.Message;
+import edu.bbte.daygig.backend.dto.conversation.MessageOutDto;
 
 public record MessageSendResult(
-        Message message,
+        MessageOutDto message,
         UUID senderUserId,
         UUID recipientUserId
 ) {

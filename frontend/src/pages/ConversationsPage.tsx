@@ -1,3 +1,4 @@
+import { type FormEvent, type KeyboardEvent, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
 
@@ -6,6 +7,7 @@ import EmptyState from '../components/ui/EmptyState';
 import ErrorState from '../components/ui/ErrorState';
 import LoadingState from '../components/ui/LoadingState';
 import useAuth from '../hooks/useAuth';
+import { useSendChatMessage } from '../hooks/useChatMessaging';
 import { useConversationMessages, useConversations } from '../hooks/useConversations';
 import type { UserSummary } from '../types/user';
 
@@ -18,12 +20,41 @@ function ConversationsPage() {
   const { conversationId } = useParams();
   const { i18n, t } = useTranslation();
   const { user } = useAuth();
+  const { isConnected, sendMessage } = useSendChatMessage();
+  const [content, setContent] = useState('');
+  const messageListRef = useRef<HTMLDivElement>(null);
   const { conversations, isError, isLoading } = useConversations();
   const selectedConversation = conversations.find(
     (conversation) => conversation.id === conversationId
   );
   const messagesQuery = useConversationMessages(selectedConversation?.id);
   const language = i18n.resolvedLanguage ?? i18n.language;
+
+  useEffect(() => {
+    const messageList = messageListRef.current;
+    if (messageList) {
+      messageList.scrollTop = messageList.scrollHeight;
+    }
+  }, [conversationId, messagesQuery.messages.length]);
+
+  const submitMessage = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const normalizedContent = content.trim();
+    if (!selectedConversation || !normalizedContent || normalizedContent.length > 200) {
+      return;
+    }
+
+    if (sendMessage(selectedConversation.id, normalizedContent)) {
+      setContent('');
+    }
+  };
+
+  const submitOnEnter = (event: KeyboardEvent<HTMLTextAreaElement>) => {
+    if (event.key === 'Enter' && !event.shiftKey) {
+      event.preventDefault();
+      event.currentTarget.form?.requestSubmit();
+    }
+  };
 
   const formatDateTime = (value: string) =>
     new Intl.DateTimeFormat(language, {
@@ -133,7 +164,10 @@ function ConversationsPage() {
                 </div>
               </header>
 
-              <div className="flex flex-1 flex-col gap-3 overflow-y-auto bg-page p-4">
+              <div
+                className="flex flex-1 flex-col gap-3 overflow-y-auto bg-page p-4"
+                ref={messageListRef}
+              >
                 {messagesQuery.isLoading ? (
                   <LoadingState message={t('conversations.messages_loading')} />
                 ) : null}
@@ -161,6 +195,37 @@ function ConversationsPage() {
                     })
                   : null}
               </div>
+
+              <form
+                className="grid gap-2 border-t border-border bg-surface p-3"
+                onSubmit={submitMessage}
+              >
+                <textarea
+                  aria-label={t('conversations.composer.label')}
+                  className="min-h-20 w-full resize-none rounded-lg border border-border bg-surface px-3 py-2 text-sm text-heading outline-none focus:border-primary focus:ring-2 focus:ring-primary-soft disabled:opacity-65"
+                  disabled={!isConnected}
+                  maxLength={200}
+                  placeholder={t('conversations.composer.placeholder')}
+                  rows={2}
+                  value={content}
+                  onChange={(event) => setContent(event.target.value)}
+                  onKeyDown={submitOnEnter}
+                />
+                <div className="flex items-center justify-between gap-3">
+                  <span className="text-xs text-body">
+                    {isConnected
+                      ? t('conversations.composer.character_count', { count: content.length })
+                      : t('conversations.composer.connecting')}
+                  </span>
+                  <button
+                    className="rounded-lg bg-action px-4 py-2 text-sm font-bold text-action-text transition focus:outline-none focus:ring-2 focus:ring-primary-soft disabled:opacity-65"
+                    disabled={!isConnected || !content.trim()}
+                    type="submit"
+                  >
+                    {t('conversations.composer.send')}
+                  </button>
+                </div>
+              </form>
             </>
           )}
         </section>

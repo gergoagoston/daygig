@@ -175,7 +175,7 @@ class ConversationControllerIntegrationTest {
 
         assertThat(result.senderUserId()).isEqualTo(applicant.getId());
         assertThat(result.recipientUserId()).isEqualTo(owner.getId());
-        assertThat(result.message().getContent()).isEqualTo("Reply");
+        assertThat(result.message().content()).isEqualTo("Reply");
         assertThat(messageRepository.count()).isEqualTo(2);
         assertThat(conversationRepository.findById(conversation.getId()))
                 .get()
