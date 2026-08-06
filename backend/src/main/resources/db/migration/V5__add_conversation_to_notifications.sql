@@ -6,7 +6,5 @@ ALTER TABLE notifications
         FOREIGN KEY (conversation_id)
         REFERENCES conversations (id);
 
-CREATE UNIQUE INDEX uk_notifications_unread_conversation
-    ON notifications (recipient_id, conversation_id)
-    WHERE conversation_id IS NOT NULL
-      AND is_read = FALSE;
+CREATE INDEX idx_notifications_recipient_conversation_read
+    ON notifications (recipient_id, conversation_id, is_read);
