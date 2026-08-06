@@ -20,7 +20,10 @@ x-backend-environment: &backend-environment
   WEBSOCKET_ALLOWED_ORIGIN_PATTERNS: http://localhost:8090
   JWT_SECRET: ${SCALE_JWT_SECRET:-daygig-scale-local-jwt-secret-that-is-longer-than-thirty-two-characters}
   MESSAGING_ENABLED: "true"
-  MAIL_ENABLED: "false"
+  MAIL_ENABLED: ${MAIL_ENABLED:-false}
+  MAIL_USERNAME: ${MAIL_USERNAME:-}
+  MAIL_PASSWORD: ${MAIL_PASSWORD:-}
+  FRONTEND_URL: ${FRONTEND_URL:-http://localhost:8090}
   AUTH_COOKIE_SECURE: "false"
   SPRING_JPA_SHOW_SQL: "false"
   LOGGING_LEVEL_EDU_BBTE_DAYGIG_BACKEND: INFO

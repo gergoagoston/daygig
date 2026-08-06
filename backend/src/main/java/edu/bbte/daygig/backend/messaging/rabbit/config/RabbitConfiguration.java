@@ -60,9 +60,21 @@ public class RabbitConfiguration {
                         .to(exchange)
                         .with(RabbitNames.JOB_COMPLETED),
                 BindingBuilder
+                        .bind(notificationQueue)
+                        .to(exchange)
+                        .with(RabbitNames.CONVERSATION_STARTED),
+                BindingBuilder
+                        .bind(notificationQueue)
+                        .to(exchange)
+                        .with(RabbitNames.MESSAGE_CREATED),
+                BindingBuilder
                         .bind(emailQueue)
                         .to(exchange)
-                        .with(RabbitNames.APPLICATION_REJECTED)
+                        .with(RabbitNames.APPLICATION_REJECTED),
+                BindingBuilder
+                        .bind(emailQueue)
+                        .to(exchange)
+                        .with(RabbitNames.CONVERSATION_STARTED)
         );
     }
 }

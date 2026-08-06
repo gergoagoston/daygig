@@ -106,6 +106,12 @@
       },
       "job": {
         "completed": "Egy munkát befejezettnek jelöltek."
+      },
+      "conversation": {
+        "started": "Új beszélgetést indítottak veled."
+      },
+      "message": {
+        "created": "Új üzeneted érkezett."
       }
     }
   },

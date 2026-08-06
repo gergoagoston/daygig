@@ -10,6 +10,8 @@ public final class RabbitNames {
     public static final String APPLICATION_REJECTED = "application.rejected";
     public static final String APPLICATION_WITHDRAWN = "application.withdrawn";
     public static final String JOB_COMPLETED = "job.completed";
+    public static final String CONVERSATION_STARTED = "conversation.started";
+    public static final String MESSAGE_CREATED = "message.created";
 
     private RabbitNames() {
     }

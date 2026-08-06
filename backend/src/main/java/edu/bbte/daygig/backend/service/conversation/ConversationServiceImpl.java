@@ -3,6 +3,7 @@ package edu.bbte.daygig.backend.service.conversation;
 import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +12,9 @@ import edu.bbte.daygig.backend.exception.ForbiddenException;
 import edu.bbte.daygig.backend.exception.ResourceNotFoundException;
 import edu.bbte.daygig.backend.exception.ServiceException;
 import edu.bbte.daygig.backend.mappers.ConversationMapper;
+import edu.bbte.daygig.backend.messaging.rabbit.config.RabbitNames;
+import edu.bbte.daygig.backend.messaging.rabbit.event.DomainEventEnvelope;
+import edu.bbte.daygig.backend.messaging.rabbit.event.JobActivityEventPayload;
 import edu.bbte.daygig.backend.model.Application;
 import edu.bbte.daygig.backend.model.Conversation;
 import edu.bbte.daygig.backend.model.enums.ApplicationStatus;
@@ -28,6 +32,7 @@ public class ConversationServiceImpl implements ConversationService {
     private final ConversationRepository conversationRepository;
     private final MessageRepository messageRepository;
     private final ConversationMapper conversationMapper;
+    private final ApplicationEventPublisher eventPublisher;
 
     @Override
     @Transactional
@@ -58,6 +63,16 @@ public class ConversationServiceImpl implements ConversationService {
         firstMessage.setSender(application.getJob().getOwner());
         firstMessage.setContent(content);
         messageRepository.saveAndFlush(firstMessage);
+
+        eventPublisher.publishEvent(DomainEventEnvelope.create(
+                RabbitNames.CONVERSATION_STARTED,
+                application.getApplicant().getId(),
+                JobActivityEventPayload.forChat(
+                        application.getJob().getId(),
+                        savedConversation.getId(),
+                        application.getJob().getOwner().getId()
+                )
+        ));
 
         return savedConversation;
     }
@@ -124,6 +139,15 @@ public class ConversationServiceImpl implements ConversationService {
         conversationRepository.save(conversation);
 
         Message savedMessage = messageRepository.saveAndFlush(message);
+        eventPublisher.publishEvent(DomainEventEnvelope.create(
+                RabbitNames.MESSAGE_CREATED,
+                recipient.getId(),
+                JobActivityEventPayload.forChat(
+                        application.getJob().getId(),
+                        conversation.getId(),
+                        sender.getId()
+                )
+        ));
         return new MessageSendResult(
                 conversationMapper.toDto(savedMessage),
                 sender.getId(),

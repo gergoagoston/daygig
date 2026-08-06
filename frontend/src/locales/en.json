@@ -106,6 +106,12 @@
       },
       "job": {
         "completed": "A job was marked as completed."
+      },
+      "conversation": {
+        "started": "A new conversation was started with you."
+      },
+      "message": {
+        "created": "You received a new message."
       }
     }
   },

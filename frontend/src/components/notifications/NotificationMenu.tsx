@@ -42,7 +42,9 @@ function NotificationMenu({
   const openNotification = async (notification: Notification) => {
     await markAsRead(notification.id);
     setIsOpen(false);
-    if (notification.jobId) {
+    if (notification.conversationId) {
+      navigate(`/conversations/${notification.conversationId}`);
+    } else if (notification.jobId) {
       navigate(`/jobs/${notification.jobId}`);
     }
   };

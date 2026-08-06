@@ -1,5 +1,6 @@
 package edu.bbte.daygig.backend.messaging.rabbit.consumer;
 
+import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -26,6 +27,7 @@ public class EmailEventConsumer {
 
     private static final Logger LOG = LoggerFactory.getLogger(EmailEventConsumer.class);
     private static final String REJECTION_SUBJECT = "Update on your DayGig application";
+    private static final String CONVERSATION_SUBJECT = "A conversation was started on DayGig";
 
     private final UserRepository userRepository;
     private final JobRepository jobRepository;
@@ -44,15 +46,6 @@ public class EmailEventConsumer {
 
     @RabbitListener(queues = RabbitNames.EMAIL_QUEUE)
     public void consume(DomainEventEnvelope<JobActivityEventPayload> event) {
-        if (!RabbitNames.APPLICATION_REJECTED.equals(event.eventType())) {
-            LOG.warn(
-                    "Ignoring unsupported email event. eventId={}, eventType={}",
-                    event.eventId(),
-                    event.eventType()
-            );
-            return;
-        }
-
         User recipient = userRepository
                 .findById(event.recipientUserId())
                 .orElseThrow(() -> new ResourceNotFoundException(
@@ -64,14 +57,52 @@ public class EmailEventConsumer {
                         "Job not found with id: " + event.payload().jobId()
                 ));
 
+        switch (event.eventType()) {
+            case RabbitNames.APPLICATION_REJECTED -> sendRejectionEmail(event, recipient, job);
+            case RabbitNames.CONVERSATION_STARTED -> sendConversationStartedEmail(
+                    event,
+                    recipient,
+                    job
+            );
+            default -> LOG.warn(
+                    "Ignoring unsupported email event. eventId={}, eventType={}",
+                    event.eventId(),
+                    event.eventType()
+            );
+        }
+    }
+
+    private void sendRejectionEmail(DomainEventEnvelope<JobActivityEventPayload> event,
+                                    User recipient,
+                                    Job job) {
+        emailService.send(recipient.getEmail(), REJECTION_SUBJECT, rejectionBody(recipient, job));
+        logSent(event, "Application rejection");
+    }
+
+    private void sendConversationStartedEmail(
+            DomainEventEnvelope<JobActivityEventPayload> event,
+            User recipient,
+            Job job
+    ) {
+        User sender = userRepository
+                .findById(event.payload().senderUserId())
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Conversation sender not found with id: " + event.payload().senderUserId()
+                ));
+
         emailService.send(
                 recipient.getEmail(),
-                REJECTION_SUBJECT,
-                rejectionBody(recipient, job)
+                CONVERSATION_SUBJECT,
+                conversationStartedBody(recipient, sender, job, event.payload().conversationId())
         );
+        logSent(event, "Conversation started");
+    }
 
+    private void logSent(DomainEventEnvelope<JobActivityEventPayload> event,
+                         String emailType) {
         LOG.info(
-                "Application rejection email sent. eventId={}, recipientUserId={}",
+                "{} email sent. eventId={}, recipientUserId={}",
+                emailType,
                 event.eventId(),
                 event.recipientUserId()
         );
@@ -93,6 +124,29 @@ public class EmailEventConsumer {
                 job.getTitle(),
                 frontendUrl(),
                 job.getId()
+        );
+    }
+
+    private String conversationStartedBody(User recipient,
+                                           User sender,
+                                           Job job,
+                                           UUID conversationId) {
+        return """
+                Hello %s,
+
+                %s %s started a conversation with you about "%s".
+
+                You can open the conversation here:
+                %s/conversations/%s
+
+                DayGig
+                """.formatted(
+                recipient.getFirstName(),
+                sender.getFirstName(),
+                sender.getLastName(),
+                job.getTitle(),
+                frontendUrl(),
+                conversationId
         );
     }
 

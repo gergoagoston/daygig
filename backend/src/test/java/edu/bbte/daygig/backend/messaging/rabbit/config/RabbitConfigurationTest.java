@@ -30,7 +30,7 @@ class RabbitConfigurationTest {
 
     @Test
     void shouldDeclareDurableEventExchange() {
-        assertEquals(8, declarables.size());
+        assertEquals(11, declarables.size());
         assertEquals(RabbitNames.EVENTS_EXCHANGE, exchange.getName());
         assertTrue(exchange.isDurable());
         assertFalse(exchange.isAutoDelete());
@@ -67,6 +67,14 @@ class RabbitConfigurationTest {
                 RabbitNames.NOTIFICATION_QUEUE,
                 RabbitNames.JOB_COMPLETED
         );
+        assertBinding(
+                RabbitNames.NOTIFICATION_QUEUE,
+                RabbitNames.CONVERSATION_STARTED
+        );
+        assertBinding(
+                RabbitNames.NOTIFICATION_QUEUE,
+                RabbitNames.MESSAGE_CREATED
+        );
     }
 
     @Test
@@ -74,6 +82,10 @@ class RabbitConfigurationTest {
         assertBinding(
                 RabbitNames.EMAIL_QUEUE,
                 RabbitNames.APPLICATION_REJECTED
+        );
+        assertBinding(
+                RabbitNames.EMAIL_QUEUE,
+                RabbitNames.CONVERSATION_STARTED
         );
     }
 

@@ -7,6 +7,7 @@ public record NotificationOutDto(
         UUID id,
         String type,
         UUID jobId,
+        UUID conversationId,
         LocalDateTime createdAt
 ) {
 }

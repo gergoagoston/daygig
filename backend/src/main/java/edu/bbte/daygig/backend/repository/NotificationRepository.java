@@ -14,6 +14,11 @@ public interface NotificationRepository extends JpaRepository<Notification, UUID
 
     boolean existsByEventId(UUID eventId);
 
+    boolean existsByRecipientIdAndConversationIdAndReadFalse(
+            UUID recipientId,
+            UUID conversationId
+    );
+
     long countByRecipientIdAndReadFalse(UUID recipientId);
 
     List<Notification> findTop10ByRecipientIdAndReadFalseOrderByCreatedAtDesc(UUID recipientId);

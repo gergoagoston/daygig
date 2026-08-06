@@ -35,6 +35,9 @@ public class Notification extends BaseEntity {
     @Column(name = "job_id")
     private UUID jobId;
 
+    @Column(name = "conversation_id")
+    private UUID conversationId;
+
     @Column(name = "is_read", nullable = false)
     private boolean read;
 }

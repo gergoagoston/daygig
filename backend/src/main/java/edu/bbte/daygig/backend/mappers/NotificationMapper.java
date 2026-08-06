@@ -19,6 +19,7 @@ public class NotificationMapper {
         notification.setRecipient(recipient);
         notification.setType(event.eventType());
         notification.setJobId(event.payload().jobId());
+        notification.setConversationId(event.payload().conversationId());
         notification.setRead(false);
         return notification;
     }
@@ -28,6 +29,7 @@ public class NotificationMapper {
                 notification.getId(),
                 notification.getType(),
                 notification.getJobId(),
+                notification.getConversationId(),
                 notification.getCreatedAt()
         );
     }

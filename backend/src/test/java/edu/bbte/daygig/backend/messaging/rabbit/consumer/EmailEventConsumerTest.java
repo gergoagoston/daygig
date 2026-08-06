@@ -68,4 +68,51 @@ class EmailEventConsumerTest {
         assertTrue(bodyCaptor.getValue().contains("Garden cleaning"));
         assertTrue(bodyCaptor.getValue().contains("https://daygig.example.com/jobs/" + jobId));
     }
+
+    @Test
+    void shouldSendConversationStartedEmailWithoutMessageContent() {
+        UUID recipientId = UUID.randomUUID();
+        UUID senderId = UUID.randomUUID();
+        UUID jobId = UUID.randomUUID();
+        UUID conversationId = UUID.randomUUID();
+        User recipient = new User();
+        recipient.setId(recipientId);
+        recipient.setFirstName("Anna");
+        recipient.setEmail("anna@example.com");
+        User sender = new User();
+        sender.setId(senderId);
+        sender.setFirstName("Bela");
+        sender.setLastName("Nagy");
+        Job job = new Job();
+        job.setId(jobId);
+        job.setTitle("Garden cleaning");
+        DomainEventEnvelope<JobActivityEventPayload> event = DomainEventEnvelope.create(
+                RabbitNames.CONVERSATION_STARTED,
+                recipientId,
+                JobActivityEventPayload.forChat(jobId, conversationId, senderId)
+        );
+        when(userRepository.findById(recipientId)).thenReturn(Optional.of(recipient));
+        when(userRepository.findById(senderId)).thenReturn(Optional.of(sender));
+        when(jobRepository.findById(jobId)).thenReturn(Optional.of(job));
+        EmailEventConsumer consumer = new EmailEventConsumer(
+                userRepository,
+                jobRepository,
+                emailService,
+                new MailProperties(true, "daygig@example.com", "https://daygig.example.com/")
+        );
+
+        consumer.consume(event);
+
+        ArgumentCaptor<String> bodyCaptor = ArgumentCaptor.forClass(String.class);
+        verify(emailService).send(
+                eq("anna@example.com"),
+                eq("A conversation was started on DayGig"),
+                bodyCaptor.capture()
+        );
+        assertTrue(bodyCaptor.getValue().contains("Bela Nagy"));
+        assertTrue(bodyCaptor.getValue().contains("Garden cleaning"));
+        assertTrue(bodyCaptor.getValue().contains(
+                "https://daygig.example.com/conversations/" + conversationId
+        ));
+    }
 }

@@ -7,7 +7,7 @@ import EmptyState from '../components/ui/EmptyState';
 import ErrorState from '../components/ui/ErrorState';
 import LoadingState from '../components/ui/LoadingState';
 import useAuth from '../hooks/useAuth';
-import { useSendChatMessage } from '../hooks/useChatMessaging';
+import { useChatMessageSubscription, useSendChatMessage } from '../hooks/useChatMessaging';
 import { useConversationMessages, useConversations } from '../hooks/useConversations';
 import type { UserSummary } from '../types/user';
 
@@ -17,6 +17,7 @@ function userName(user: UserSummary) {
 }
 
 function ConversationsPage() {
+  useChatMessageSubscription();
   const { conversationId } = useParams();
   const { i18n, t } = useTranslation();
   const { user } = useAuth();

@@ -1,5 +1,6 @@
 package edu.bbte.daygig.backend.messaging.rabbit.consumer;
 
+import java.util.UUID;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.ApplicationEventPublisher;
@@ -35,6 +36,15 @@ public class NotificationEventConsumer {
     @Transactional
     public void consume(DomainEventEnvelope<JobActivityEventPayload> event) {
         if (notificationRepository.existsByEventId(event.eventId())) {
+            return;
+        }
+
+        UUID conversationId = event.payload().conversationId();
+        if (conversationId != null
+                && notificationRepository.existsByRecipientIdAndConversationIdAndReadFalse(
+                        event.recipientUserId(),
+                        conversationId
+                )) {
             return;
         }
 

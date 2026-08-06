@@ -15,10 +15,8 @@ import TermsAndConditionsPage from './pages/TermsAndConditionsPage';
 import UserProfilePage from './pages/UserProfilePage';
 import LoginPage from './pages/auth/LoginPage';
 import RegisterPage from './pages/auth/RegisterPage';
-import { useChatMessageSubscription } from './hooks/useChatMessaging';
 
 function App() {
-  useChatMessageSubscription();
   const location = useLocation();
   const { i18n } = useTranslation();
   const [isCreateJobOpen, setIsCreateJobOpen] = useState(false);
