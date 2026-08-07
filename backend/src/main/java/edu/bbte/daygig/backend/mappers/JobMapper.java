@@ -8,7 +8,9 @@ import lombok.RequiredArgsConstructor;
 import edu.bbte.daygig.backend.dto.job.JobCreateInDto;
 import edu.bbte.daygig.backend.dto.job.JobDetailedOutDto;
 import edu.bbte.daygig.backend.dto.job.JobOutDto;
+import edu.bbte.daygig.backend.dto.job.OwnerJobOutDto;
 import edu.bbte.daygig.backend.model.Job;
+import edu.bbte.daygig.backend.service.job.OwnerJobSummary;
 
 @Component
 @RequiredArgsConstructor
@@ -43,6 +45,13 @@ public class JobMapper {
                 approximateCoordinate(job.getLatitude()), approximateCoordinate(job.getLongitude()),
                 PUBLIC_LOCATION_RADIUS_METERS, userMapper.toSummaryDto(job.getOwner()), job.getCreatedAt(),
                 completedApplicationId(job), job.getCompletedAt());
+    }
+
+    public OwnerJobOutDto toOwnerListDto(OwnerJobSummary summary) {
+        Job job = summary.job();
+        return new OwnerJobOutDto(job.getId(), job.getTitle(), job.getDescription(), job.getCategory(),
+                job.getStatus(), job.getHourlyRate(), job.getCurrency(), job.getLocationName(), job.getCreatedAt(),
+                completedApplicationId(job), job.getCompletedAt(), summary.applicationCount());
     }
 
     private UUID completedApplicationId(Job job) {

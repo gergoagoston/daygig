@@ -61,7 +61,7 @@ function JobDetailsPage() {
 
   return (
     <main className="app-page">
-      <div className="mx-auto w-full max-w-5xl">
+      <div className="mx-auto w-full max-w-6xl">
         {isLoading ? <LoadingState message={t('jobs.details.loading')} /> : null}
 
         {(!hasJobId || isError) && !isLoading ? (
@@ -74,7 +74,7 @@ function JobDetailsPage() {
               <JobDetailsHeader category={job.category} title={job.title} />
             </div>
 
-            <div className="grid gap-0 lg:grid-cols-[minmax(0,1fr)_320px]">
+            <div className="grid gap-0 lg:grid-cols-[minmax(0,1fr)_400px]">
               <article className="grid min-w-0 gap-7 px-6 py-7 sm:px-8">
                 <div className="max-w-3xl">
                   <p className="whitespace-pre-line text-lg leading-relaxed text-body">

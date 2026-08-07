@@ -24,6 +24,7 @@ import edu.bbte.daygig.backend.dto.job.JobCreateInDto;
 import edu.bbte.daygig.backend.dto.job.JobDetailedOutDto;
 import edu.bbte.daygig.backend.dto.job.JobOutDto;
 import edu.bbte.daygig.backend.dto.job.JobSearchInDto;
+import edu.bbte.daygig.backend.dto.job.OwnerJobOutDto;
 import edu.bbte.daygig.backend.mappers.JobMapper;
 import edu.bbte.daygig.backend.security.JwtPrincipal;
 import edu.bbte.daygig.backend.service.job.JobService;
@@ -50,11 +51,11 @@ public class JobController {
     }
 
     @GetMapping("/mine")
-    public List<JobOutDto> getMine(@AuthenticationPrincipal JwtPrincipal principal) {
+    public List<OwnerJobOutDto> getMine(@AuthenticationPrincipal JwtPrincipal principal) {
         return jobService
                 .getMine(currentUserId(principal))
                 .stream()
-                .map(jobMapper::toListDto)
+                .map(jobMapper::toOwnerListDto)
                 .toList();
     }
 

@@ -8,6 +8,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.ServletException;
+import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -53,17 +54,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             String role = claims.get("role", String.class);
 
 
-            if (uuid == null || uuid.isBlank()) {
-                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid JWT token");
-                return;
-            }
-            if (email == null || email.isBlank()) {
-                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid JWT token");
-                return;
-            }
-            if (role == null || role.isBlank()) {
-                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid JWT token");
-                return;
+            if (uuid == null || uuid.isBlank()
+                    || email == null || email.isBlank()
+                    || role == null || role.isBlank()) {
+                throw new JwtException("JWT token is missing required claims");
             }
 
             UUID.fromString(uuid);
@@ -96,7 +90,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         } catch (JwtException | IllegalArgumentException ex) {
             log.warn("JWT validation failed: {}", ex.getMessage());
             SecurityContextHolder.clearContext();
-            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid or expired JWT token");
+            response.addHeader(HttpHeaders.SET_COOKIE, authCookieService.clearAccessTokenCookie());
+            filterChain.doFilter(request, response);
         }
     }
 }

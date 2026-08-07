@@ -1,7 +1,11 @@
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
+import StartConversationModal from '../conversations/StartConversationModal';
 import useJobApplications from '../../hooks/useJobApplications';
 import useCompleteJob from '../../hooks/useCompleteJob';
+import { useConversations, useCreateConversation } from '../../hooks/useConversations';
 import useUpdateOwnerApplicationStatus from '../../hooks/useUpdateOwnerApplicationStatus';
 import type { JobStatus } from '../../types/job';
 import OwnerApplicationListItem from './OwnerApplicationListItem';
@@ -18,8 +22,12 @@ function OwnerApplicationsPanel({
   completedApplicationId,
 }: OwnerApplicationsPanelProps) {
   const { t } = useTranslation();
+  const navigate = useNavigate();
+  const [selectedApplicationId, setSelectedApplicationId] = useState<string | null>(null);
   const isJobOpen = jobStatus === 'OPEN';
   const { applications, isError, isLoading } = useJobApplications(jobId);
+  const { conversations } = useConversations();
+  const createConversation = useCreateConversation();
   const { isUpdateError, isUpdating, updateStatus, updatingApplicationId } =
     useUpdateOwnerApplicationStatus(jobId);
   const { complete, completingApplicationId, isCompleteError, isCompleting } =
@@ -29,6 +37,29 @@ function OwnerApplicationsPanel({
     if (window.confirm(t('posted_jobs.applications.actions.complete_confirm'))) {
       complete(applicationId);
     }
+  };
+
+  const closeStartConversation = () => {
+    if (!createConversation.isPending) {
+      setSelectedApplicationId(null);
+      createConversation.reset();
+    }
+  };
+
+  const startConversation = (content: string) => {
+    if (!selectedApplicationId) {
+      return;
+    }
+
+    createConversation.mutate(
+      { applicationId: selectedApplicationId, content },
+      {
+        onSuccess: (conversation) => {
+          setSelectedApplicationId(null);
+          navigate(`/conversations/${conversation.id}`);
+        },
+      }
+    );
   };
 
   return (
@@ -64,12 +95,21 @@ function OwnerApplicationsPanel({
                 key={application.id}
                 application={application}
                 completedApplicationId={completedApplicationId}
+                conversationId={
+                  conversations.find(
+                    (conversation) => conversation.applicationId === application.id
+                  )?.id
+                }
                 isCompleting={isCompleting && completingApplicationId === application.id}
                 isJobOpen={isJobOpen}
                 isRejecting={isUpdating && updatingApplicationId === application.id}
                 jobId={jobId}
                 onComplete={handleComplete}
                 onReject={(applicationId) => updateStatus(applicationId, 'REJECTED')}
+                onStartConversation={(applicationId) => {
+                  createConversation.reset();
+                  setSelectedApplicationId(applicationId);
+                }}
               />
             ))}
           </ul>
@@ -84,6 +124,16 @@ function OwnerApplicationsPanel({
         <p className="text-sm text-danger">
           {t('posted_jobs.applications.errors.complete_failed')}
         </p>
+      ) : null}
+
+      {selectedApplicationId ? (
+        <StartConversationModal
+          isError={createConversation.isError}
+          isOpen
+          isSubmitting={createConversation.isPending}
+          onClose={closeStartConversation}
+          onSubmit={startConversation}
+        />
       ) : null}
     </section>
   );

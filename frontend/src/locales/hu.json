@@ -49,11 +49,71 @@
     "main": "Fő navigáció",
     "my_jobs": "Meghirdetett munkáim",
     "my_applications": "Jelentkezéseim",
+    "messages": "Üzenetek",
     "login": "Bejelentkezés",
     "register": "Regisztráció",
     "logout": "Kijelentkezés",
     "profile": "Profilbeállítások",
-    "language": "Nyelv"
+    "language": "Nyelv",
+    "menu": "Menü"
+  },
+  "conversations": {
+    "title": "Üzenetek",
+    "loading": "Beszélgetések betöltése...",
+    "messages_loading": "Üzenetek betöltése...",
+    "select": "Válassz egy beszélgetést az üzenetek megtekintéséhez.",
+    "back": "Vissza",
+    "actions": {
+      "start": "Beszélgetés indítása",
+      "chat": "Chat"
+    },
+    "start": {
+      "title": "Beszélgetés indítása",
+      "message_label": "Első üzenet",
+      "message_placeholder": "Írd meg az első üzenetet...",
+      "submit": "Beszélgetés indítása",
+      "submitting": "Indítás...",
+      "cancel": "Mégse",
+      "error": "Nem sikerült elindítani a beszélgetést. Próbáld újra."
+    },
+    "composer": {
+      "label": "Üzenet",
+      "placeholder": "Írj egy üzenetet...",
+      "send": "Küldés",
+      "connecting": "Kapcsolódás...",
+      "character_count": "{{count}}/200"
+    },
+    "empty": {
+      "title": "Még nincsenek beszélgetéseid"
+    },
+    "errors": {
+      "load_failed": "Nem sikerült betölteni a beszélgetéseket. Próbáld újra.",
+      "messages_load_failed": "Nem sikerült betölteni az üzeneteket. Próbáld újra.",
+      "not_found": "Ez a beszélgetés nem érhető el."
+    }
+  },
+  "notifications": {
+    "title": "Értesítések",
+    "open": "Értesítések megnyitása",
+    "loading": "Értesítések betöltése...",
+    "empty": "Nincs olvasatlan értesítés.",
+    "mark_all_read": "Összes olvasottnak jelölése",
+    "types": {
+      "application": {
+        "created": "Új jelentkezés érkezett.",
+        "rejected": "Elutasították a jelentkezésedet.",
+        "withdrawn": "Visszavontak egy jelentkezést."
+      },
+      "job": {
+        "completed": "Egy munkát befejezettnek jelöltek."
+      },
+      "conversation": {
+        "started": "Új üzeneted érkezett."
+      },
+      "message": {
+        "created": "Új üzeneted érkezett."
+      }
+    }
   },
   "profile": {
     "settings": {
@@ -210,7 +270,7 @@
       },
       "actions": {
         "REJECTED": "Elutasítás",
-        "complete": "Befejezve",
+        "complete": "Munka elvégezve",
         "complete_confirm": "Biztosan ő végezte el a munkát? Ez lezárja a munkát, és később őt lehet értékelni.",
         "completing": "Lezárás...",
         "updating": "Frissítés..."
@@ -288,7 +348,9 @@
       "actions": {
         "search": "Keresés",
         "searching": "Keresés...",
-        "reset": "Szűrők törlése"
+        "reset": "Szűrők törlése",
+        "filters": "Szűrők",
+        "filters_active": "Szűrők ({{count}})"
       },
       "location": {
         "label": "Keresési hely",

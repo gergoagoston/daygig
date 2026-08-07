@@ -24,4 +24,12 @@ i18n
     },
   });
 
+export function getCurrentLanguage(): string {
+  return i18n.resolvedLanguage ?? i18n.language;
+}
+
+export function changeCurrentLanguage(language: string): void {
+  void i18n.changeLanguage(language);
+}
+
 export default i18n;

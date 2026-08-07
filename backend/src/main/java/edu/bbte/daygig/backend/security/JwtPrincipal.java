@@ -1,4 +1,11 @@
 package edu.bbte.daygig.backend.security;
 
-public record JwtPrincipal(String uuid, String email, String role) {
+import java.security.Principal;
+
+public record JwtPrincipal(String uuid, String email, String role) implements Principal {
+
+    @Override
+    public String getName() {
+        return uuid;
+    }
 }

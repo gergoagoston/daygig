@@ -2,8 +2,11 @@ package edu.bbte.daygig.backend.service.job;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.UUID;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -17,12 +20,16 @@ import edu.bbte.daygig.backend.exception.ForbiddenException;
 import edu.bbte.daygig.backend.exception.ResourceNotFoundException;
 import edu.bbte.daygig.backend.exception.ServiceException;
 import edu.bbte.daygig.backend.mappers.JobMapper;
+import edu.bbte.daygig.backend.messaging.rabbit.config.RabbitNames;
+import edu.bbte.daygig.backend.messaging.rabbit.event.DomainEventEnvelope;
+import edu.bbte.daygig.backend.messaging.rabbit.event.JobActivityEventPayload;
 import edu.bbte.daygig.backend.model.Application;
 import edu.bbte.daygig.backend.model.enums.ApplicationStatus;
 import edu.bbte.daygig.backend.model.enums.JobStatus;
 import edu.bbte.daygig.backend.model.Job;
 import edu.bbte.daygig.backend.model.User;
 import edu.bbte.daygig.backend.repository.ApplicationRepository;
+import edu.bbte.daygig.backend.repository.JobApplicationCountProjection;
 import edu.bbte.daygig.backend.repository.JobRepository;
 import edu.bbte.daygig.backend.repository.JobSpecifications;
 import edu.bbte.daygig.backend.repository.UserRepository;
@@ -38,6 +45,7 @@ public class JobServiceImpl implements JobService {
     private final ApplicationRepository applicationRepository;
     private final UserRepository userRepository;
     private final JobMapper jobMapper;
+    private final ApplicationEventPublisher eventPublisher;
 
     @Override
     public Page<Job> getOpenJobs(JobSearchInDto search,
@@ -47,8 +55,23 @@ public class JobServiceImpl implements JobService {
     }
 
     @Override
-    public List<Job> getMine(UUID ownerId) {
-        return jobRepository.findAllByOwnerIdOrderByCreatedAtDesc(ownerId);
+    public List<OwnerJobSummary> getMine(UUID ownerId) {
+        List<Job> jobs = jobRepository.findAllByOwnerIdOrderByCreatedAtDesc(ownerId);
+        Map<UUID, Long> applicationCounts = applicationRepository
+                .countByJobOwnerId(ownerId)
+                .stream()
+                .collect(Collectors.toMap(
+                        JobApplicationCountProjection::getJobId,
+                        JobApplicationCountProjection::getApplicationCount
+                ));
+
+        return jobs
+                .stream()
+                .map(job -> new OwnerJobSummary(
+                        job,
+                        applicationCounts.getOrDefault(job.getId(), 0L)
+                ))
+                .toList();
     }
 
     @Override
@@ -111,7 +134,16 @@ public class JobServiceImpl implements JobService {
         job.setCompletedAt(LocalDateTime.now());
         job.setStatus(JobStatus.COMPLETED);
 
-        return jobRepository.saveAndFlush(job);
+        Job savedJob = jobRepository.saveAndFlush(job);
+        eventPublisher.publishEvent(DomainEventEnvelope.create(
+                RabbitNames.JOB_COMPLETED,
+                application.getApplicant().getId(),
+                new JobActivityEventPayload(
+                        savedJob.getId(),
+                        application.getId()
+                )
+        ));
+        return savedJob;
     }
 
     @Override

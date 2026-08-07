@@ -49,11 +49,71 @@
     "main": "Navigare principala",
     "my_jobs": "Joburile publicate",
     "my_applications": "Aplicatiile mele",
+    "messages": "Mesaje",
     "login": "Autentificare",
     "register": "Inregistrare",
     "logout": "Deconectare",
     "profile": "Setari profil",
-    "language": "Limba"
+    "language": "Limba",
+    "menu": "Meniu"
+  },
+  "conversations": {
+    "title": "Mesaje",
+    "loading": "Se incarca conversatiile...",
+    "messages_loading": "Se incarca mesajele...",
+    "select": "Selecteaza o conversatie pentru a vedea mesajele.",
+    "back": "Inapoi",
+    "actions": {
+      "start": "Porneste conversatia",
+      "chat": "Chat"
+    },
+    "start": {
+      "title": "Porneste conversatia",
+      "message_label": "Primul mesaj",
+      "message_placeholder": "Scrie primul mesaj...",
+      "submit": "Porneste conversatia",
+      "submitting": "Se porneste...",
+      "cancel": "Anuleaza",
+      "error": "Nu am putut porni conversatia. Incearca din nou."
+    },
+    "composer": {
+      "label": "Mesaj",
+      "placeholder": "Scrie un mesaj...",
+      "send": "Trimite",
+      "connecting": "Se conecteaza...",
+      "character_count": "{{count}}/200"
+    },
+    "empty": {
+      "title": "Nu ai conversatii inca"
+    },
+    "errors": {
+      "load_failed": "Nu am putut incarca conversatiile. Incearca din nou.",
+      "messages_load_failed": "Nu am putut incarca mesajele. Incearca din nou.",
+      "not_found": "Aceasta conversatie nu este disponibila."
+    }
+  },
+  "notifications": {
+    "title": "Notificări",
+    "open": "Deschide notificările",
+    "loading": "Se încarcă notificările...",
+    "empty": "Nu există notificări necitite.",
+    "mark_all_read": "Marchează toate ca citite",
+    "types": {
+      "application": {
+        "created": "Ai primit o cerere nouă.",
+        "rejected": "Cererea ta a fost respinsă.",
+        "withdrawn": "O cerere a fost retrasă."
+      },
+      "job": {
+        "completed": "O lucrare a fost marcată ca finalizată."
+      },
+      "conversation": {
+        "started": "Ai primit un mesaj nou."
+      },
+      "message": {
+        "created": "Ai primit un mesaj nou."
+      }
+    }
   },
   "profile": {
     "settings": {
@@ -288,7 +348,9 @@
       "actions": {
         "search": "Cauta",
         "searching": "Se cauta...",
-        "reset": "Sterge filtrele"
+        "reset": "Sterge filtrele",
+        "filters": "Filtre",
+        "filters_active": "Filtre ({{count}})"
       },
       "location": {
         "label": "Locatia cautarii",

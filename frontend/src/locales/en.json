@@ -49,11 +49,71 @@
     "main": "Main navigation",
     "my_jobs": "Posted Jobs",
     "my_applications": "My Applications",
+    "messages": "Messages",
     "login": "Login",
     "register": "Register",
     "logout": "Logout",
     "profile": "Profile settings",
-    "language": "Language"
+    "language": "Language",
+    "menu": "Menu"
+  },
+  "conversations": {
+    "title": "Messages",
+    "loading": "Loading conversations...",
+    "messages_loading": "Loading messages...",
+    "select": "Select a conversation to view its messages.",
+    "back": "Back",
+    "actions": {
+      "start": "Start conversation",
+      "chat": "Chat"
+    },
+    "start": {
+      "title": "Start conversation",
+      "message_label": "First message",
+      "message_placeholder": "Write your first message...",
+      "submit": "Start conversation",
+      "submitting": "Starting...",
+      "cancel": "Cancel",
+      "error": "Could not start the conversation. Please try again."
+    },
+    "composer": {
+      "label": "Message",
+      "placeholder": "Write a message...",
+      "send": "Send",
+      "connecting": "Connecting...",
+      "character_count": "{{count}}/200"
+    },
+    "empty": {
+      "title": "No conversations yet"
+    },
+    "errors": {
+      "load_failed": "Could not load conversations. Please try again.",
+      "messages_load_failed": "Could not load messages. Please try again.",
+      "not_found": "This conversation is not available."
+    }
+  },
+  "notifications": {
+    "title": "Notifications",
+    "open": "Open notifications",
+    "loading": "Loading notifications...",
+    "empty": "No unread notifications.",
+    "mark_all_read": "Mark all as read",
+    "types": {
+      "application": {
+        "created": "You received a new application.",
+        "rejected": "Your application was rejected.",
+        "withdrawn": "An application was withdrawn."
+      },
+      "job": {
+        "completed": "A job was marked as completed."
+      },
+      "conversation": {
+        "started": "You received a new message."
+      },
+      "message": {
+        "created": "You received a new message."
+      }
+    }
   },
   "profile": {
     "settings": {
@@ -288,7 +348,9 @@
       "actions": {
         "search": "Search",
         "searching": "Searching...",
-        "reset": "Clear filters"
+        "reset": "Clear filters",
+        "filters": "Filters",
+        "filters_active": "Filters ({{count}})"
       },
       "location": {
         "label": "Search location",

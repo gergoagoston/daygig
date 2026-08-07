@@ -4,9 +4,6 @@ import { notifyUnauthorized } from '../utils/authEvents';
 const httpClient = axios.create({
   baseURL: '/api',
   withCredentials: true,
-  headers: {
-    'Content-Type': 'application/json',
-  },
 });
 
 httpClient.interceptors.response.use(

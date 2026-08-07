@@ -32,6 +32,10 @@ export type Job = {
   completedAt: string | null;
 };
 
+export type OwnerJob = Job & {
+  applicationCount: number;
+};
+
 export type JobCreatePayload = {
   title: string;
   description: string;
