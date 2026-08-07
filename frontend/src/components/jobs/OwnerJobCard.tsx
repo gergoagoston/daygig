@@ -1,11 +1,10 @@
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
-import useJobApplications from '../../hooks/useJobApplications';
-import type { Job } from '../../types/job';
+import type { OwnerJob } from '../../types/job';
 
 type OwnerJobCardProps = {
-  job: Job;
+  job: OwnerJob;
 };
 
 function formatRate(value: number, language: string) {
@@ -19,8 +18,7 @@ function OwnerJobCard({ job }: OwnerJobCardProps) {
   const { i18n, t } = useTranslation();
   const language = i18n.resolvedLanguage ?? i18n.language;
 
-  const { applications } = useJobApplications(job.id);
-  const hasApplications = applications.length > 0;
+  const hasApplications = job.applicationCount > 0;
 
   return (
     <Link
@@ -63,7 +61,7 @@ function OwnerJobCard({ job }: OwnerJobCardProps) {
             {t('posted_jobs.applications.title')}
           </span>
           <span className="text-xs font-bold text-body">
-            {t('posted_jobs.applications.count', { count: applications.length })}
+            {t('posted_jobs.applications.count', { count: job.applicationCount })}
           </span>
         </div>
       ) : null}

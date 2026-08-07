@@ -242,6 +242,8 @@ class JobControllerIntegrationTest {
         Job firstOwnJob = saveJob(owner, "Own open job", JobCategory.CLEANING, JobStatus.OPEN);
         Job secondOwnJob = saveJob(owner, "Own completed job", JobCategory.GARDENING, JobStatus.COMPLETED);
         saveJob(otherOwner, "Other owner job", JobCategory.MOVING, JobStatus.OPEN);
+        saveApplication(saveUser("mine-first-applicant"), firstOwnJob, ApplicationStatus.ACTIVE);
+        saveApplication(saveUser("mine-second-applicant"), firstOwnJob, ApplicationStatus.REJECTED);
 
         mockMvc.perform(get("/jobs/mine")
                 .cookie(accessTokenCookie(owner)))
@@ -254,7 +256,8 @@ class JobControllerIntegrationTest {
                 .andExpect(jsonPath("$[*].category", containsInAnyOrder("CLEANING", "GARDENING")))
                 .andExpect(jsonPath("$[*].status", containsInAnyOrder("OPEN", "COMPLETED")))
                 .andExpect(jsonPath("$[*].locationName", containsInAnyOrder("Cluj-Napoca", "Cluj-Napoca")))
-                .andExpect(jsonPath("$[*].currency", containsInAnyOrder("RON", "RON")));
+                .andExpect(jsonPath("$[*].currency", containsInAnyOrder("RON", "RON")))
+                .andExpect(jsonPath("$[*].applicationCount", containsInAnyOrder(2, 0)));
     }
 
     @Test

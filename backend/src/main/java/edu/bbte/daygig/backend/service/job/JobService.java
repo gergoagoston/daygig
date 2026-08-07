@@ -13,7 +13,7 @@ public interface JobService {
     Page<Job> getOpenJobs(JobSearchInDto search,
                           Pageable pageable);
 
-    List<Job> getMine(UUID ownerId);
+    List<OwnerJobSummary> getMine(UUID ownerId);
 
     Job create(JobCreateInDto jobCreateInDto,
                UUID ownerId);

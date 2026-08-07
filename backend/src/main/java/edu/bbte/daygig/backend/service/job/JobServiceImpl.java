@@ -2,7 +2,9 @@ package edu.bbte.daygig.backend.service.job;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.UUID;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
@@ -27,6 +29,7 @@ import edu.bbte.daygig.backend.model.enums.JobStatus;
 import edu.bbte.daygig.backend.model.Job;
 import edu.bbte.daygig.backend.model.User;
 import edu.bbte.daygig.backend.repository.ApplicationRepository;
+import edu.bbte.daygig.backend.repository.JobApplicationCountProjection;
 import edu.bbte.daygig.backend.repository.JobRepository;
 import edu.bbte.daygig.backend.repository.JobSpecifications;
 import edu.bbte.daygig.backend.repository.UserRepository;
@@ -52,8 +55,23 @@ public class JobServiceImpl implements JobService {
     }
 
     @Override
-    public List<Job> getMine(UUID ownerId) {
-        return jobRepository.findAllByOwnerIdOrderByCreatedAtDesc(ownerId);
+    public List<OwnerJobSummary> getMine(UUID ownerId) {
+        List<Job> jobs = jobRepository.findAllByOwnerIdOrderByCreatedAtDesc(ownerId);
+        Map<UUID, Long> applicationCounts = applicationRepository
+                .countByJobOwnerId(ownerId)
+                .stream()
+                .collect(Collectors.toMap(
+                        JobApplicationCountProjection::getJobId,
+                        JobApplicationCountProjection::getApplicationCount
+                ));
+
+        return jobs
+                .stream()
+                .map(job -> new OwnerJobSummary(
+                        job,
+                        applicationCounts.getOrDefault(job.getId(), 0L)
+                ))
+                .toList();
     }
 
     @Override
