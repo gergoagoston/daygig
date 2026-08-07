@@ -55,3 +55,4 @@ app:
     secure: ${AUTH_COOKIE_SECURE:false}
     sameSite: Strict
     path: /api
+    domain: ${AUTH_COOKIE_DOMAIN:}

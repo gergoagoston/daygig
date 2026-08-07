@@ -7,6 +7,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseCookie;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 @Component
 public class AuthCookieService {
@@ -37,26 +38,31 @@ public class AuthCookieService {
     }
 
     public String createAccessTokenCookie(String token) {
-        return ResponseCookie
-                .from(authCookieProperties.name(), token)
-                .httpOnly(true)
-                .secure(authCookieProperties.secure())
-                .sameSite(authCookieProperties.sameSite())
-                .path(authCookieProperties.path())
+        return cookieBuilder(token)
                 .maxAge(Duration.ofMinutes(jwtProperties.expirationMinutes()))
                 .build()
                 .toString();
     }
 
     public String clearAccessTokenCookie() {
-        return ResponseCookie
-                .from(authCookieProperties.name(), "")
-                .httpOnly(true)
-                .secure(authCookieProperties.secure())
-                .sameSite(authCookieProperties.sameSite())
-                .path(authCookieProperties.path())
+        return cookieBuilder("")
                 .maxAge(Duration.ZERO)
                 .build()
                 .toString();
+    }
+
+    private ResponseCookie.ResponseCookieBuilder cookieBuilder(String value) {
+        ResponseCookie.ResponseCookieBuilder builder = ResponseCookie
+                .from(authCookieProperties.name(), value)
+                .httpOnly(true)
+                .secure(authCookieProperties.secure())
+                .sameSite(authCookieProperties.sameSite())
+                .path(authCookieProperties.path());
+
+        if (StringUtils.hasText(authCookieProperties.domain())) {
+            builder.domain(authCookieProperties.domain());
+        }
+
+        return builder;
     }
 }
