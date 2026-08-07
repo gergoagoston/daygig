@@ -11,10 +11,12 @@ class AuthCookieServiceTest {
 
     private static final String COOKIE_NAME = "accessToken";
     private static final String TOKEN = "jwt-token";
+    private static final JwtProperties JWT_PROPERTIES =
+            new JwtProperties("test-secret-key-that-is-long-enough-for-hmac-sha256", 60L);
 
     private final AuthCookieService authCookieService = new AuthCookieService(
-            new AuthCookieProperties(COOKIE_NAME, false, "Strict", "/api"),
-            new JwtProperties("test-secret-key-that-is-long-enough-for-hmac-sha256", 60L));
+            new AuthCookieProperties(COOKIE_NAME, false, "Strict", "/api", null),
+            JWT_PROPERTIES);
 
     @Test
     void extractAccessTokenReturnsEmptyWhenRequestHasNoCookies() {
@@ -33,7 +35,23 @@ class AuthCookieServiceTest {
                 .contains("Max-Age=3600")
                 .contains("HttpOnly")
                 .contains("SameSite=Strict")
+                .doesNotContain("Domain=")
                 .doesNotContain("Secure");
+    }
+
+    @Test
+    void accessTokenCookiesUseConfiguredDomain() {
+        AuthCookieService domainCookieService = new AuthCookieService(
+                new AuthCookieProperties(COOKIE_NAME, true, "Strict", "/api", "daygig.hu"),
+                JWT_PROPERTIES);
+
+        assertThat(domainCookieService.createAccessTokenCookie(TOKEN))
+                .contains("Domain=daygig.hu")
+                .contains("Secure");
+        assertThat(domainCookieService.clearAccessTokenCookie())
+                .contains("Domain=daygig.hu")
+                .contains("Max-Age=0")
+                .contains("Secure");
     }
 
     @Test
