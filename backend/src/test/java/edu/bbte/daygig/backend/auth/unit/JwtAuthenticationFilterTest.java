@@ -83,22 +83,23 @@ class JwtAuthenticationFilterTest {
     }
 
     @Test
-    void doFilterReturnsUnauthorizedWhenTokenIsInvalid() throws Exception {
+    void doFilterContinuesWithoutAuthenticationAndClearsCookieWhenTokenIsInvalid() throws Exception {
         JwtAuthenticationFilter filter = filter();
         MockHttpServletRequest request = new MockHttpServletRequest();
         MockHttpServletResponse response = new MockHttpServletResponse();
         when(authCookieService.extractAccessToken(request)).thenReturn(Optional.of(TOKEN));
         when(jwtService.parseToken(TOKEN)).thenThrow(new JwtException("bad token"));
+        when(authCookieService.clearAccessTokenCookie()).thenReturn("accessToken=; Max-Age=0; Path=/api");
 
         filter.doFilter(request, response, filterChain);
 
-        assertThat(response.getStatus()).isEqualTo(MockHttpServletResponse.SC_UNAUTHORIZED);
+        assertThat(response.getHeader("Set-Cookie")).contains("Max-Age=0");
         assertThat(SecurityContextHolder.getContext().getAuthentication()).isNull();
-        verify(filterChain, never()).doFilter(request, response);
+        verify(filterChain).doFilter(request, response);
     }
 
     @Test
-    void doFilterReturnsUnauthorizedWhenRequiredClaimIsMissing() throws Exception {
+    void doFilterContinuesWithoutAuthenticationWhenRequiredClaimIsMissing() throws Exception {
         JwtAuthenticationFilter filter = filter();
         MockHttpServletRequest request = new MockHttpServletRequest();
         MockHttpServletResponse response = new MockHttpServletResponse();
@@ -106,11 +107,12 @@ class JwtAuthenticationFilterTest {
         when(jwtService.parseToken(TOKEN)).thenReturn(claims);
         when(claims.get("uuid", String.class)).thenReturn(UUID.randomUUID().toString());
         when(claims.get("email", String.class)).thenReturn("");
+        when(authCookieService.clearAccessTokenCookie()).thenReturn("accessToken=; Max-Age=0; Path=/api");
 
         filter.doFilter(request, response, filterChain);
 
-        assertThat(response.getStatus()).isEqualTo(MockHttpServletResponse.SC_UNAUTHORIZED);
-        verify(filterChain, never()).doFilter(request, response);
+        assertThat(SecurityContextHolder.getContext().getAuthentication()).isNull();
+        verify(filterChain).doFilter(request, response);
     }
 
     private JwtAuthenticationFilter filter() {

@@ -65,7 +65,7 @@
     "back": "Inapoi",
     "actions": {
       "start": "Porneste conversatia",
-      "open": "Deschide conversatia"
+      "chat": "Chat"
     },
     "start": {
       "title": "Porneste conversatia",
@@ -108,7 +108,7 @@
         "completed": "O lucrare a fost marcată ca finalizată."
       },
       "conversation": {
-        "started": "A fost inițiată o conversație nouă cu tine."
+        "started": "Ai primit un mesaj nou."
       },
       "message": {
         "created": "Ai primit un mesaj nou."

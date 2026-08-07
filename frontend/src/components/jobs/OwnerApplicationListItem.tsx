@@ -19,7 +19,7 @@ type OwnerApplicationListItemProps = {
 };
 
 const actionButtonClass =
-  'inline-flex h-8 items-center justify-center whitespace-nowrap rounded-md border px-2.5 text-xs font-bold transition focus:outline-none focus:ring-2 focus:ring-primary-soft disabled:opacity-65';
+  'inline-flex h-8 items-center justify-center whitespace-nowrap rounded-md border border-border bg-surface px-2.5 text-xs font-bold text-heading transition focus:outline-none focus:ring-2 focus:ring-primary-soft disabled:opacity-65';
 
 function getApplicantName(application: OwnerApplication) {
   const fullName = `${application.applicant.firstName} ${application.applicant.lastName}`.trim();
@@ -41,6 +41,7 @@ function OwnerApplicationListItem({
   const { t } = useTranslation();
   const isCompletedWorker = completedApplicationId === application.id;
   const canManage = isJobOpen && application.status === 'ACTIVE';
+  const canStartConversation = !conversationId && application.status === 'ACTIVE';
   const isBusy = isCompleting || isRejecting;
 
   return (
@@ -67,47 +68,51 @@ function OwnerApplicationListItem({
           </div>
         </div>
 
-        {canManage ? (
+        {canManage || conversationId || canStartConversation ? (
           <div className="flex flex-wrap gap-2">
-            <button
-              className={`${actionButtonClass} border-action bg-action text-action-text`}
-              type="button"
-              disabled={isBusy}
-              onClick={() => onComplete(application.id)}
-            >
-              {isCompleting
-                ? t('posted_jobs.applications.actions.completing')
-                : t('posted_jobs.applications.actions.complete')}
-            </button>
-            <button
-              className={`${actionButtonClass} border-danger bg-danger-soft text-danger`}
-              type="button"
-              disabled={isBusy}
-              onClick={() => onReject(application.id)}
-            >
-              {isRejecting
-                ? t('posted_jobs.applications.actions.updating')
-                : t('posted_jobs.applications.actions.REJECTED')}
-            </button>
-          </div>
-        ) : null}
+            {canManage ? (
+              <>
+                <button
+                  className={`${actionButtonClass} hover:border-emerald-600 hover:bg-emerald-600 hover:text-white`}
+                  type="button"
+                  disabled={isBusy}
+                  onClick={() => onComplete(application.id)}
+                >
+                  {isCompleting
+                    ? t('posted_jobs.applications.actions.completing')
+                    : t('posted_jobs.applications.actions.complete')}
+                </button>
+                <button
+                  className={`${actionButtonClass} hover:border-danger hover:bg-danger hover:text-white`}
+                  type="button"
+                  disabled={isBusy}
+                  onClick={() => onReject(application.id)}
+                >
+                  {isRejecting
+                    ? t('posted_jobs.applications.actions.updating')
+                    : t('posted_jobs.applications.actions.REJECTED')}
+                </button>
+              </>
+            ) : null}
 
-        {conversationId ? (
-          <Link
-            className={`${actionButtonClass} w-fit border-primary bg-primary-soft text-primary no-underline!`}
-            to={`/conversations/${conversationId}`}
-          >
-            {t('conversations.actions.open')}
-          </Link>
-        ) : application.status === 'ACTIVE' ? (
-          <button
-            className={`${actionButtonClass} w-fit border-primary bg-primary-soft text-primary`}
-            type="button"
-            disabled={isBusy}
-            onClick={() => onStartConversation(application.id)}
-          >
-            {t('conversations.actions.start')}
-          </button>
+            {conversationId ? (
+              <Link
+                className={`${actionButtonClass} text-heading! no-underline! hover:border-primary hover:bg-primary hover:text-white!`}
+                to={`/conversations/${conversationId}`}
+              >
+                {t('conversations.actions.chat')}
+              </Link>
+            ) : canStartConversation ? (
+              <button
+                className={`${actionButtonClass} hover:border-primary hover:bg-primary hover:text-white`}
+                type="button"
+                disabled={isBusy}
+                onClick={() => onStartConversation(application.id)}
+              >
+                {t('conversations.actions.start')}
+              </button>
+            ) : null}
+          </div>
         ) : null}
 
         {isCompletedWorker ? <JobRatingPanel compact enabled jobId={jobId} /> : null}

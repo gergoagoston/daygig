@@ -65,7 +65,7 @@
     "back": "Back",
     "actions": {
       "start": "Start conversation",
-      "open": "Open conversation"
+      "chat": "Chat"
     },
     "start": {
       "title": "Start conversation",
@@ -108,7 +108,7 @@
         "completed": "A job was marked as completed."
       },
       "conversation": {
-        "started": "A new conversation was started with you."
+        "started": "You received a new message."
       },
       "message": {
         "created": "You received a new message."

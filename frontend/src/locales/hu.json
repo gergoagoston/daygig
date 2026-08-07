@@ -65,7 +65,7 @@
     "back": "Vissza",
     "actions": {
       "start": "Beszélgetés indítása",
-      "open": "Beszélgetés megnyitása"
+      "chat": "Chat"
     },
     "start": {
       "title": "Beszélgetés indítása",
@@ -108,7 +108,7 @@
         "completed": "Egy munkát befejezettnek jelöltek."
       },
       "conversation": {
-        "started": "Új beszélgetést indítottak veled."
+        "started": "Új üzeneted érkezett."
       },
       "message": {
         "created": "Új üzeneted érkezett."
