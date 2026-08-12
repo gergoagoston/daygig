@@ -46,6 +46,7 @@
     }
   },
   "navigation": {
+    "brand": "DayGig",
     "main": "Main navigation",
     "my_jobs": "Posted Jobs",
     "my_applications": "My Applications",

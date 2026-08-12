@@ -1,11 +1,11 @@
-import type { ChangeEvent, FormEvent } from 'react';
+import type { ChangeEvent, SubmitEvent } from 'react';
 import { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useNavigate } from 'react-router-dom';
 
 import { registerUser } from '../../api/authApi';
 import { isHttpConflictError } from '../../api/httpClient';
-import AuthPage from '../../components/auth/AuthPage';
+import AuthFormLayout from '../../components/auth/AuthFormLayout';
 import Button from '../../components/ui/Button';
 import Input from '../../components/ui/Input';
 
@@ -91,7 +91,7 @@ function RegisterPage() {
     }
   };
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const validationErrors = validate(formValues);
@@ -134,7 +134,7 @@ function RegisterPage() {
   };
 
   return (
-    <AuthPage
+    <AuthFormLayout
       title={t('auth.register.title')}
       subtitle={t('auth.register.subtitle')}
       onSubmit={handleSubmit}
@@ -263,7 +263,7 @@ function RegisterPage() {
       <p className="mt-5 text-center">
         {t('auth.register.login_prompt')} <Link to="/login">{t('auth.login.submit_button')}</Link>
       </p>
-    </AuthPage>
+    </AuthFormLayout>
   );
 }
 

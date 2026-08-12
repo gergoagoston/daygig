@@ -46,6 +46,7 @@
     }
   },
   "navigation": {
+    "brand": "DayGig",
     "main": "Navigare principala",
     "my_jobs": "Joburile publicate",
     "my_applications": "Aplicatiile mele",

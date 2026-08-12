@@ -1,4 +1,4 @@
-import { type FormEvent, useState } from 'react';
+import { type SubmitEvent, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import Modal from '../ui/Modal';
@@ -22,7 +22,7 @@ function StartConversationModal({
   const [content, setContent] = useState('');
   const normalizedContent = content.trim();
 
-  const submit = (event: FormEvent<HTMLFormElement>) => {
+  const submit = (event: SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!normalizedContent || normalizedContent.length > 200 || isSubmitting) {
       return;

@@ -51,7 +51,7 @@ function DesktopNavbar({ onCreateJob, notificationMenuProps }: DesktopNavbarProp
         className="justify-self-center text-lg font-extrabold text-heading !no-underline"
         to="/jobs"
       >
-        DayGig
+        {t('navigation.brand')}
       </NavLink>
 
       <div className="flex flex-wrap items-center justify-end gap-3 justify-self-end">

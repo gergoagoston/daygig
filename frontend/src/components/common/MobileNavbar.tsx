@@ -45,7 +45,7 @@ function MobileNavbar({ onCreateJob, notificationMenuProps }: MobileNavbarProps)
         to="/jobs"
         onClick={closeMenu}
       >
-        DayGig
+        {t('navigation.brand')}
       </NavLink>
 
       <div className="flex items-center justify-end gap-2">

@@ -22,7 +22,7 @@ function OwnerJobCard({ job }: OwnerJobCardProps) {
 
   return (
     <Link
-      className="flex h-full flex-col rounded-lg border border-border bg-surface p-5 text-heading !no-underline shadow-panel transition hover:border-primary"
+      className="flex h-full flex-col rounded-lg border border-border bg-surface p-5 text-heading no-underline! shadow-panel transition hover:border-primary"
       to={`/jobs/${job.id}`}
     >
       <div className="mb-4 flex items-start justify-between gap-3">

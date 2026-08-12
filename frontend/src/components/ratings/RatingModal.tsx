@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from 'react';
+import { useState, type SubmitEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import type { RatingCreatePayload, RatingParticipant } from '../../types/rating';
@@ -31,7 +31,7 @@ function RatingModal({
 
   const fullName = `${reviewee.firstName} ${reviewee.lastName}`.trim();
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (stars === 0) {
       return;

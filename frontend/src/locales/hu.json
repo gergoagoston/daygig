@@ -46,6 +46,7 @@
     }
   },
   "navigation": {
+    "brand": "NapiMeló",
     "main": "Fő navigáció",
     "my_jobs": "Meghirdetett munkáim",
     "my_applications": "Jelentkezéseim",
