@@ -21,11 +21,18 @@ function App() {
   const { i18n } = useTranslation();
   const [isCreateJobOpen, setIsCreateJobOpen] = useState(false);
   const currentLanguage = (i18n.resolvedLanguage ?? i18n.language).slice(0, 2);
+  const isConversationsPage =
+    location.pathname === '/conversations' || location.pathname.startsWith('/conversations/');
 
   return (
-    <div className="min-h-svh bg-page">
+    <div
+      className={`${isConversationsPage ? 'flex h-svh flex-col overflow-hidden' : 'min-h-svh'} bg-page`}
+    >
       <Navbar onCreateJob={() => setIsCreateJobOpen(true)} />
-      <div key={`${location.pathname}-${currentLanguage}`} className="view-transition">
+      <div
+        key={`${location.pathname}-${currentLanguage}`}
+        className={`view-transition ${isConversationsPage ? 'min-h-0 flex-1 overflow-hidden' : ''}`}
+      >
         <Routes location={location}>
           <Route path="/" element={<Navigate to="/jobs" replace />} />
           <Route path="/login" element={<LoginPage />} />

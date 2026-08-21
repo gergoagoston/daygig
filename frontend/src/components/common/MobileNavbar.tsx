@@ -33,7 +33,7 @@ function MobileNavbar({ onCreateJob, notificationMenuProps }: MobileNavbarProps)
 
   return (
     <header
-      className="mobile-navbar sticky top-0 z-50 min-h-18 grid-cols-[1fr_auto] items-center gap-3 border-b border-border bg-surface px-5 py-3 shadow-sm"
+      className="mobile-navbar sticky top-0 z-50 min-h-18 shrink-0 grid-cols-[1fr_auto] items-center gap-3 border-b border-border bg-surface px-5 py-3 shadow-sm"
       onKeyDown={(event) => {
         if (event.key === 'Escape') {
           closeMenu();
@@ -45,7 +45,7 @@ function MobileNavbar({ onCreateJob, notificationMenuProps }: MobileNavbarProps)
         to="/jobs"
         onClick={closeMenu}
       >
-        DayGig
+        {t('navigation.brand')}
       </NavLink>
 
       <div className="flex items-center justify-end gap-2">

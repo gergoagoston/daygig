@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { z } from 'zod';
 
-import { jobCategories, type JobCategory, type JobCreatePayload } from '../../../types/job';
+import { jobCategories, type CreateJobRequest, type JobCategory } from '../../../types/job';
 
 type Translate = (key: string) => string;
 
@@ -69,7 +69,7 @@ export function createJobSchema(t: Translate) {
   });
 }
 
-export function toJobCreatePayload(values: JobCreateFormValues): JobCreatePayload {
+export function toCreateJobRequest(values: JobCreateFormValues): CreateJobRequest {
   return {
     title: values.title.trim(),
     description: values.description.trim(),

@@ -46,6 +46,7 @@
     }
   },
   "navigation": {
+    "brand": "NapiMeló",
     "main": "Fő navigáció",
     "my_jobs": "Meghirdetett munkáim",
     "my_applications": "Jelentkezéseim",
@@ -64,7 +65,6 @@
     "select": "Válassz egy beszélgetést az üzenetek megtekintéséhez.",
     "back": "Vissza",
     "actions": {
-      "start": "Beszélgetés indítása",
       "chat": "Chat"
     },
     "start": {
@@ -203,7 +203,6 @@
     "terms": {
       "title": "Felhasználási feltételek",
       "subtitle": "Kérjük, olvasd el ezeket a feltételeket a DayGig fiók létrehozása előtt. Leírják a DayGig szerepét és a felhasználók felelősségét.",
-      "back_to_register": "Vissza a regisztrációhoz",
       "sections": {
         "platform_role": {
           "title": "A DayGig szerepe",
@@ -245,7 +244,6 @@
     }
   },
   "posted_jobs": {
-    "title": "Meghirdetett munkáim",
     "loading": "Meghirdetett munkák betöltése...",
     "empty": {
       "title": "Még nincs meghirdetett munkád",
@@ -393,7 +391,6 @@
     "create": {
       "nav_label": "Munka meghirdetése",
       "title": "Munka meghirdetése",
-      "close": "Bezárás",
       "cancel": "Mégse",
       "submit": "Munka létrehozása",
       "submitting": "Létrehozás...",
@@ -433,7 +430,6 @@
     },
     "details": {
       "loading": "Munka részleteinek betöltése...",
-      "status_label": "Állapot",
       "hourly_rate": "Óradíj",
       "location": "Helyszín",
       "owner": "Hirdető",
@@ -447,10 +443,8 @@
         "button": "Jelentkezés",
         "submitting": "Jelentkezés...",
         "success": "A jelentkezés sikeresen elküldve!",
-        "already_applied": "Már jelentkeztél erre a munkára.",
         "duplicate": "Erre a munkára már jelentkeztél.",
         "generic_error": "Valami hiba történt. Próbáld újra később.",
-        "own_job": "Nem jelentkezhetsz a saját munkádra.",
         "job_closed": "Ez a munka már nem fogad jelentkezéseket."
       },
       "errors": {

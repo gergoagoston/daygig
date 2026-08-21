@@ -3,8 +3,8 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { createRating, getRatingEligibility } from '../../api/ratingsApi';
-import type { RatingCreatePayload } from '../../types/rating';
-import Button from '../ui/Button';
+import type { CreateRatingRequest } from '../../types/rating';
+import Button, { compactActionClassName } from '../ui/Button';
 import UserAvatar from '../profile/UserAvatar';
 import RatingModal from './RatingModal';
 
@@ -12,9 +12,10 @@ type JobRatingPanelProps = {
   compact?: boolean;
   enabled: boolean;
   jobId: string;
+  showReviewee?: boolean;
 };
 
-function JobRatingPanel({ compact = false, enabled, jobId }: JobRatingPanelProps) {
+function JobRatingPanel({ compact = false, enabled, jobId, showReviewee }: JobRatingPanelProps) {
   const { t } = useTranslation();
   const queryClient = useQueryClient();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -25,7 +26,7 @@ function JobRatingPanel({ compact = false, enabled, jobId }: JobRatingPanelProps
   });
   const eligibility = eligibilityQuery.data;
   const ratingMutation = useMutation({
-    mutationFn: (payload: RatingCreatePayload) => createRating(jobId, payload),
+    mutationFn: (request: CreateRatingRequest) => createRating(jobId, request),
     onSuccess: async () => {
       setIsModalOpen(false);
       await queryClient.invalidateQueries({ queryKey: ['rating-eligibility', jobId] });
@@ -42,6 +43,11 @@ function JobRatingPanel({ compact = false, enabled, jobId }: JobRatingPanelProps
       }
     },
   });
+
+  const openRatingModal = () => {
+    ratingMutation.reset();
+    setIsModalOpen(true);
+  };
 
   if (!enabled || eligibilityQuery.isLoading) {
     return null;
@@ -61,11 +67,12 @@ function JobRatingPanel({ compact = false, enabled, jobId }: JobRatingPanelProps
 
   const reviewee = eligibility.reviewee;
   const fullName = `${reviewee.firstName} ${reviewee.lastName}`.trim();
+  const shouldShowReviewee = showReviewee ?? !compact;
 
   return (
-    <div>
-      {!compact ? (
-        <div className="flex items-center gap-3">
+    <div className={compact ? 'contents' : undefined}>
+      {shouldShowReviewee ? (
+        <div className={`flex items-center gap-3 ${compact ? 'order-1 basis-full' : ''}`}>
           <UserAvatar
             avatarUrl={reviewee.avatarUrl}
             firstName={reviewee.firstName}
@@ -77,28 +84,20 @@ function JobRatingPanel({ compact = false, enabled, jobId }: JobRatingPanelProps
       ) : null}
 
       {eligibility.alreadyRated ? (
-        <p className={`${compact ? '' : 'mt-3'} text-sm font-semibold text-body`}>
+        <p className={`${compact ? 'order-3' : 'mt-3'} text-sm font-semibold text-body`}>
           {t('ratings.job.submitted')}
         </p>
       ) : compact ? (
         <button
-          className="inline-flex h-8 items-center justify-center whitespace-nowrap rounded-md border border-action bg-action px-2.5 text-xs font-bold text-action-text transition focus:outline-none focus:ring-2 focus:ring-primary-soft"
+          className={`${compactActionClassName} order-3 hover:border-primary hover:bg-primary hover:text-white`}
           type="button"
-          onClick={() => {
-            ratingMutation.reset();
-            setIsModalOpen(true);
-          }}
+          onClick={openRatingModal}
         >
           {t('ratings.job.action')}
         </button>
       ) : (
         <div className="mt-4">
-          <Button
-            onClick={() => {
-              ratingMutation.reset();
-              setIsModalOpen(true);
-            }}
-          >
+          <Button className="!w-fit" onClick={openRatingModal}>
             {t('ratings.job.action')}
           </Button>
         </div>

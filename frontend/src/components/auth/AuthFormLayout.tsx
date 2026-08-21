@@ -1,13 +1,13 @@
-import type { FormEventHandler, ReactNode } from 'react';
+import type { ReactNode, SubmitEventHandler } from 'react';
 
-type AuthPageProps = {
+type AuthFormLayoutProps = {
   title: string;
   subtitle: string;
-  onSubmit: FormEventHandler<HTMLFormElement>;
+  onSubmit: SubmitEventHandler<HTMLFormElement>;
   children: ReactNode;
 };
 
-function AuthPage({ title, subtitle, onSubmit, children }: AuthPageProps) {
+function AuthFormLayout({ title, subtitle, onSubmit, children }: AuthFormLayoutProps) {
   return (
     <main className="app-page-centered">
       <section className="grid w-full max-w-5xl items-center gap-8 md:grid-cols-[0.9fr_1.1fr]">
@@ -29,4 +29,4 @@ function AuthPage({ title, subtitle, onSubmit, children }: AuthPageProps) {
   );
 }
 
-export default AuthPage;
+export default AuthFormLayout;

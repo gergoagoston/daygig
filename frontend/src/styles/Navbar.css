@@ -5,17 +5,18 @@
 }
 
 .desktop-navbar {
-  display: none;
+  display: grid;
 }
 
-@media (min-width: 48rem) {
-  .mobile-navbar {
-    display: none;
-  }
-
-  .desktop-navbar {
-    display: grid;
-  }
+.desktop-navbar[data-active='false'] {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: -1;
+  overflow: hidden;
+  visibility: hidden;
+  pointer-events: none;
 }
 
 .navbar-gomb {
@@ -139,4 +140,13 @@
 
 .notification-menu {
   @apply absolute right-0 top-[calc(100%+0.5rem)] z-60 max-h-96 w-[min(22rem,calc(100vw-2rem))] overflow-y-auto rounded-xl border border-border bg-surface shadow-lg;
+}
+
+.mobile-navbar .notification-menu {
+  position: fixed;
+  top: 4.75rem;
+  right: 1rem;
+  left: 1rem;
+  width: auto;
+  max-height: calc(100dvh - 5.75rem);
 }

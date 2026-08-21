@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 
 import { logoutUser } from '../api/authApi';
 import { getCurrentUser } from '../api/usersApi';
-import type { UserOutDto } from '../dtos/user';
+import type { CurrentUser } from '../types/user';
 import { subscribeToUnauthorized } from '../utils/authEvents';
 import AuthContext, { type CurrentUserUpdate } from './AuthContext';
 
@@ -12,10 +12,10 @@ type AuthProviderProps = {
 };
 
 function AuthProvider({ children }: AuthProviderProps) {
-  const [user, setUser] = useState<UserOutDto | null>(null);
+  const [user, setUser] = useState<CurrentUser | null>(null);
   const [isInitializing, setIsInitializing] = useState(true);
 
-  const login = (nextUser: UserOutDto) => {
+  const login = (nextUser: CurrentUser) => {
     setUser(nextUser);
   };
 

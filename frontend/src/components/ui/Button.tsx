@@ -5,6 +5,9 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   isLoading?: boolean;
 };
 
+export const compactActionClassName =
+  'inline-flex h-8 items-center justify-center whitespace-nowrap rounded-md border border-border bg-surface px-2.5 text-xs font-bold text-heading transition focus:outline-none focus:ring-2 focus:ring-primary-soft disabled:opacity-65';
+
 function Button({
   children,
   className = '',

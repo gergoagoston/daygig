@@ -46,6 +46,7 @@
     }
   },
   "navigation": {
+    "brand": "DayGig",
     "main": "Navigare principala",
     "my_jobs": "Joburile publicate",
     "my_applications": "Aplicatiile mele",
@@ -64,7 +65,6 @@
     "select": "Selecteaza o conversatie pentru a vedea mesajele.",
     "back": "Inapoi",
     "actions": {
-      "start": "Porneste conversatia",
       "chat": "Chat"
     },
     "start": {
@@ -203,7 +203,6 @@
     "terms": {
       "title": "Termeni si conditii",
       "subtitle": "Te rugam sa citesti acesti termeni inainte de a crea un cont DayGig. Ei explica rolul DayGig si responsabilitatile tale cand interactionezi cu alti utilizatori.",
-      "back_to_register": "Inapoi la inregistrare",
       "sections": {
         "platform_role": {
           "title": "Rolul DayGig",
@@ -245,7 +244,6 @@
     }
   },
   "posted_jobs": {
-    "title": "Joburile publicate",
     "loading": "Se incarca joburile publicate...",
     "empty": {
       "title": "Nu ai joburi publicate inca",
@@ -393,7 +391,6 @@
     "create": {
       "nav_label": "Publica un job",
       "title": "Publica un job",
-      "close": "Inchide",
       "cancel": "Anuleaza",
       "submit": "Creeaza jobul",
       "submitting": "Se creeaza...",
@@ -433,7 +430,6 @@
     },
     "details": {
       "loading": "Se incarca detaliile jobului...",
-      "status_label": "Status",
       "hourly_rate": "Tarif orar",
       "location": "Locatie",
       "owner": "Publicat de",
@@ -447,10 +443,8 @@
         "button": "Aplica",
         "submitting": "Se aplica...",
         "success": "Aplicatia a fost trimisa cu succes!",
-        "already_applied": "Ai aplicat pentru acest job.",
         "duplicate": "Ai aplicat deja pentru acest job.",
         "generic_error": "A aparut o eroare. Incearca din nou mai tarziu.",
-        "own_job": "Nu poti aplica la propriul job.",
         "job_closed": "Acest job nu mai accepta aplicatii."
       },
       "errors": {

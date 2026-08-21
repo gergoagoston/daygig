@@ -100,10 +100,16 @@ type ProfileReviewsProps = {
 function ProfileReviews({ userId }: ProfileReviewsProps) {
   const { i18n, t } = useTranslation();
   const [workerRatingsQuery, ownerRatingsQuery] = useQueries({
-    queries: (['WORKER', 'JOB_OWNER'] as const).map((context) => ({
-      queryKey: ['user-ratings', userId, context],
-      queryFn: () => getReceivedRatings(userId, context),
-    })),
+    queries: [
+      {
+        queryKey: ['user-ratings', userId, 'WORKER'],
+        queryFn: () => getReceivedRatings(userId, 'WORKER'),
+      },
+      {
+        queryKey: ['user-ratings', userId, 'JOB_OWNER'],
+        queryFn: () => getReceivedRatings(userId, 'JOB_OWNER'),
+      },
+    ],
   });
   const language = i18n.resolvedLanguage ?? i18n.language;
 
