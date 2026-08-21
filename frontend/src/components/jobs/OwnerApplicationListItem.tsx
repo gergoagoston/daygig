@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import type { OwnerApplication } from '../../types/application';
 import UserAvatar from '../profile/UserAvatar';
 import JobRatingPanel from '../ratings/JobRatingPanel';
+import { compactActionClassName } from '../ui/Button';
 
 type OwnerApplicationListItemProps = {
   application: OwnerApplication;
@@ -17,9 +18,6 @@ type OwnerApplicationListItemProps = {
   onReject: (applicationId: string) => void;
   onStartConversation: (applicationId: string) => void;
 };
-
-const actionButtonClass =
-  'inline-flex h-8 items-center justify-center whitespace-nowrap rounded-md border border-border bg-surface px-2.5 text-xs font-bold text-heading transition focus:outline-none focus:ring-2 focus:ring-primary-soft disabled:opacity-65';
 
 function getApplicantName(application: OwnerApplication) {
   const fullName = `${application.applicant.firstName} ${application.applicant.lastName}`.trim();
@@ -68,12 +66,12 @@ function OwnerApplicationListItem({
           </div>
         </div>
 
-        {canManage || conversationId || canStartConversation ? (
+        {canManage || conversationId || canStartConversation || isCompletedWorker ? (
           <div className="flex flex-wrap gap-2">
             {canManage ? (
               <>
                 <button
-                  className={`${actionButtonClass} hover:border-emerald-600 hover:bg-emerald-600 hover:text-white`}
+                  className={`${compactActionClassName} hover:border-emerald-600 hover:bg-emerald-600 hover:text-white`}
                   type="button"
                   disabled={isBusy}
                   onClick={() => onComplete(application.id)}
@@ -83,7 +81,7 @@ function OwnerApplicationListItem({
                     : t('posted_jobs.applications.actions.complete')}
                 </button>
                 <button
-                  className={`${actionButtonClass} hover:border-danger hover:bg-danger hover:text-white`}
+                  className={`${compactActionClassName} hover:border-danger hover:bg-danger hover:text-white`}
                   type="button"
                   disabled={isBusy}
                   onClick={() => onReject(application.id)}
@@ -97,25 +95,25 @@ function OwnerApplicationListItem({
 
             {conversationId ? (
               <Link
-                className={`${actionButtonClass} text-heading! no-underline! hover:border-primary hover:bg-primary hover:text-white!`}
+                className={`${compactActionClassName} order-2 text-heading! no-underline! hover:border-primary hover:bg-primary hover:text-white!`}
                 to={`/conversations/${conversationId}`}
               >
                 {t('conversations.actions.chat')}
               </Link>
             ) : canStartConversation ? (
               <button
-                className={`${actionButtonClass} hover:border-primary hover:bg-primary hover:text-white`}
+                className={`${compactActionClassName} order-2 hover:border-primary hover:bg-primary hover:text-white`}
                 type="button"
                 disabled={isBusy}
                 onClick={() => onStartConversation(application.id)}
               >
-                {t('conversations.actions.start')}
+                {t('conversations.actions.chat')}
               </button>
             ) : null}
+
+            {isCompletedWorker ? <JobRatingPanel compact enabled jobId={jobId} /> : null}
           </div>
         ) : null}
-
-        {isCompletedWorker ? <JobRatingPanel compact enabled jobId={jobId} /> : null}
       </div>
     </li>
   );

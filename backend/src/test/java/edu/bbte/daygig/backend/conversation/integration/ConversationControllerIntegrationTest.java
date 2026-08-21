@@ -98,13 +98,33 @@ class ConversationControllerIntegrationTest {
     }
 
     @Test
-    void applicantCannotStartConversation() throws Exception {
-        User owner = saveUser("forbidden-owner");
-        User applicant = saveUser("forbidden-applicant");
+    void applicantCreatesConversationWithFirstMessage() throws Exception {
+        User owner = saveUser("applicant-start-owner");
+        User applicant = saveUser("applicant-start-applicant");
         Application application = saveApplication(applicant, saveJob(owner), ApplicationStatus.ACTIVE);
 
         mockMvc.perform(post("/applications/{applicationId}/conversation", application.getId())
                 .cookie(accessTokenCookie(applicant))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(messageJson("Hello")))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.otherParticipant.id").value(owner.getId().toString()));
+
+        assertThat(conversationRepository.count()).isOne();
+        assertThat(messageRepository.findAll()).singleElement().satisfies(message ->
+                assertThat(message.getSender().getId()).isEqualTo(applicant.getId())
+        );
+    }
+
+    @Test
+    void userOutsideApplicationCannotStartConversation() throws Exception {
+        User owner = saveUser("outside-start-owner");
+        User applicant = saveUser("outside-start-applicant");
+        User otherUser = saveUser("outside-start-user");
+        Application application = saveApplication(applicant, saveJob(owner), ApplicationStatus.ACTIVE);
+
+        mockMvc.perform(post("/applications/{applicationId}/conversation", application.getId())
+                .cookie(accessTokenCookie(otherUser))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(messageJson("Hello")))
                 .andExpect(status().isForbidden());

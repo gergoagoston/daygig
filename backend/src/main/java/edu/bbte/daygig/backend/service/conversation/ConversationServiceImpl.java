@@ -37,7 +37,7 @@ public class ConversationServiceImpl implements ConversationService {
     @Override
     @Transactional
     public Conversation create(UUID applicationId,
-                               UUID ownerId,
+                               UUID currentUserId,
                                String firstMessageContent) {
         Application application = applicationRepository
                 .findById(applicationId)
@@ -45,7 +45,20 @@ public class ConversationServiceImpl implements ConversationService {
                         "Application not found with id: " + applicationId
                 ));
 
-        ensureOwner(application, ownerId);
+        User owner = application.getJob().getOwner();
+        User applicant = application.getApplicant();
+        User sender;
+        User recipient;
+        if (owner.getId().equals(currentUserId)) {
+            sender = owner;
+            recipient = applicant;
+        } else if (applicant.getId().equals(currentUserId)) {
+            sender = applicant;
+            recipient = owner;
+        } else {
+            throw new ForbiddenException("Only job participants can start a conversation");
+        }
+
         ensureActive(application);
         ensureConversationDoesNotExist(applicationId);
 
@@ -60,17 +73,17 @@ public class ConversationServiceImpl implements ConversationService {
 
         Message firstMessage = new Message();
         firstMessage.setConversation(savedConversation);
-        firstMessage.setSender(application.getJob().getOwner());
+        firstMessage.setSender(sender);
         firstMessage.setContent(content);
         messageRepository.saveAndFlush(firstMessage);
 
         eventPublisher.publishEvent(DomainEventEnvelope.create(
                 RabbitNames.CONVERSATION_STARTED,
-                application.getApplicant().getId(),
+                recipient.getId(),
                 JobActivityEventPayload.forChat(
                         application.getJob().getId(),
                         savedConversation.getId(),
-                        application.getJob().getOwner().getId()
+                        sender.getId()
                 )
         ));
 
@@ -153,13 +166,6 @@ public class ConversationServiceImpl implements ConversationService {
                 sender.getId(),
                 recipient.getId()
         );
-    }
-
-    private void ensureOwner(Application application,
-                             UUID userId) {
-        if (!application.getJob().getOwner().getId().equals(userId)) {
-            throw new ForbiddenException("Only the job owner can start a conversation");
-        }
     }
 
     private void ensureActive(Application application) {

@@ -8,7 +8,7 @@ import edu.bbte.daygig.backend.model.Message;
 public interface ConversationService {
 
     Conversation create(UUID applicationId,
-                        UUID ownerId,
+                        UUID currentUserId,
                         String firstMessageContent);
 
     List<Conversation> getAll(UUID userId);

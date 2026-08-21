@@ -65,7 +65,6 @@
     "select": "Select a conversation to view its messages.",
     "back": "Back",
     "actions": {
-      "start": "Start conversation",
       "chat": "Chat"
     },
     "start": {
@@ -204,7 +203,6 @@
     "terms": {
       "title": "Terms and Conditions",
       "subtitle": "Please read these terms before creating a DayGig account. They explain DayGig's role and your responsibilities when connecting with other users.",
-      "back_to_register": "Back to registration",
       "sections": {
         "platform_role": {
           "title": "DayGig's role",
@@ -246,7 +244,6 @@
     }
   },
   "posted_jobs": {
-    "title": "Posted Jobs",
     "loading": "Loading posted jobs...",
     "empty": {
       "title": "No posted jobs yet",
@@ -394,7 +391,6 @@
     "create": {
       "nav_label": "Post a Job",
       "title": "Post a Job",
-      "close": "Close",
       "cancel": "Cancel",
       "submit": "Create job",
       "submitting": "Creating...",
@@ -434,7 +430,6 @@
     },
     "details": {
       "loading": "Loading job details...",
-      "status_label": "Status",
       "hourly_rate": "Hourly rate",
       "location": "Location",
       "owner": "Posted by",
@@ -448,10 +443,8 @@
         "button": "Apply",
         "submitting": "Applying...",
         "success": "Application submitted successfully!",
-        "already_applied": "You have applied to this job.",
         "duplicate": "You have already applied for this job.",
         "generic_error": "Something went wrong. Please try again later.",
-        "own_job": "You cannot apply to your own job.",
         "job_closed": "This job is no longer accepting applications."
       },
       "errors": {
