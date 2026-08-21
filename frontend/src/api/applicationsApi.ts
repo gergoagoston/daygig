@@ -1,8 +1,8 @@
 import type {
   Application,
   ApplicationStatusUpdate,
-  ApplicationStatusUpdatePayload,
   OwnerApplication,
+  UpdateApplicationStatusRequest,
 } from '../types/application';
 import httpClient from './httpClient';
 
@@ -25,6 +25,6 @@ export async function updateApplicationStatus(
   applicationId: string,
   status: ApplicationStatusUpdate
 ): Promise<void> {
-  const payload: ApplicationStatusUpdatePayload = { status };
-  await httpClient.patch(`/applications/${applicationId}`, payload);
+  const request: UpdateApplicationStatusRequest = { status };
+  await httpClient.patch(`/applications/${applicationId}`, request);
 }

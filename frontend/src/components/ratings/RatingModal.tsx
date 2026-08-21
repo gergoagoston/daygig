@@ -1,7 +1,7 @@
 import { useState, type SubmitEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 
-import type { RatingCreatePayload, RatingParticipant } from '../../types/rating';
+import type { CreateRatingRequest, RatingParticipant } from '../../types/rating';
 import Button from '../ui/Button';
 import Modal from '../ui/Modal';
 import Textarea from '../ui/Textarea';
@@ -14,7 +14,7 @@ type RatingModalProps = {
   reviewee: RatingParticipant;
   submitError: boolean;
   onClose: () => void;
-  onSubmit: (payload: RatingCreatePayload) => void;
+  onSubmit: (request: CreateRatingRequest) => void;
 };
 
 function RatingModal({

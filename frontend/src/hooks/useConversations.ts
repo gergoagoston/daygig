@@ -13,10 +13,11 @@ export function conversationMessagesQueryKey(conversationId: string) {
   return ['conversations', conversationId, 'messages'] as const;
 }
 
-export function useConversations() {
+export function useConversations(enabled = true) {
   const conversationsQuery = useQuery({
     queryKey: conversationsQueryKey,
     queryFn: getConversations,
+    enabled,
   });
 
   return {

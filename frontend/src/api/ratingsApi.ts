@@ -1,7 +1,7 @@
 import type {
+  CreateRatingRequest,
   Rating,
   RatingContext,
-  RatingCreatePayload,
   RatingEligibility,
 } from '../types/rating';
 import httpClient from './httpClient';
@@ -11,8 +11,8 @@ export async function getRatingEligibility(jobId: string): Promise<RatingEligibi
   return response.data;
 }
 
-export async function createRating(jobId: string, payload: RatingCreatePayload): Promise<Rating> {
-  const response = await httpClient.post<Rating>(`/jobs/${jobId}/ratings`, payload);
+export async function createRating(jobId: string, request: CreateRatingRequest): Promise<Rating> {
+  const response = await httpClient.post<Rating>(`/jobs/${jobId}/ratings`, request);
   return response.data;
 }
 

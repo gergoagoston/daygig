@@ -4,14 +4,14 @@ import { useTranslation } from 'react-i18next';
 
 import { deleteCurrentUserAvatar, uploadCurrentUserAvatar } from '../../api/usersApi';
 import type { CurrentUserUpdate } from '../../contexts/AuthContext';
-import type { UserOutDto } from '../../dtos/user';
+import type { CurrentUser } from '../../types/user';
 import UserAvatar from './UserAvatar';
 
 const MAX_AVATAR_SIZE_BYTES = 2 * 1024 * 1024;
 
 type AvatarEditorProps = {
   onUserUpdated: (update: CurrentUserUpdate) => void;
-  user: UserOutDto;
+  user: CurrentUser;
 };
 
 function addAvatarCacheKey(avatarUrl: string | null): string | null {

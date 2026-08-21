@@ -1,15 +1,15 @@
 import { createContext } from 'react';
 
-import type { UserOutDto, UserRole } from '../dtos/user';
+import type { CurrentUser, UserRole } from '../types/user';
 
-export type CurrentUserUpdate = UserOutDto | ((currentUser: UserOutDto) => UserOutDto);
+export type CurrentUserUpdate = CurrentUser | ((currentUser: CurrentUser) => CurrentUser);
 
 export type AuthContextValue = {
-  user: UserOutDto | null;
+  user: CurrentUser | null;
   role: UserRole | null;
   isAuthenticated: boolean;
   isInitializing: boolean;
-  login: (user: UserOutDto) => void;
+  login: (user: CurrentUser) => void;
   updateUser: (update: CurrentUserUpdate) => void;
   logout: () => Promise<void>;
 };

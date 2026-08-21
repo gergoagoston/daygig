@@ -36,7 +36,7 @@ export type OwnerJob = Job & {
   applicationCount: number;
 };
 
-export type JobCreatePayload = {
+export type CreateJobRequest = {
   title: string;
   description: string;
   category: JobCategory;
@@ -54,7 +54,7 @@ export type JobDetails = Job & {
   owner: UserSummary;
 };
 
-export type JobsQueryParams = {
+export type JobSearchParams = {
   page?: number;
   size?: number;
   sort?: string | string[];
@@ -65,4 +65,8 @@ export type JobsQueryParams = {
   latitude?: number;
   longitude?: number;
   maxDistanceKm?: number;
+};
+
+export type CompleteJobRequest = {
+  applicationId: string;
 };

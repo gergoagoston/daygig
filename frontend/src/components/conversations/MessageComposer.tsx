@@ -30,7 +30,10 @@ function MessageComposer({ isConnected, onSendMessage }: MessageComposerProps) {
   };
 
   return (
-    <form className="grid gap-2 border-t border-border bg-surface p-3" onSubmit={submitMessage}>
+    <form
+      className="grid shrink-0 gap-2 border-t border-border bg-surface p-3"
+      onSubmit={submitMessage}
+    >
       <textarea
         aria-label={t('conversations.composer.label')}
         className="min-h-20 w-full resize-none rounded-lg border border-border bg-surface px-3 py-2 text-sm text-heading outline-none focus:border-primary focus:ring-2 focus:ring-primary-soft disabled:opacity-65"

@@ -31,7 +31,7 @@ function ConversationList({ conversations, selectedConversationId }: Conversatio
       <h1 className="m-0! border-b border-border px-5 py-4 text-2xl! font-extrabold!">
         {t('conversations.title')}
       </h1>
-      <div className="grid overflow-y-auto">
+      <div className="min-h-0 flex-1 overflow-y-auto">
         {conversations.map((conversation) => {
           const selected = conversation.id === selectedConversationId;
           return (

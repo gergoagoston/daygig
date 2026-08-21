@@ -1,3 +1,4 @@
+import { forwardRef } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
@@ -7,11 +8,15 @@ import UserAvatar from '../profile/UserAvatar';
 import NavbarLanguageSelect from './NavbarLanguageSelect';
 
 type DesktopNavbarProps = {
+  active: boolean;
   onCreateJob: () => void;
   notificationMenuProps: NotificationMenuProps;
 };
 
-function DesktopNavbar({ onCreateJob, notificationMenuProps }: DesktopNavbarProps) {
+const DesktopNavbar = forwardRef<HTMLElement, DesktopNavbarProps>(function DesktopNavbar(
+  { active, onCreateJob, notificationMenuProps },
+  ref
+) {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { isAuthenticated, isInitializing, logout, user } = useAuth();
@@ -23,8 +28,18 @@ function DesktopNavbar({ onCreateJob, notificationMenuProps }: DesktopNavbarProp
   };
 
   return (
-    <header className="desktop-navbar sticky top-0 z-50 min-h-18 grid-cols-[1fr_auto_1fr] items-center gap-3 border-b border-border bg-surface px-8 py-4 shadow-sm">
-      <nav className="flex items-center gap-2 justify-self-start" aria-label={t('navigation.main')}>
+    <header
+      ref={ref}
+      className="desktop-navbar sticky top-0 z-50 min-h-18 shrink-0 grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-3 border-b border-border bg-surface px-8 py-4 shadow-sm"
+      data-active={active}
+      aria-hidden={active ? undefined : true}
+      inert={!active}
+    >
+      <nav
+        className="flex items-center gap-2 justify-self-start"
+        aria-label={t('navigation.main')}
+        data-navbar-section="start"
+      >
         {isAuthenticated ? (
           <>
             <NavLink className="navbar-gomb" to="/my-jobs">
@@ -50,13 +65,17 @@ function DesktopNavbar({ onCreateJob, notificationMenuProps }: DesktopNavbarProp
       <NavLink
         className="justify-self-center text-lg font-extrabold text-heading !no-underline"
         to="/jobs"
+        data-navbar-section="center"
       >
         {t('navigation.brand')}
       </NavLink>
 
-      <div className="flex flex-wrap items-center justify-end gap-3 justify-self-end">
+      <div
+        className="flex items-center justify-end gap-3 justify-self-end"
+        data-navbar-section="end"
+      >
         {isInitializing ? null : isAuthenticated ? (
-          <div className="flex min-w-0 flex-wrap items-center justify-end gap-2">
+          <div className="flex min-w-0 items-center justify-end gap-2">
             <NotificationMenu {...notificationMenuProps} />
             {user ? (
               <NavLink
@@ -81,7 +100,7 @@ function DesktopNavbar({ onCreateJob, notificationMenuProps }: DesktopNavbarProp
             </button>
           </div>
         ) : (
-          <div className="flex flex-wrap items-center gap-2">
+          <div className="flex items-center gap-2">
             <NavLink className="navbar-gomb" to="/login">
               {t('navigation.login')}
             </NavLink>
@@ -95,6 +114,6 @@ function DesktopNavbar({ onCreateJob, notificationMenuProps }: DesktopNavbarProp
       </div>
     </header>
   );
-}
+});
 
 export default DesktopNavbar;

@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
 import {
-  toJobsQueryParams,
+  toJobSearchParams,
   type JobSearchFormValues,
 } from '../../../../src/components/jobs/search/jobSearchFormModel';
 
@@ -18,7 +18,7 @@ describe('jobSearchFormModel', () => {
       maxDistanceKm: '25',
     };
 
-    expect(toJobsQueryParams(values, 2, 24)).toEqual({
+    expect(toJobSearchParams(values, 2, 24)).toEqual({
       page: 2,
       size: 24,
       sort: 'hourlyRate,desc',

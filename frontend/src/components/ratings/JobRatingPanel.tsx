@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { createRating, getRatingEligibility } from '../../api/ratingsApi';
-import type { RatingCreatePayload } from '../../types/rating';
+import type { CreateRatingRequest } from '../../types/rating';
 import Button from '../ui/Button';
 import UserAvatar from '../profile/UserAvatar';
 import RatingModal from './RatingModal';
@@ -25,7 +25,7 @@ function JobRatingPanel({ compact = false, enabled, jobId }: JobRatingPanelProps
   });
   const eligibility = eligibilityQuery.data;
   const ratingMutation = useMutation({
-    mutationFn: (payload: RatingCreatePayload) => createRating(jobId, payload),
+    mutationFn: (request: CreateRatingRequest) => createRating(jobId, request),
     onSuccess: async () => {
       setIsModalOpen(false);
       await queryClient.invalidateQueries({ queryKey: ['rating-eligibility', jobId] });
@@ -80,20 +80,10 @@ function JobRatingPanel({ compact = false, enabled, jobId }: JobRatingPanelProps
         <p className={`${compact ? '' : 'mt-3'} text-sm font-semibold text-body`}>
           {t('ratings.job.submitted')}
         </p>
-      ) : compact ? (
-        <button
-          className="inline-flex h-8 items-center justify-center whitespace-nowrap rounded-md border border-action bg-action px-2.5 text-xs font-bold text-action-text transition focus:outline-none focus:ring-2 focus:ring-primary-soft"
-          type="button"
-          onClick={() => {
-            ratingMutation.reset();
-            setIsModalOpen(true);
-          }}
-        >
-          {t('ratings.job.action')}
-        </button>
       ) : (
-        <div className="mt-4">
+        <div className={compact ? '' : 'mt-4'}>
           <Button
+            className="!w-fit"
             onClick={() => {
               ratingMutation.reset();
               setIsModalOpen(true);

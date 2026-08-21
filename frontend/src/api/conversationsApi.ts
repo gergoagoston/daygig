@@ -1,4 +1,4 @@
-import type { ChatMessage, Conversation } from '../types/conversation';
+import type { ChatMessage, Conversation, CreateConversationRequest } from '../types/conversation';
 import httpClient from './httpClient';
 
 export async function getConversations(): Promise<Conversation[]> {
@@ -15,9 +15,10 @@ export async function createConversation(
   applicationId: string,
   content: string
 ): Promise<Conversation> {
+  const request: CreateConversationRequest = { content };
   const response = await httpClient.post<Conversation>(
     `/applications/${applicationId}/conversation`,
-    { content }
+    request
   );
   return response.data;
 }

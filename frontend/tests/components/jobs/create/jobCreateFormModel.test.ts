@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 
 import {
   createJobSchema,
-  toJobCreatePayload,
+  toCreateJobRequest,
 } from '../../../../src/components/jobs/create/jobCreateFormModel';
 
 const t = (key: string) => key;
@@ -20,7 +20,7 @@ describe('jobCreateFormModel', () => {
     };
 
     expect(createJobSchema(t).safeParse(values).success).toBe(true);
-    expect(toJobCreatePayload(values)).toEqual({
+    expect(toCreateJobRequest(values)).toEqual({
       title: 'Garden help',
       description: 'Mow the lawn',
       category: 'GARDENING',

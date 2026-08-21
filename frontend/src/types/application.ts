@@ -30,6 +30,6 @@ export type OwnerApplication = {
   applicant: UserSummary;
 };
 
-export type ApplicationStatusUpdatePayload = {
+export type UpdateApplicationStatusRequest = {
   status: ApplicationStatusUpdate;
 };

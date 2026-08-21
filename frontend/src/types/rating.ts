@@ -30,7 +30,7 @@ export type RatingEligibility = {
   context: RatingContext | null;
 };
 
-export type RatingCreatePayload = {
+export type CreateRatingRequest = {
   stars: number;
   comment: string | null;
 };

@@ -11,7 +11,7 @@ import Textarea from '../../ui/Textarea';
 import {
   createJobSchema,
   defaultJobCreateValues,
-  toJobCreatePayload,
+  toCreateJobRequest,
   type JobCreateFormValues,
 } from './jobCreateFormModel';
 import useCreateJobSubmit from './useCreateJobSubmit';
@@ -51,7 +51,7 @@ function JobCreateForm({ onCancel }: JobCreateFormProps) {
     <form
       className="grid gap-5"
       noValidate
-      onSubmit={handleSubmit((values) => createJobMutation.mutate(toJobCreatePayload(values)))}
+      onSubmit={handleSubmit((values) => createJobMutation.mutate(toCreateJobRequest(values)))}
     >
       <div className="grid gap-5 md:grid-cols-2">
         <Input

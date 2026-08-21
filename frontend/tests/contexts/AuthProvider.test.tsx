@@ -3,7 +3,7 @@ import { describe, expect, it, vi } from 'vitest';
 
 import { getCurrentUser } from '../../src/api/usersApi';
 import AuthProvider from '../../src/contexts/AuthProvider';
-import type { UserOutDto } from '../../src/dtos/user';
+import type { CurrentUser } from '../../src/types/user';
 import useAuth from '../../src/hooks/useAuth';
 import { notifyUnauthorized } from '../../src/utils/authEvents';
 
@@ -15,7 +15,7 @@ vi.mock('../../src/api/usersApi', () => ({
   getCurrentUser: vi.fn(),
 }));
 
-const currentUser: UserOutDto = {
+const currentUser: CurrentUser = {
   id: 'user-1',
   email: 'worker@example.com',
   role: 'ROLE_USER',

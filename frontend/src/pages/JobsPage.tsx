@@ -9,7 +9,7 @@ import JobSearchPanel from '../components/jobs/search/JobSearchPanel';
 import {
   defaultJobSearchValues,
   hasJobFilters,
-  toJobsQueryParams,
+  toJobSearchParams,
   type JobSearchFormValues,
 } from '../components/jobs/search/jobSearchFormModel';
 import EmptyState from '../components/ui/EmptyState';
@@ -19,7 +19,7 @@ import LoadingState from '../components/ui/LoadingState';
 function JobsPage() {
   const { t } = useTranslation();
   const [queryParams, setQueryParams] = useState(() =>
-    toJobsQueryParams(defaultJobSearchValues, 0, 12)
+    toJobSearchParams(defaultJobSearchValues, 0, 12)
   );
   const {
     data: jobsPage,
@@ -34,7 +34,7 @@ function JobsPage() {
   const hasActiveFilters = hasJobFilters(queryParams);
 
   function handleSearch(values: JobSearchFormValues) {
-    setQueryParams((currentParams) => toJobsQueryParams(values, 0, currentParams.size));
+    setQueryParams((currentParams) => toJobSearchParams(values, 0, currentParams.size));
   }
 
   function handlePageChange(page: number) {

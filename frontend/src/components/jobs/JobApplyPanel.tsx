@@ -1,6 +1,8 @@
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 
 import type { ApplyMessage } from '../../hooks/useApplyToJob';
+import { useConversations } from '../../hooks/useConversations';
 import useWithdrawApplication from '../../hooks/useWithdrawApplication';
 import type { ApplicationStatus } from '../../types/application';
 import type { JobStatus } from '../../types/job';
@@ -65,6 +67,10 @@ function JobApplyPanel({
     applicationId ?? '',
     jobId
   );
+  const { conversations } = useConversations(hasApplied && !isOwnJob);
+  const conversation = applicationId
+    ? conversations.find((item) => item.applicationId === applicationId)
+    : undefined;
   const canWithdraw =
     Boolean(applicationId) && applicationStatus === 'ACTIVE' && jobStatus === 'OPEN';
 
@@ -110,6 +116,12 @@ function JobApplyPanel({
             >
               {isWithdrawing ? t('applications.card.withdrawing') : t('applications.card.withdraw')}
             </Button>
+          ) : null}
+
+          {conversation ? (
+            <Link className="navbar-gomb w-fit" to={`/conversations/${conversation.id}`}>
+              {t('conversations.actions.chat')}
+            </Link>
           ) : null}
 
           {isWithdrawError ? (

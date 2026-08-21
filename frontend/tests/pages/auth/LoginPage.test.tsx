@@ -4,7 +4,7 @@ import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { describe, expect, it, vi } from 'vitest';
 
 import { loginUser } from '../../../src/api/authApi';
-import type { UserOutDto } from '../../../src/dtos/user';
+import type { CurrentUser } from '../../../src/types/user';
 import useAuth from '../../../src/hooks/useAuth';
 import LoginPage from '../../../src/pages/auth/LoginPage';
 
@@ -16,7 +16,7 @@ vi.mock('../../../src/hooks/useAuth', () => ({
   default: vi.fn(),
 }));
 
-const currentUser: UserOutDto = {
+const currentUser: CurrentUser = {
   id: 'user-1',
   email: 'worker@example.com',
   role: 'ROLE_USER',

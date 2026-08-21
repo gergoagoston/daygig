@@ -17,3 +17,7 @@ export type ChatMessage = {
   content: string;
   createdAt: string;
 };
+
+export type CreateConversationRequest = {
+  content: string;
+};

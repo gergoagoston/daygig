@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { jobCategories, type JobCategory, type JobsQueryParams } from '../../../types/job';
+import { jobCategories, type JobCategory, type JobSearchParams } from '../../../types/job';
 
 type Translate = (key: string) => string;
 
@@ -24,7 +24,7 @@ export type JobSearchFormValues = {
   maxDistanceKm: string;
 };
 
-export type AppliedJobsQueryParams = JobsQueryParams & {
+export type AppliedJobSearchParams = JobSearchParams & {
   page: number;
   size: number;
 };
@@ -117,11 +117,11 @@ export function createJobSearchSchema(t: Translate) {
     });
 }
 
-export function toJobsQueryParams(
+export function toJobSearchParams(
   values: JobSearchFormValues,
   page: number,
   size: number
-): AppliedJobsQueryParams {
+): AppliedJobSearchParams {
   const query = values.q.trim();
   const hasLocation =
     values.latitude !== '' && values.longitude !== '' && values.maxDistanceKm !== '';
@@ -144,7 +144,7 @@ export function toJobsQueryParams(
   };
 }
 
-export function hasJobFilters(params: JobsQueryParams) {
+export function hasJobFilters(params: JobSearchParams) {
   return Boolean(
     params.q ||
     params.category ||
