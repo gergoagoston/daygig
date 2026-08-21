@@ -69,7 +69,12 @@ describe('JobApplyPanel', () => {
       </MemoryRouter>
     );
 
-    await user.click(screen.getByRole('button', { name: 'applications.card.withdraw' }));
+    const chatButton = screen.getByRole('button', { name: 'conversations.actions.chat' });
+    const withdrawButton = screen.getByRole('button', { name: 'applications.card.withdraw' });
+
+    expect(withdrawButton.parentElement).toBe(chatButton.parentElement);
+    expect(withdrawButton).toHaveClass('h-8', 'order-3');
+    await user.click(withdrawButton);
 
     expect(window.confirm).toHaveBeenCalledWith('applications.card.withdraw_confirm');
     expect(withdraw).toHaveBeenCalledOnce();
