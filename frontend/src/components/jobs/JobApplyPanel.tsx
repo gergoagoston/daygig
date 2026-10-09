@@ -146,17 +146,7 @@ function JobApplyPanel({
             </p>
           ) : null}
 
-          {canWithdraw ? (
-            <Button
-              className="justify-self-stretch"
-              isLoading={isWithdrawing}
-              onClick={handleWithdraw}
-            >
-              {isWithdrawing ? t('applications.card.withdrawing') : t('applications.card.withdraw')}
-            </Button>
-          ) : null}
-
-          {conversation || canStartConversation || canRate ? (
+          {conversation || canStartConversation || canWithdraw || canRate ? (
             <div className="flex flex-wrap gap-2">
               {canRate ? <JobRatingPanel compact enabled jobId={jobId} showReviewee /> : null}
 
@@ -177,6 +167,19 @@ function JobApplyPanel({
                   }}
                 >
                   {t('conversations.actions.chat')}
+                </button>
+              ) : null}
+
+              {canWithdraw ? (
+                <button
+                  className={`${compactActionClassName} order-3 hover:border-danger hover:bg-danger hover:text-white`}
+                  disabled={isWithdrawing}
+                  type="button"
+                  onClick={handleWithdraw}
+                >
+                  {isWithdrawing
+                    ? t('applications.card.withdrawing')
+                    : t('applications.card.withdraw')}
                 </button>
               ) : null}
             </div>

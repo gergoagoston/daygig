@@ -84,12 +84,12 @@ function JobRatingPanel({ compact = false, enabled, jobId, showReviewee }: JobRa
       ) : null}
 
       {eligibility.alreadyRated ? (
-        <p className={`${compact ? 'order-3' : 'mt-3'} text-sm font-semibold text-body`}>
+        <p className={`${compact ? 'order-4' : 'mt-3'} text-sm font-semibold text-body`}>
           {t('ratings.job.submitted')}
         </p>
       ) : compact ? (
         <button
-          className={`${compactActionClassName} order-3 hover:border-primary hover:bg-primary hover:text-white`}
+          className={`${compactActionClassName} order-4 hover:border-primary hover:bg-primary hover:text-white`}
           type="button"
           onClick={openRatingModal}
         >
